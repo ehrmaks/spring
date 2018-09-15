@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="reply">
+	<insert id="insertReply">
+		insert into reply (rno,bno,replytext,replyer,user_name,secret_reply) 
+		values (reply_seq.nextval, #{bno}, #{replytext}, #{replyer}, #{user_name}, #{secret_reply})
+	</insert>
+	
+	<select id="listReply" 
+	resultType="com.example.spring02.model.board.dto.ReplyDTO">
+		<!-- select rno,bno,replyer,r.regdate,r.updatedate,user_name,replytext
+		from reply r, member m
+		where r.replyer=m.userid and bno=#{bno}
+		order by rno -->
+		
+		<include refid="pagingHeader"/>
+			select r.rno, bno, r.replytext, r.replyer, 
+				r.secret_reply, r.regdate, r.updatedate, r.user_name,
+				(select b.writer from board b where b.bno = r.bno) as writer
+			from reply r, member m
+			where
+				r.replyer = m.userid
+				and bno = #{bno}
+			order by rno
+		<include refid="pagingFooter"></include>
+	</select>
+	
+	<sql id="pagingHeader">
+		select * from (
+		select rownum as rn, A.* from (
+	</sql>
+	
+	<sql id="pagingFooter">
+			) A
+		) where rn between #{start} and #{end}
+	</sql>
+	
+	<delete id="deleteReply">
+		delete from reply
+		where rno=#{rno}
+	</delete>
+	
+	<update id="updateReply">
+		update reply
+		set replytext = #{replytext}
+		where rno=#{rno}
+	</update>
+	
+	<select id="detailReply" 
+	resultType="com.example.spring02.model.board.dto.ReplyDTO">
+		select rno, bno, replytext, replyer, regdate, updatedate, 
+		secret_reply
+		FROM reply
+		where rno = #{rno}
+	</select>
+	
+	<!-- 댓글 갯수(for 페이징처리) -->
+	<select id="countReply" resultType="int">
+		select count(*) from reply where bno=#{bno}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
