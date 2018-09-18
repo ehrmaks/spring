@@ -128,7 +128,6 @@ public class ReplyController {
             String user_name = (String) session.getAttribute("name");
             dto.setUser_name(user_name);
             
-            System.out.println(dto.getWriter());
             
 
             // 댓글입력 메서드 호출

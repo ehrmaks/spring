@@ -32,7 +32,6 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	@Override
 	public void addAttach(String fullName, String fileSize) {
-		System.out.println("board.addAttach 실행");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("fullName", fullName);

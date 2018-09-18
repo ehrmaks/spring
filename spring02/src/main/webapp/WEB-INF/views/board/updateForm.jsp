@@ -298,7 +298,7 @@ CKEDITOR.replace("content",{
 	<br>
 </form>
 
-	<div> 첨부파일을 아래박스에 드래그하세요 또는&nbsp;
+	<div> 첨부파일을 아래박스에 드래그 하세요 또는&nbsp;
 		<form id="uploadForm" enctype="multipart/form-data" method="post"
 		action="/upload/uploadAjax">
 			<input type="file" name="file">

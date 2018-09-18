@@ -48,9 +48,7 @@ public class BoardController {
 			
 			while(iterator.hasNext()) {
 				String keyValue = (String) iterator.next().toString();
-				System.out.println("keyValue : " + keyValue);
 				
-				System.out.println(i);
 				list.add(String.valueOf(listA.get(i).get(keyValue)));
 				
 
@@ -58,14 +56,12 @@ public class BoardController {
 		}
 		
 
-		System.out.println("getAttach : " + bno);
 		
 		return list;
 	}
 	
 	@RequestMapping("delete.do")
 	public String delete(int bno) throws Exception {
-		System.out.println("삭제 처리중..");
 		boardService.delete(bno); // 삭제 처리
 		
 		return "redirect:/board/list.do"; // 목록으로 이동
@@ -78,7 +74,6 @@ public class BoardController {
 		if(dto != null) {
 			boardService.update(dto); // 레코드 수정
 			String[] file = dto.getFiles();
-			System.out.println("파일정보 확인" + file);
 		}
 		// 수정 완료 후 현재페이지에서 수정된 내용 확인
 		return "redirect:/board/view.do?bno=" + dto.getBno();
