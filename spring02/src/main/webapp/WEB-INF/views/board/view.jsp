@@ -88,7 +88,7 @@ $(document).ready(function() {
 		// 비밀댓글 체크 여부
 		var secret_reply = "n";
 		// 태그.js (":속성") 체크여부 true/false
-		if($("#secretReply").is(".checked")) {
+		if($("#secretReply").is(":checked")) {
 			secret_reply = "y";
 		}
 		
@@ -105,9 +105,10 @@ $(document).ready(function() {
 			}
 		});
 	}
-	
+
 	// 1_2. 댓글 입력 함수(json 형식)
      function replyJson(){
+		
         var replytext=$("#replytext").val();
         var bno="${dto.bno}"
         // 비밀댓글 체크여부
@@ -121,8 +122,8 @@ $(document).ready(function() {
             url: "/reply/insertRest.do",
             headers: {
                 "Content-Type" : "application/json"
-            },
-            dateType: "text",
+            }, 
+            dataType: "text",
             // param형식보다 간편
             data: JSON.stringify({
                 bno : bno,
@@ -135,7 +136,11 @@ $(document).ready(function() {
                 //listReply("1");     // 전통적인 Controller방식
                 //listReply2();     // json리턴 방식
                 listReplyRest("1"); // Rest 방식
-            }
+            },
+			error: function(e) {
+				console.log(e);
+				alert("실패");
+			}
         });
     }
 
@@ -191,6 +196,7 @@ function listReply2(){
 
 //2_3. 댓글 목록 - Rest방식
 function listReplyRest(num){
+	
     $.ajax({
         type: "get",
         url: "/reply/list/${dto.bno}/"+num,

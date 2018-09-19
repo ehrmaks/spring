@@ -10,5 +10,5 @@ uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <script src="${path}/include/jquery-3.3.1.min.js"></script>
 <!-- <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script> -->
-<link rel="stylesheet" href="${path}/include/style.css">
+<!-- <link rel="stylesheet" href="${path}/include/style.css"> -->
 

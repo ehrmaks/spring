@@ -76,7 +76,13 @@ $(function() {
     document.form1.action="${path}/member/join_check.do";
     document.form1.submit();
 	});
+	
+	$("#btnback").click(function() {
+		history.back();
+	});
 });
+
+
 
 function daumZipCode() {
 	new daum.Postcode({
