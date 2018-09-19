@@ -35,6 +35,7 @@ public class BoardDAOImpl implements BoardDAO {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("fullName", fullName);
+		System.out.println("DAO FullName" + fullName);
 		map.put("fileSize", fileSize);
 		
 		sqlSession.insert("board.addAttach", map);	

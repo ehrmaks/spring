@@ -276,10 +276,6 @@ CKEDITOR.replace("content",{
 	<br><hr><br>
 	
 	
-	<br>
-	<hr>
-	<br>
-	
 	<div style="width:700px; text-align:center;">
 <!-- 수정,삭제에 필요한 글번호를 hidden 태그에 저장 -->	
 		<input type="hidden" name="bno" value="${dto.bno}">

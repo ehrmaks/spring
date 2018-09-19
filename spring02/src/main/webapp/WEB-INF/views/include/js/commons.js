@@ -7,6 +7,7 @@
 
 // 이미지 파일 여부 판단
 function checkImageType(fileName) {
+	console.log(fileName);
 	var pattern = /jpg|gif|png|jpeg/i;
 	return fileName.match(pattern);
 }
@@ -14,16 +15,25 @@ function checkImageType(fileName) {
 // 업로드 파일 정보
 function getFileInfo(fullName) {
 	var fileName, imgsrc, getLink, fileLink;
-	
+	var end;
+	console.log(fullName);
 	// 이미지 파일일 경우
 	if(checkImageType(fullName)) {
 		// 이미지 파일 경로(썸네일)
 		imgsrc = "/upload/displayFile?fileName="+fullName;
 		console.log(imgsrc);
 		
-		// 업로드 파일명
-		fileLink = fullName.substr(14);
-		console.log(fileLink);
+		var i = fullName.substring(fullName.lastIndexOf(".")+1);
+		console.log(i);
+		
+		if(i == "jpeg"){
+			fileLink = fullName.substr(12);
+			console.log(fileLink);
+		} else {
+			// 업로드 파일명
+			fileLink = fullName.substr(14);
+			console.log(fileLink);
+		}
 		
 		// 파일사이즈
 		//fileSize = fullName.substr(fileLink.lastIndexOf('-')+15);
@@ -33,10 +43,16 @@ function getFileInfo(fullName) {
 		var front = fullName.substr(0,12);
 		console.log(front);
 		
-		// s_를 제거한 업로드이미지파일명
-		var end = fullName.substr(14);
-		console.log(end);
-		
+		if(i == "jpeg"){
+			// s_를 제거한 업로드이미지파일명
+			end = fullName.substr(12);
+			console.log(end);
+		} else {
+			// s_를 제거한 업로드이미지파일명
+			end = fullName.substr(14);
+			console.log(end);
+		}
+
 		
 		// 원본이미지 파일 디렉토리
 		getLink = "/upload/displayFile?fileName="+front+end;

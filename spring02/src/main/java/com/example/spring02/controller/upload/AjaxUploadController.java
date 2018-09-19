@@ -1,12 +1,18 @@
 package com.example.spring02.controller.upload;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -25,6 +31,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.spring02.service.board.BoardService;
 import com.example.spring02.util.MediaUtils;
 import com.example.spring02.util.UploadFileUtils;
+
+import net.sf.json.JSONObject;
 
 @Controller
 public class AjaxUploadController {
@@ -51,28 +59,29 @@ public class AjaxUploadController {
 	@ResponseBody // json 형식으로 리턴
 	@RequestMapping(value = "/upload/uploadAjax",
 	method = RequestMethod.POST,
-	produces = "text/plain;charset=utf-8")
+	produces = "application/text;charset=utf-8")
 	public ModelAndView uploadAjax(MultipartFile file) throws Exception {
 		logger.info("originalName : " + file.getOriginalFilename());
 		logger.info("size : " + file.getSize());
 		logger.info("contentType : " + file.getContentType());
-		
 		ModelAndView mav = new ModelAndView();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		String fileName = file.getOriginalFilename();
+		System.out.println("ajax 컨트롤러 : " + fileName);
+		
 		
 		long fileSize1 = file.getSize();
 		String fileSize = Long.toString(fileSize1);
 		
 		String fullName = UploadFileUtils.uploadFile(uploadPath, fileName, file.getBytes());
 		
+		
 		map.put("fileSize", fileSize);
 		map.put("fullName", fullName);
 		mav.addAllObjects(map);
 		mav.setViewName("jsonView");
 		
-
 		return mav;
 	}
 	
@@ -81,7 +90,8 @@ public class AjaxUploadController {
 	@ResponseBody // view가 아닌 데이터 리턴
 	@RequestMapping("/upload/displayFile")
 	public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
-		
+		System.out.println("displayfile 진입");
+		System.out.println("파일이름" + fileName);
 		// 서버의 파일을 다운로드 하기 위한 스트림
 		InputStream in = null;
 		ResponseEntity<byte[]> entity = null;
@@ -105,6 +115,8 @@ public class AjaxUploadController {
 				// 다운로드용 컨텐트 타입
 				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 				
+				//response.setHeader(arg0, arg1);
+				
 				// 큰 따옴표 내부에 " \" "
 				// 바이트 배열을 스트링으로			
 				// iso-8859-1 서유럽언어
@@ -117,6 +129,8 @@ public class AjaxUploadController {
 			// 바이트배열, 헤더
 			entity = new ResponseEntity<byte[]>(
 					IOUtils.toByteArray(in), headers, HttpStatus.OK);
+			
+			System.out.println("entity"+entity);
 		
 		} catch (Exception e) {
 			e.printStackTrace();
