@@ -121,7 +121,8 @@ $(document).ready(function() {
 					+fullName+"'>";
 				html += "<input type='hidden' class='file2' value='"
 					+fileSize+"'></div>";
-					
+				
+				alert("업로드 Success!!");
 				$("#uploadedList").append(html);
 			}
 		});
@@ -165,7 +166,7 @@ $(document).ready(function() {
 				
 				html += "<input type='hidden' class='file2' value='"
 					+fileSize+"'></div>";
-				
+				alert("업로드 Success!!");
 				$("#uploadedList").append(html);
 				
 			},

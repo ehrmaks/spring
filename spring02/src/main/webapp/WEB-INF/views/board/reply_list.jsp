@@ -30,9 +30,6 @@ value="${fn:replace(str,newLineChar,'<br>') }" /> --%>
 			<!-- 본인 댓글만 수정버튼 생성되도록 처리 -->
 			<c:if test="${sessionScope.userid == row.replyer || sessionScope.userid == 'admin' || sessionScope.userid == row.writer}">
 				<input type="button" id="btnModify" value="수정" onclick="showReplyModify('${row.rno}')">
-			</c:if>
-			
-			<c:if test="${sessionScope.userid || !sessionScope.userid}">
 				<input type="button" id="detail" value="상세보기" onclick="showReplyModify('${row.rno}')" >	
 			</c:if>
 			
