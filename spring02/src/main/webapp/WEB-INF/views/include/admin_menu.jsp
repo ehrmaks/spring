@@ -68,7 +68,6 @@
 			<!-- 로그인 하지 않은 상태 -->
 			<a href="/member/login.do">로그인</a> | 
 			<a href="/admin/login.do">관리자 로그인</a>
-			<!-- 아아아 -->
 		</c:when>
 		
 		<c:otherwise>
