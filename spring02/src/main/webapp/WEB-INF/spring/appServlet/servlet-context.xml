@@ -53,7 +53,8 @@
 		<beans:constructor-arg value="d:/upload"/>
 	</beans:bean> -->
 	
-	
+	<!-- aop의 설정으로 Proxy 객체를 자동으로 생성 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	<!-- 인터셉터 빈 등록 -->
 	<beans:bean id="loginInterceptor"
 	class="com.example.spring02.interceptor.LoginInterceptor"></beans:bean>
