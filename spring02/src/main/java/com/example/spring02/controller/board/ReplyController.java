@@ -119,6 +119,7 @@ public class ReplyController {
     // @RequestBody : json을 객체로
     @RequestMapping(value="insertRest.do", method=RequestMethod.POST)
     public ResponseEntity<String> insertRest(@RequestBody ReplyDTO dto, HttpSession session){
+    	System.out.println("댓글 입력 컨트롤러 진입");
         ResponseEntity<String> entity = null;
         try {
             // 세션에 저장된 회원아이디를 댓글작성자에 세팅
@@ -127,9 +128,6 @@ public class ReplyController {
             
             String user_name = (String) session.getAttribute("name");
             dto.setUser_name(user_name);
-            
-            System.out.println(dto.getWriter());
-            
 
             // 댓글입력 메서드 호출
             replyService.create(dto);
@@ -148,7 +146,6 @@ public class ReplyController {
 			method= {RequestMethod.PUT, RequestMethod.PATCH})
 	public ResponseEntity<String> replyUpdate(@PathVariable("rno") int rno,
 			@RequestBody ReplyDTO dto) {
-		System.out.println("진입이라도 합니다.update");
 		ResponseEntity<String> entity = null;
 		try {
 			dto.setRno(rno);
@@ -168,10 +165,8 @@ public class ReplyController {
 	@RequestMapping(value="/delete/{rno}")
 	public ResponseEntity<String> replyDelete(@PathVariable("rno") int rno) {
 		ResponseEntity<String> entity = null;
-		System.out.println("진입이라도 합니다.delete");
 		try {
 			replyService.delete(rno);
-			System.out.println("rno의 값 : " + rno);
 			// 댓글 삭제가 성공하면 성공 상태 메시지 저장
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 			System.out.println("댓글 삭제 성공");

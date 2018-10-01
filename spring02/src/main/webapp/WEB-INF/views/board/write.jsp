@@ -76,8 +76,9 @@ $(document).ready(function(){
 			contentType: false,
 			success: function(data){
 				console.log("data:"+data); //업로드된 파일 이름
-				
-				//console.log(data);
+				console.log(data.fullName);
+				var files = decodeURIComponent(data.fullName);
+				console.log(files);
 				//data : 업로드한 파일 정보와 Http 상태 코드
 				var fileInfo=getFileInfo(data.fullName);
 				var fileName=fileInfo.fileName;
@@ -99,6 +100,7 @@ $(document).ready(function(){
 				html += "<input type='hidden' class='file2' value='"
 					+fileSize+"'></div>";
 				
+				alert("업로드 Success!!");
 				$("#uploadedList").append(html);
 				
 			},
@@ -145,7 +147,7 @@ $(document).ready(function(){
 				
 				html += "<input type='hidden' class='file2' value='"
 					+fileSize+"'></div>";
-				
+				alert("업로드 Success!!");
 				$("#uploadedList").append(html);
 				
 			},
@@ -225,8 +227,8 @@ CKEDITOR.replace("content",{
 		<button type="button" id="btnSave">확인</button>
 	</div>
 </form>
-
-	<div> 첨부파일을 아래박스에 드래그하세요 또는&nbsp;
+<br><hr><br>
+	<div> 첨부파일을 아래박스에 드래그 하세요 또는&nbsp;
 		<form id="uploadForm" enctype="multipart/form-data" method="post"
 		action="/upload/uploadAjax">
 			<input type="file" name="file">

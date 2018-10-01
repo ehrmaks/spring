@@ -6,9 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 <%@ include file="../include/header.jsp" %>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
-
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 
 <script>
 $(function() {
@@ -78,7 +76,13 @@ $(function() {
     document.form1.action="${path}/member/join_check.do";
     document.form1.submit();
 	});
+	
+	$("#btnback").click(function() {
+		history.back();
+	});
 });
+
+
 
 function daumZipCode() {
 	new daum.Postcode({

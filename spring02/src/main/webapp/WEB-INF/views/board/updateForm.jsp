@@ -121,7 +121,8 @@ $(document).ready(function() {
 					+fullName+"'>";
 				html += "<input type='hidden' class='file2' value='"
 					+fileSize+"'></div>";
-					
+				
+				alert("업로드 Success!!");
 				$("#uploadedList").append(html);
 			}
 		});
@@ -165,7 +166,7 @@ $(document).ready(function() {
 				
 				html += "<input type='hidden' class='file2' value='"
 					+fileSize+"'></div>";
-				
+				alert("업로드 Success!!");
 				$("#uploadedList").append(html);
 				
 			},
@@ -276,10 +277,6 @@ CKEDITOR.replace("content",{
 	<br><hr><br>
 	
 	
-	<br>
-	<hr>
-	<br>
-	
 	<div style="width:700px; text-align:center;">
 <!-- 수정,삭제에 필요한 글번호를 hidden 태그에 저장 -->	
 		<input type="hidden" name="bno" value="${dto.bno}">
@@ -298,7 +295,7 @@ CKEDITOR.replace("content",{
 	<br>
 </form>
 
-	<div> 첨부파일을 아래박스에 드래그하세요 또는&nbsp;
+	<div> 첨부파일을 아래박스에 드래그 하세요 또는&nbsp;
 		<form id="uploadForm" enctype="multipart/form-data" method="post"
 		action="/upload/uploadAjax">
 			<input type="file" name="file">
