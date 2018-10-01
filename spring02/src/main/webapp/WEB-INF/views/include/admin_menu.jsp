@@ -65,7 +65,7 @@
 <div style="text-align: right;">
 	<c:choose>
 		<c:when test="${sessionScope.admin_userid == null}">
-			<!-- 로그인 하지 않은 상태. -->
+			<!-- 로그인 하지 않은 상태 -->
 			<a href="/member/login.do">로그인</a> | 
 			<a href="/admin/login.do">관리자 로그인</a>
 		</c:when>
