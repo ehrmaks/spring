@@ -8,12 +8,6 @@ join_date date default sysdate);
 select * from member;
 alter table member modify join_date date default sysdate;
 
-create table admin (
-userid varchar2(30) not null unique,
-passwd varchar2(30) not null,
-name varchar2(30) not null,
-email varchar2(50) not null,
-join_date timestamp);
 
 select * from board;
 delete from board where writer='ehrmaks';
@@ -26,12 +20,7 @@ regdate date default sysdate,
 viewcnt number default 0,
 primary key(bno)
 );
-insert into board(bno,title,writer,viewcnt) values(1,'제목','kjsfk',1);
-select * from board;
-delete from board where user_name='관리자';
-select viewcnt from board where bno=20;
-select bno, title, writer, regdate, viewcnt  from board;
-select m.name from board b, member m;
+
 
 alter table board add user_name varchar2(50);
 alter table board add cnt number;
@@ -47,27 +36,7 @@ create sequence seq_board start with 1 increment by 1;
 select count(*) from board b, member m where writer like '%';
 
 SELECT NVL(MAX(bno)+1, 1)from board);
-drop table attach;
-drop table admin;
 
-delete from member where userid='admin';
-
-select * from admin;
-select * from member;
-select * from board;
-select count(*) from board b, member m, admin a where (b.writer = m.userid or b.writer = a.userid) and b.user_name like '관리자';
-
-select count(*) from member;
-select count(*) from member m left outer join admin a on m.userid=a.userid;
-select  from board b, member m, admin a where (b.writer=m.userid or b.writer=a.userid) and b.bno='59';
-
-select bno, title, regdate, content, viewcnt, user_name from board b, member m, admin a where b.writer=m.userid and m.userid=a.userid and b.bno='48';
-
-select bno, title, regdate, content, viewcnt, user_name from board where bno='26';
-select bno, title, regdate, content, viewcnt, user_name from board b left join member m on b.writer=m.userid left join admin a on b.writer=a.userid where (b.writer=m.userid or b.writer=a.userid) and b.bno='26';
-select bno,title,regdate,content,viewcnt,user_name,writer from board b, member m, admin a where b.writer=m.userid and b.bno='26';
-select * from board b, member m where b.writer=m.userid and b.bno='48'(select * from admin a where b.writer=a.userid and b.bno='26');
-select b.* from board b, member m, admin a where (b.writer=m.userid or b.writer=a.userid) and b.bno='49';
 
 SELECT * FROM BOARD;
 create table attach (
