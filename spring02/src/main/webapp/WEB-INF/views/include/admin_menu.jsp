@@ -31,7 +31,7 @@
   <body id="page-top">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">
+      <a class="navbar-brand js-scroll-trigger" href="/">
         <span class="d-block d-lg-none">Spring Project</span>
         <span class="d-none d-lg-block">
           <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="${path}/resources/img/profile.jpg" alt="">
@@ -66,6 +66,7 @@
 	<c:choose>
 		<c:when test="${sessionScope.admin_userid == null}">
 			<!-- 로그인 하지 않은 상태 -->
+			<a href="/member/login.do">로그인</a> | 
 			<a href="/admin/login.do">관리자 로그인</a>
 		</c:when>
 		
