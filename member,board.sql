@@ -26,9 +26,9 @@ regdate date default sysdate,
 viewcnt number default 0,
 primary key(bno)
 );
-insert into board(bno,title,writer,viewcnt) values(1,'Á¦¸ñ','kjsfk',1);
+insert into board(bno,title,writer,viewcnt) values(1,'ì œëª©','kjsfk',1);
 select * from board;
-delete from board where user_name='°ü¸®ÀÚ';
+delete from board where user_name='ê´€ë¦¬ì';
 select viewcnt from board where bno=20;
 select bno, title, writer, regdate, viewcnt  from board;
 select m.name from board b, member m;
@@ -46,7 +46,6 @@ create sequence seq_board start with 1 increment by 1;
 
 select count(*) from board b, member m where writer like '%';
 
-insert into board(bno, title, content, writer) values(seq_board.NEXTVAL, '¾ÆÀ×', '»ÑÀ×', '±èÁø¼®');
 SELECT NVL(MAX(bno)+1, 1)from board);
 drop table attach;
 drop table admin;
@@ -56,7 +55,7 @@ delete from member where userid='admin';
 select * from admin;
 select * from member;
 select * from board;
-select count(*) from board b, member m, admin a where (b.writer = m.userid or b.writer = a.userid) and b.user_name like '°ü¸®ÀÚ';
+select count(*) from board b, member m, admin a where (b.writer = m.userid or b.writer = a.userid) and b.user_name like 'ê´€ë¦¬ì';
 
 select count(*) from member;
 select count(*) from member m left outer join admin a on m.userid=a.userid;
