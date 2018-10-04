@@ -52,6 +52,9 @@
             <a class="nav-link js-scroll-trigger" href="${path}/email/write.do">이메일 발송</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="${path}/messages/write.do">메시지 전송</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="/admin/admin.do">관리자 홈</a>
           </li>
           <li class="nav-item">

@@ -62,6 +62,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             <a class="nav-link js-scroll-trigger" href="${path}/shop/product/list.do">상품목록</a>
             
           </li>
+          <c:if test="${sessionScope.admin_userid != null}">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="${path}/messages/write.do">메시지 전송</a>
+          </li>
+          </c:if>
           
           <c:if test="${sessionScope.admin_userid != null}">
           <li class="nav-item">
