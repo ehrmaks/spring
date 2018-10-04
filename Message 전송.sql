@@ -1,4 +1,4 @@
-1. »ç¿ëÀÚ Å×ÀÌºí »ı¼º
+1. ì‚¬ìš©ì í…Œì´ë¸” ìƒì„±
 create table tbl_user(
 userid varchar2(50) not null,
 userpw varchar2(50) not null,
@@ -7,7 +7,7 @@ upoint number default 0,
 primary key(userid)
 );
 
-2. ¸Ş½ÃÁö ÀúÀå Å×ÀÌºí »ı¼º
+2. ë©”ì‹œì§€ ì €ì¥ í…Œì´ë¸” ìƒì„±
 create table tbl_message (
 mid number not null,
 targetid varchar2(50) not null,
@@ -25,10 +25,10 @@ alter table tbl_message drop constraint fk_usersender;
 drop table tbl_user;
 drop table tbl_message;
 
-3. ½ÃÄö½º »ı¼º
+3. ì‹œí€€ìŠ¤ ìƒì„±
 create sequence message_seq start with 1 increment by 1;
 
-4. Á¦¾àÁ¶°Ç
+4. ì œì•½ì¡°ê±´
 alter table tbl_message add constraint fk_usersender 
 foreign key (sender) references tbl_user(userid);
 alter table tbl_message add constraint fk_usertarget
