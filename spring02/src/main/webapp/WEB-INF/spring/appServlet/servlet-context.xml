@@ -81,6 +81,9 @@
 		<interceptor>
 			<mapping path="/shop/product/write.do"/>
 			<mapping path="/shop/product/insert.do"/>
+			<mapping path="/messages/write.do"/>
+			<mapping path="/email/write.do"/>
+			<mapping path="/admin/admin.do"/>
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 	</interceptors>
