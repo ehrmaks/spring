@@ -48,8 +48,13 @@ public class MemberController {
 		if(result != null) { //로그인 성공
 //			System.out.println("home");
 //			mav.setViewName("home"); //뷰의 이름
+			//session.setMaxInactiveInterval(5*60);
+			//int timeout = session.getMaxInactiveInterval();
+			
 			session.setAttribute("userid", dto.getUserid());
 			session.setAttribute("name", result);
+			
+			//mav.addObject("timeout", timeout);
 			mav.setViewName("member/member");
 		}else { //로그인 실패
 			mav.setViewName("member/login");

@@ -102,10 +102,15 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 		<c:otherwise>
 			<!-- 로그인한 상태 -->
 			${sessionScope.name}님이 로그인중입니다.
-			<a href="/member/logout.do">로그아웃</a>
+			<a href="/member/logout.do">로그아웃</a><br>
+			<!-- 세션 timeout 되면 invalidate 처리 -->
+			<script type="text/javascript" charset="utf-8" src="${path}/include/js/timeoutchk.js"></script>
+			<span id="timer"></span>&nbsp;
+			<a href="javascript:refreshTimer();">연장</a>
 		</c:otherwise>
 	</c:choose>
 </div> 
+
 <hr>
 
     <!-- Bootstrap core JavaScript -->

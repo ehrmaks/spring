@@ -21,7 +21,7 @@
 	Jinseok's PORTFOLIO!  
 </h1>
 <br>
-<P>  The time on the server is ${serverTime}. </P>
+<P>  The time on the server is ${serverTime}. </P><br>
 
 <!-- 실제로 서비스되는 디렉토리(배포 디렉토리) -->
 <%//=application.getRealPath("/WEB-INF/views/images/") %>
