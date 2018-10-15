@@ -7,7 +7,7 @@ window.onload=function(){
 }
 
 function ClearTime() {
-	second = 60;
+	second = 60*5;
 }
 
 Lpad = function(str,len) {
