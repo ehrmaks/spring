@@ -40,7 +40,7 @@ initTimer = function(){
 
 function refreshTimer() {
 	var xhr = initAjax();
-	xhr.open("POST", "/member/login_check.do", false);
+	xhr.open("POST", "/member/login.do", false);
 	xhr.send();
 	ClearTime();
 }
