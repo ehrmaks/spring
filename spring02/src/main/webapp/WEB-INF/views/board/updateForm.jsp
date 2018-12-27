@@ -241,27 +241,20 @@ function listAttach(){
 
 </script>
 
-<style>
-.fileDrop {
-	width: 600px;
-	height: 100px;
-	border: 1px dotted gray;
-	background-color: gray;
-}
-</style>
+
 
 
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
-<h2>게시물 수정</h2>
+<h2 class="text-center">게시물 수정</h2>
 <form id="form1" name="form1" method="post"
 action="${path}/board/insert.do">
-	<div>제목  <input name="title" id="title" size="80" 
+	<div class="container" style="width:80%;">제목 : <input name="title" id="title" size="60"
 	value="${dto.title}" placeholder="제목을 입력해주세요">
 	</div>
-	<div>조회수 : ${dto.viewcnt}	</div>
-	<div style="width:800px;">
+	<div class="container" style="width:80%;">조회수 : ${dto.viewcnt}	</div>
+	<div style="width:80%;" class="container">
 		내용 
 		<textarea name="content" id="content" rows="4" 
 		cols="80" placeholder="내용을 입력해주세요">
@@ -277,34 +270,34 @@ CKEDITOR.replace("content",{
 	<br><hr><br>
 	
 	
-	<div style="width:700px; text-align:center;">
+	<div style="width:700px; text-align:center;" class="container">
 <!-- 수정,삭제에 필요한 글번호를 hidden 태그에 저장 -->	
 		<input type="hidden" name="bno" value="${dto.bno}">
 		
 		<!-- 본인만 수정,삭제 버튼 표시 -->
 		<c:if test="${sessionScope.userid == dto.writer}">
-			<button type="button" id="btnSave">확인</button>
+			<button type="button" id="btnSave" class="btn btn-default btn-primary">확인</button>
 		</c:if>
 
 		
 		
-		<button type="button" id="btnList">목록</button>
+		<button type="button" id="btnList" class="btn btn-default btn-info">목록</button>
 	</div>
 	<br>
 	<hr>
 	<br>
 </form>
 
-	<div> 첨부파일을 아래박스에 드래그 하세요 또는&nbsp;
+	<div class="container" style="text-align: center;"> 첨부파일을 아래박스에 드래그 하세요 또는&nbsp;
 		<form id="uploadForm" enctype="multipart/form-data" method="post"
 		action="/upload/uploadAjax">
-			<input type="file" name="file">
+			<input type="file" name="file" class="btn btn-default btn-info">
 		</form>
-		<button id="fileUp">업로드</button>
+		<button id="fileUp" class="btn btn-default btn-primary">업로드</button>
 		<!-- 첨부팡리 등록 영역 -->
-		<div class="fileDrop"></div>
+		<div class="container" style="width:60%; height: 100px; background-color: pink;"></div>
 		<!-- 첨부파일의 목록 출력 영역 -->
-		<div id="uploadedList"></div>
+		<div id="uploadedList" class="container"></div>
 	</div>
 	
 	<br>	<br>	<br>	<br>

@@ -21,13 +21,17 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public MemberDTO viewMember(String userid) {
-		System.out.println("Member DAO => member.viewMember 접근 시도");
-		System.out.println("userid = "+ userid);
-		return sqlSession.selectOne("memeber.viewMember", userid);
+		System.out.println("DAO의 userid = " + userid);
+		return sqlSession.selectOne("member.viewMember", userid);
 	}
 	
 	public void insert(MemberDTO dto) {
 		sqlSession.insert("member.insert", dto);
+	}
+
+	@Override
+	public void update(MemberDTO dto) {
+		sqlSession.update("member.update", dto);
 	}
 
 }

@@ -43,9 +43,10 @@ public class AdminController {
 			//관리자용 세션변수
 			session.setAttribute("admin_userid", dto.getUserid());
 			session.setAttribute("admin_name", name);
-			//일반 사용자용 세션변수
+			/*//일반 사용자용 세션변수
 			session.setAttribute("userid", dto2.getUserid());
 			session.setAttribute("name", name2);
+			System.out.println("userid" + dto2.getUserid());*/
 			mav.setViewName("admin/admin"); //admin.jsp로 이동
 		}else{ //로그인 실패
 			mav.setViewName("admin/login"); //login.jsp로 이동

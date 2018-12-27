@@ -9,4 +9,5 @@ public interface MemberService {
 	public void logout(HttpSession session);
 	public MemberDTO viewMember(String userid);
 	public void insert(MemberDTO dto);
+	public void update(MemberDTO dto);
 }

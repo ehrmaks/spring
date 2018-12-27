@@ -72,7 +72,7 @@ $(function() {
     	return;
     }
     
-
+	alert("가입 성공 하셨습니다!");
     document.form1.action="${path}/member/join_check.do";
     document.form1.submit();
 	});
@@ -133,17 +133,47 @@ function daumZipCode() {
 <%@ include file="../include/menu.jsp" %>
 
 <form name="form1" method="post">
-	아이디 : <input id="userid" name="userid" size="10"><br>
-	비밀번호 : <input type="password" name="passwd" id="passwd"><br>
-	비밀번호 확인 : <input type="password" name="passwd_check" id="passwd_check"><br>
-	이름 : <input type="text" name="name" size="10" id="name"><br>
-	우편번호 : <input name="zipcode" id="zipcode" readonly size="10">
-	<input type="button" onclick="daumZipCode()" value="우편번호 찾기"><br>
-	주소 : <input name="address1" id="address1" size="60"><br>
-	상세주소 : <input name="address2" id="address2"><br>
-	이메일 : <input type="text" name="email" id="email" size="30"><br>
-	<input type="button" id="btnjoin" value="가입신청">&nbsp;&nbsp;
-	<input type="button" id="btnback" value="취소">
+<table class="table table-hover">
+			<tr>
+				<td>아이디</td>
+				<td><input name="userid" id="userid" size="10"></td>
+			</tr>
+			<tr>
+				<td>이름</td>
+				<td><input name="name" id="name" size="10"></td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td><input type="password" name="passwd" id="passwd"></td>
+			</tr>
+			<tr>
+				<td>비밀번호 확인</td>
+				<td><input type="password" name="passwd_check" id="passwd_check"></td>
+			</tr>
+			<tr>
+				<td>이메일주소</td>
+				<td><input type="text" name="email" id="email" size="30"></td>
+			</tr>
+			<tr>
+				<td>우편번호</td>
+				<td><input name="zipcode" id="zipcode" readonly="readonly" size="10">
+				<input type="button" onclick="daumZipCode()" value="우편번호 찾기" class="btn btn-default btn-info"></td>
+			</tr>
+			<tr>
+				<td>주소</td>
+				<td><input name="address1" id="address1" size="60"></td>
+			</tr>
+			<tr>
+				<td>상세주소</td>
+				<td><input name="address2" id="address2" size="60"></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="button" value="가입신청" id="btnjoin" class="btn btn-default btn-primary">
+					<input type="button" value="취소" id="btnback" class="btn btn-default btn-danger">
+				</td>
+			</tr>
+		</table>
 </form>
 </body>
 </html>

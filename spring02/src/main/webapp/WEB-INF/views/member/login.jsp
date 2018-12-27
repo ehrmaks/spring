@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
 <%@ include file="../include/header.jsp" %>
 <script>
 $(function(){
@@ -32,34 +33,32 @@ $(function(){
 		document.form1.submit();
 	});
 });
-</script>
-<script>
+
 $(function() {
 	$("#btnJoin").click(function() {
 		document.form1.action="${path}/member/join.do";
 		document.form1.submit();
 	});
 });
+
 </script>
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
-<h2>로그인</h2>
+<!-- <br><br><br><br><br><br><br><br><br> -->
+<h2 class="text-center">Please sign in</h2><br>
 <form name="form1" method="post">
-<table border="1" width="400px">
+<table class="container-fluid" style="width: 350px;">
 	<tr>
-		<td>아이디</td>
-		<td><input name="userid" id="userid"></td>
+		<!-- <td>아이디</td> -->
+		<td><input name="userid" id="userid" class="form-control" placeholder="User ID"><br></td>
 	</tr>
 	<tr>
-		<td>비밀번호</td>
-		<td><input type="password" name="passwd" id="passwd"></td>
+		<!-- <td>비밀번호</td> -->
+		<td><input type="password" name="passwd" id="passwd" class="form-control" placeholder="Password"><br></td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center">
-			<input type="button" id="btnLogin" value="로그인">&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="button" id="btnJoin" value="회원가입"> 
-
+		<td align="center">
 			<c:if test="${param.message == 'nologin' }">
 				<div style="color:red;">
 					로그인 하신 후 사용하세요.
@@ -75,15 +74,11 @@ $(function() {
 					로그아웃 처리되었습니다.
 				</div>
 			</c:if>
-			
-			<c:if test="${param.message == 'no'}">
-				<div style="color: red;">
-					관리자 아이디는 로그인 불가
-				</div>
-			</c:if>
-			
-		</td>
+			<br>
 		
+			<input type="button" id="btnLogin" value="로그인" class="btn btn-default btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="button" id="btnJoin" value="회원가입" class="btn btn-default btn-primary"> 
+		</td>
 	</tr>
 </table>
 </form>

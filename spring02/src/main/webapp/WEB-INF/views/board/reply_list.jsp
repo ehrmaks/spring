@@ -10,7 +10,7 @@
 </head>
 <body>
 <% pageContext.setAttribute("newLineChar", "\n"); %>
-<table style="width:900px">
+<table style="width:80%; margin: auto; text-align: left;" class="table table-hover">
 <c:forEach var="row" items="${list}">   
 <%--  	<c:set var="str"
 value="${fn:replace(row.replytext,'<','&lt;') }" />
@@ -29,8 +29,8 @@ value="${fn:replace(str,newLineChar,'<br>') }" /> --%>
 			<br>
 			<!-- 본인 댓글만 수정버튼 생성되도록 처리 -->
 			<c:if test="${sessionScope.userid == row.replyer || sessionScope.userid == 'admin' || sessionScope.userid == row.writer}">
-				<input type="button" id="btnModify" value="수정" onclick="showReplyModify('${row.rno}')">
-				<input type="button" id="detail" value="상세보기" onclick="showReplyModify('${row.rno}')" >	
+				<input type="button" id="btnModify" value="수정" onclick="showReplyModify('${row.rno}')" class="btn btn-default btn-warning">
+				<input type="button" id="detail" value="상세보기" onclick="showReplyModify('${row.rno}')" class="btn btn-default btn-info">	
 			</c:if>
 			
 			
@@ -42,7 +42,7 @@ value="${fn:replace(str,newLineChar,'<br>') }" /> --%>
 </c:forEach>	
 
 <!-- 댓글페이징 -->
-<tr style="text-align:center;">
+<tr style="text-align:center;" align="center">
 	<td>
 		<!-- 현재페이지 블럭이 1보다 크면 처음페이지로 이동-->
 		<c:if test="${replyPager.curBlock>1}">
@@ -79,8 +79,9 @@ value="${fn:replace(str,newLineChar,'<br>') }" /> --%>
 </tr>
 
 </table>
+
 <!-- 댓글 수정 영역 -->
-<div id="modifyReply"></div>
+<div id="modifyReply" class="container" align="center"></div>
 
 </body>
 </html>

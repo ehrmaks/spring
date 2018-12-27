@@ -60,7 +60,8 @@ $("#btnReplyUpdate").click(function(){
 <body>
 <%@ include file="../include/menu2.jsp" %>
 댓글 번호 : ${dto.rno}<br>
-<textarea id="detailReplytext" rows="3" cols="80">
+<div align="center">
+<textarea id="detailReplytext" rows="3" cols="50">
 	<c:if test="${dto.secret_reply == 'y'}">
 		<c:if test="${!sessionScope.userid==dto.writer && !sessionScope.userid==dto.replyer}"> 
 			비밀 댓글입니다.
@@ -71,13 +72,14 @@ $("#btnReplyUpdate").click(function(){
 	</c:if>
 	<c:if test="${dto.secret_reply == 'n'}">${dto.replytext}</c:if>
 </textarea>
-<div style="text-align: center;">
+</div>
+<div style="text-align: center;" align="center">
 	<!-- 본인 댓글/관리자만 수정, 삭제가 가능하도록 처리 -->
 	<c:if test="${sessionScope.userid == dto.replyer || sessionScope.userid == 'admin'}">
-		<button type="button" id="btnReplyUpdate">수정</button>
-		<button type="button" id="btnReplyDelete">삭제</button>
+		<button type="button" id="btnReplyUpdate" class="btn btn-default btn-warning">수정</button>
+		<button type="button" id="btnReplyDelete" class="btn btn-default btn-danger">삭제</button>
 	</c:if>
-	<button type="button" id="btnReplyClose">닫기</button>
+	<button type="button" id="btnReplyClose" class="btn btn-default btn-primary">닫기</button>
 </div>
 
 </body>

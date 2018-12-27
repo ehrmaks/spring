@@ -1,14 +1,26 @@
 package com.example.spring02.controller.member;
 
+import java.util.List;
+
 import javax.inject.Inject;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.spring02.model.member.dao.MemberDAO;
 import com.example.spring02.model.member.dto.MemberDTO;
 import com.example.spring02.service.member.MemberService;
 
@@ -21,6 +33,8 @@ public class MemberController {
 			LoggerFactory.getLogger(MemberController.class);
 	@Inject
 	MemberService memberService;
+	@Inject
+	MemberDAO memberDao;
 	
 	@RequestMapping("join.do")
 	public String address() {
@@ -42,14 +56,8 @@ public class MemberController {
 	public ModelAndView login_check(
 			MemberDTO dto, HttpSession session, ModelAndView mav) {
 		//로그인 성공 true, 실패 false
-		System.out.println("컨트롤러에서 login체크중.");
 		String result = memberService.loginCheck(dto);
-//		ModelAndView mav = new ModelAndView();
 		if(result != null) { //로그인 성공
-//			System.out.println("home");
-//			mav.setViewName("home"); //뷰의 이름
-			//session.setMaxInactiveInterval(5*60);
-			//int timeout = session.getMaxInactiveInterval();
 			
 			session.setAttribute("userid", dto.getUserid());
 			session.setAttribute("name", result);
@@ -73,6 +81,26 @@ public class MemberController {
 		mav.setViewName("member/login");
 		mav.addObject("message","logout");
 		return mav;
+	}
+	
+	@RequestMapping("{userid}/form")
+	public ModelAndView updateForm(@PathVariable String userid, ModelAndView mav) {
+		if(userid == null) {
+			throw new IllegalArgumentException("사용자 아이디는 null 입니다.");
+		}
+		MemberDTO dto = memberDao.viewMember(userid);
+		mav.addObject("dto", dto);
+		mav.setViewName("member/view");
+		
+		return mav;
+	}
+	
+	@RequestMapping("member.do")
+	public String view(@ModelAttribute MemberDTO dto) {
+		System.out.println("member.do 진입");
+		memberService.update(dto);
+		
+		return "redirect:/member/member.do";
 	}
 	
 }

@@ -190,26 +190,19 @@ $(document).ready(function(){
 
 </script>
 
-<style>
-.fileDrop {
-	width: 600px;
-	height: 100px;
-	border: 1px dotted gray;
-	background-color: gray;
-}
-</style>
+
 
 
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
-<h2>글쓰기</h2>
+<h2 class="text-center">글쓰기</h2>
 <form id="form1" name="form1" method="post"
 action="/board/insert.do" enctype="multipart/form-data">
-	<div>제목 <input name="title" id="title" size="80"
+	<div class="container" style="width:80%;">제목 : <input name="title" id="title" size="60"
 					placeholder="제목을 입력하세요">
 	</div>
-	<div style="width:800px;">
+	<div style="width:80%;" class="container">
 		내용  <textarea id="content" name="content"
 rows="3" cols="80" placeholder="내용을 입력하세요"></textarea>
 <script>
@@ -223,19 +216,19 @@ CKEDITOR.replace("content",{
 		<div class="fileDrop"></div>
 		<div id="uploadedList"></div>
 	</div> -->
-	<div style="width:700px; text-align:center;">
-		<button type="button" id="btnSave">확인</button>
+	<div style="width:700px; text-align:center;" class="container">
+		<button type="button" id="btnSave"  class="btn btn-default btn-primary">확인</button>
 	</div>
 </form>
 <br><hr><br>
-	<div> 첨부파일을 아래박스에 드래그 하세요 또는&nbsp;
+	<div class="container" style="text-align: center;"> 첨부파일을 아래박스에 드래그 하세요 또는&nbsp;
 		<form id="uploadForm" enctype="multipart/form-data" method="post"
 		action="/upload/uploadAjax">
-			<input type="file" name="file">
+			<input type="file" name="file" class="btn btn-default btn-info">
 		</form>
-		<button id="fileUp">업로드</button>
-		<div class="fileDrop"></div>
-		<div id="uploadedList"></div>
+		<button id="fileUp" class="btn btn-default btn-primary">업로드</button>
+		<div class="container" style="width:60%; height: 100px; background-color: pink;"></div>
+		<div id="uploadedList" class="container"></div>
 	</div>
 	<br>	<br>	<br>	<br>
 

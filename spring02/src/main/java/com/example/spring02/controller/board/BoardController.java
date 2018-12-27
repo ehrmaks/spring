@@ -50,13 +50,8 @@ public class BoardController {
 				String keyValue = (String) iterator.next().toString();
 				
 				list.add(String.valueOf(listA.get(i).get(keyValue)));
-				
-
 			}
 		}
-		
-
-		
 		return list;
 	}
 	

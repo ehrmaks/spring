@@ -42,13 +42,18 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDTO viewMember(String userid) {
-		System.out.println("viewMember => 서비스 접근");
+		System.out.println("서비스의 userid = " + userid);
 		return memberDao.viewMember(userid);
 	}
 
 	@Override
 	public void insert(MemberDTO dto) {
 		memberDao.insert(dto);
+	}
+
+	@Override
+	public void update(MemberDTO dto) {
+		memberDao.update(dto);
 	}
 
 }

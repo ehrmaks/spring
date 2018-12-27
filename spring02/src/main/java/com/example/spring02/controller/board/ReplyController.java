@@ -119,7 +119,6 @@ public class ReplyController {
     // @RequestBody : json을 객체로
     @RequestMapping(value="insertRest.do", method=RequestMethod.POST)
     public ResponseEntity<String> insertRest(@RequestBody ReplyDTO dto, HttpSession session){
-    	System.out.println("댓글 입력 컨트롤러 진입");
         ResponseEntity<String> entity = null;
         try {
             // 세션에 저장된 회원아이디를 댓글작성자에 세팅
@@ -151,12 +150,10 @@ public class ReplyController {
 			dto.setRno(rno);
 			replyService.update(dto);
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
-			System.out.println("댓글 수정 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
 			// 댓글 수정이 실패하면 실패 상태메시지 저장
 			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-			System.out.println("댓글 수정 실패");
 		}
 		// 수정 처리 HTTP 상태 메시지 리턴
 		return entity;
