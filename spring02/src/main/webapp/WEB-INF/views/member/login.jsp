@@ -59,6 +59,7 @@ $(function() {
 	</tr>
 	<tr>
 		<td align="center">
+		
 			<c:if test="${param.message == 'nologin' }">
 				<div style="color:red;">
 					로그인 하신 후 사용하세요.

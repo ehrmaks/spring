@@ -23,24 +23,11 @@
 <br>
 <%-- <P class="text-center">  The time on the server is ${serverTime}. </P><br> --%>
 
-<div align="center" class="container">
-
-	<div style="border:1px solid #dedede; width:80%; height:150px; line-height:150px; color:#666;font-size:50px; text-align:center;" id="clock">
+<div align="center" class="container-fluid">
+	<div style="border:1px solid #dedede; width:80%; height:150px; line-height:150px; color:#666;font-size:40px; text-align:center;" id="clock">
 	</div>
-
 </div>
 
-<head>
-	<!-- Global site tag (gtag.js) - AdWords: 800742375 -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=AW-800742375"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date()); gtag('config', 'AW-800742375');
-	</script>
-</head>
 
 
 <!-- 실제로 서비스되는 디렉토리(배포 디렉토리) -->

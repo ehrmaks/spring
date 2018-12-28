@@ -10,4 +10,6 @@ public interface MemberService {
 	public MemberDTO viewMember(String userid);
 	public void insert(MemberDTO dto);
 	public void update(MemberDTO dto);
+	public void delete(MemberDTO dto);
+	public int idCheck(String userid);
 }

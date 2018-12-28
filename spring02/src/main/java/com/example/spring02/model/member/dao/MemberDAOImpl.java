@@ -34,4 +34,15 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.update("member.update", dto);
 	}
 
+	@Override
+	public void delete(MemberDTO dto) {
+		sqlSession.delete("member.delete", dto);
+	}
+
+	@Override
+	public int idCheck(String userid) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("member.idcheck", userid);
+	}
+
 }

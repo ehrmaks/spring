@@ -1,17 +1,16 @@
 package com.example.spring02.controller.member;
 
-import java.util.List;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +26,7 @@ import com.example.spring02.service.member.MemberService;
 @Controller //컨트롤러 빈으로 등록
 @RequestMapping("member/*") //공통적인 url 매핑
 public class MemberController {
- 
+
 	//로깅을 위한 변수
 	private static final Logger logger=
 			LoggerFactory.getLogger(MemberController.class);
@@ -35,6 +34,8 @@ public class MemberController {
 	MemberService memberService;
 	@Inject
 	MemberDAO memberDao;
+	@Inject
+	BCryptPasswordEncoder passwordEncoder;
 	
 	@RequestMapping("join.do")
 	public String address() {
@@ -43,6 +44,8 @@ public class MemberController {
 	
 	@RequestMapping("join_check.do")
 	public String join_check(MemberDTO dto) {
+		String passwd = passwordEncoder.encode(dto.getPasswd());
+		dto.setPasswd(passwd);
 		memberService.insert(dto);
 		return "member/login";
 	}
@@ -97,10 +100,39 @@ public class MemberController {
 	
 	@RequestMapping("member.do")
 	public String view(@ModelAttribute MemberDTO dto) {
-		System.out.println("member.do 진입");
 		memberService.update(dto);
 		
-		return "redirect:/member/member.do";
+		return "member/member";
+	}
+	
+	@RequestMapping("delete.do")
+	public ModelAndView delete(String userid, ModelAndView mav) {
+		MemberDTO dto = memberDao.viewMember(userid);
+		mav.addObject("dto", dto);
+		mav.setViewName("member/delete");
+		return mav;
+	}
+	
+	@RequestMapping("secession.do")
+	public String secession(@ModelAttribute MemberDTO dto, HttpSession session) {
+		
+		memberService.delete(dto);
+		memberService.logout(session);
+		return "member/login";
+	}
+	
+	@RequestMapping(value="/idcheck", method=RequestMethod.POST,
+			produces = "application/json")
+	@ResponseBody
+	public Map<Object, Object> idCheck(@RequestBody String userid) {
+		int count = 0;
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		
+		count = memberService.idCheck(userid);
+		System.out.println("count : " + count);
+		map.put("cnt", count);
+		
+		return map;
 	}
 	
 }

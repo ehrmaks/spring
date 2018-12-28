@@ -11,6 +11,7 @@ public class MemberDTO {
 	private String address1;
 	private String address2;
 	private Date updatesys;
+	private String zipcode;
 	// getter,setter, toString(), �⺻������
 	
 	
@@ -117,17 +118,23 @@ public class MemberDTO {
 
 
 
-	@Override
-	public String toString() {
-		return "MemberDTO [userid=" + userid + ", passwd=" + passwd + ", name=" + name + ", email=" + email
-				+ ", join_date=" + join_date + ", address1=" + address1 + ", address2=" + address2 + ", updatesys="
-				+ updatesys + "]";
+	public String getZipcode() {
+		return zipcode;
 	}
 
 
 
-	
-	
-	
-	
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "MemberDTO [userid=" + userid + ", passwd=" + passwd + ", name=" + name + ", email=" + email
+				+ ", join_date=" + join_date + ", address1=" + address1 + ", address2=" + address2 + ", updatesys="
+				+ updatesys + ", zipcode=" + zipcode + "]";
+	}
+
 }

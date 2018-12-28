@@ -10,6 +10,61 @@
 
 <script>
 $(function() {
+	var idck = 0;
+	$("#userid").keyup(function() {
+		var userid = $("#userid").val();
+		
+		if(userid == "") {
+			$("#div2").html("아이디를 입력하세요.").css("color","red");
+		} else {
+			$.ajax({
+				async: true, // 비동기 통신 default는 true이다
+				type: "post",
+				data: userid,
+				url: "/member/idcheck",
+				dataType: "json",
+				contentType: "application/json; charset=UTF-8",
+				success: function(data) {
+					if(data.cnt > 0) {
+						$("#div2").html("아이디가 존재합니다. 다른 아이디를 입력해주세요.").css("color","red");
+					} else {
+						$("#div2").html("사용가능한 아이디입니다.").css("color","blue");		
+						idck = 1;
+					}
+				}, error: function(error) {
+					console.log(error);
+					alert("error : " + error);
+				}
+			});
+		}
+	});
+	
+	
+	
+	
+	$("#passwd").keyup(function() {
+		var passwd = $("#passwd").val();
+		var passwd_check = $("#passwd_check").val();
+		
+		if(passwd != passwd_check) {
+			$("#div1").html("비밀번호가 일치하지 않습니다.").css("color","red");
+		} else {
+			$("#div1").html("일치 합니다.").css("color","blue");
+		}
+	});
+	
+	
+	$("#passwd_check").keyup(function() {
+		var passwd = $("#passwd").val();
+		var passwd_check = $("#passwd_check").val();
+		
+		if(passwd != passwd_check) {
+			$("#div1").html("비밀번호가 일치하지 않습니다.").css("color","red");
+		} else {
+			$("#div1").html("일치 합니다.").css("color","blue");
+		}
+	});
+	
 	$("#btnjoin").click(function() {
 	var idtext = document.form1.userid;
 	var pwtext = document.form1.passwd;
@@ -136,11 +191,15 @@ function daumZipCode() {
 <table class="table table-hover">
 			<tr>
 				<td>아이디</td>
-				<td><input name="userid" id="userid" size="10"></td>
+				<td><input name="userid" id="userid" size="10">
+					<div id="div2" style="color: red; font-style: inherit;"></div>
+				</td>
 			</tr>
 			<tr>
 				<td>이름</td>
-				<td><input name="name" id="name" size="10"></td>
+				<td><input name="name" id="name" size="10">
+					
+				</td>
 			</tr>
 			<tr>
 				<td>비밀번호</td>
@@ -148,7 +207,9 @@ function daumZipCode() {
 			</tr>
 			<tr>
 				<td>비밀번호 확인</td>
-				<td><input type="password" name="passwd_check" id="passwd_check"></td>
+				<td><input type="password" name="passwd_check" id="passwd_check">
+					<div id="div1" style="color: red; font-style: inherit;"></div>
+				</td>
 			</tr>
 			<tr>
 				<td>이메일주소</td>

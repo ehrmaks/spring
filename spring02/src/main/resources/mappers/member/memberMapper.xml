@@ -13,27 +13,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="viewMember"
 	resultType="com.example.spring02.model.member.dto.MemberDTO">
-		select userid, name, email, join_date, address1, address2
+		select userid, passwd, name, email, join_date, address1, address2, zipcode
 		 from member where userid=#{userid}
 	</select>
 	
 	<insert id="insert" parameterType="com.example.spring02.model.member.dto.MemberDTO">
-		insert into member(userid,passwd,name,email,address1,address2) 
-		values(#{userid}, #{passwd}, #{name}, #{email}, #{address1}, #{address2})
+		insert into member(userid,passwd,name,email,address1,address2,zipcode) 
+		values(#{userid}, #{passwd}, #{name}, #{email}, #{address1}, #{address2}, #{zipcode})
 	</insert>
 	
 	<update id="update">
 		update member 
 		set
-			passwd = #{passwd},
-			name = #{name},
-			email = #{email},
-			address1 = #{address1},
-			address2 = #{address2},
-			updatesys = SYSDATE
+			userid = #{userid,jdbcType=VARCHAR},
+			passwd = #{passwd,jdbcType=VARCHAR},
+			name = #{name,jdbcType=VARCHAR},
+			email = #{email,jdbcType=VARCHAR},
+			address1 = #{address1,jdbcType=VARCHAR},
+			address2 = #{address2,jdbcType=VARCHAR},
+			updatesys = SYSDATE,
+			zipcode = #{zipcode,jdbcType=VARCHAR}
 		where
-			userid = #{userid}
+			userid = #{userid,jdbcType=VARCHAR}
 	</update>
+	
+	<delete id="delete">
+		delete from	member
+		where userid = #{userid} and passwd = #{passwd}
+	</delete>
+	
+	<select id="idcheck" parameterType="String" resultType="Integer">
+		select count(*) 
+		from member
+		where userid = #{userid}
+	</select>
 	
 </mapper>
 

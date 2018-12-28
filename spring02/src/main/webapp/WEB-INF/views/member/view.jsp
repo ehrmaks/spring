@@ -11,6 +11,30 @@
 
 <script>
 $(function() {
+	
+	$("#passwd").keyup(function() {
+		var passwd = $("#passwd").val();
+		var passwd_check = $("#passwd_check").val();
+		
+		if(passwd != passwd_check) {
+			$("#div1").html("비밀번호가 일치하지 않습니다.").css("color","red");
+		} else {
+			$("#div1").html("일치 합니다.").css("color","blue");
+		}
+	});
+	
+	
+	$("#passwd_check").keyup(function() {
+		var passwd = $("#passwd").val();
+		var passwd_check = $("#passwd_check").val();
+		
+		if(passwd != passwd_check) {
+			$("#div1").html("비밀번호가 일치하지 않습니다.").css("color","red");
+		} else {
+			$("#div1").html("일치 합니다.").css("color","blue");
+		}
+	});
+	
 	$("#btnUpdate").click(function() {
 		var passwd = $("#passwd").val();
 		var passwd_check = $("#passwd_check").val();
@@ -30,6 +54,13 @@ $(function() {
 		document.form1.action = "${path}/member/member.do";
 		document.form1.submit();
 		
+	});
+	
+	$("#btnDelete").click(function() {
+		var userid = $("#userid").val();
+		
+		document.form1.action = "${path}/member/delete.do";
+		document.form1.submit();
 	});
 });
 
@@ -79,39 +110,42 @@ function daumZipCode() {
 <%@ include file="../include/menu.jsp" %>
 
 	<form name="form1" method="post">
-		<table class="table table-hover">
+		<table class="table table-striped table-bordered table-hover" width="600px">
 			<tr>
 				<td>아이디</td>
-				<td><input name="userid" value="${dto.userid}" readonly="readonly"></td>
+				<td><input id="userid" name="userid" value="${dto.userid}" readonly="readonly"></td>
 			</tr>
 			<tr>
 				<td>이름</td>
-				<td><input name="name" value="${dto.name}"></td>
+				<td><input id="name" name="name" value="${dto.name}"></td>
 			</tr>
 			<tr>
 				<td>비밀번호</td>
 				<td><input type="password" name="passwd" id="passwd"></td>
+				
 			</tr>
 			<tr>
 				<td>비밀번호 확인</td>
-				<td><input type="password" name="passwd_check" id="passwd_check"></td>
+				<td><input type="password" name="passwd_check" id="passwd_check">
+					<div id="div1" style="color: red; font-style: inherit;"></div>
+				</td>
 			</tr>
 			<tr>
 				<td>이메일주소</td>
-				<td><input name="email" value="${dto.email}"></td>
+				<td><input id="email" name="email" value="${dto.email}"></td>
 			</tr>
 			<tr>
 				<td>우편번호</td>
-				<td><input name="zipcode" id="zipcode" readonly="readonly" size="10">
+				<td><input name="zipcode" id="zipcode" value="${dto.zipcode}" readonly="readonly" size="10">
 				<input type="button" onclick="daumZipCode()" value="우편번호 찾기" class="btn btn-default btn-info"></td>
 			</tr>
 			<tr>
 				<td>주소</td>
-				<td><input name="address1" id="address1" size="60" value="${dto.address1}"></td>
+				<td><input name="address1" id="address1" size="30" value="${dto.address1}"></td>
 			</tr>
 			<tr>
 				<td>상세주소</td>
-				<td><input name="address2" id="address2" size="60" value="${dto.address2}"></td>
+				<td><input name="address2" id="address2" size="10" value="${dto.address2}"></td>
 			</tr>
 			<tr>
 				<td>회원가입날짜</td>
@@ -120,7 +154,7 @@ function daumZipCode() {
 			<tr>
 				<td colspan="2" align="center">
 					<input type="button" value="수정" id="btnUpdate" class="btn btn-default btn-primary">
-					<input type="button" value="삭제" id="btnDelete" class="btn btn-default btn-danger">
+					<input type="button" value="회원탈퇴" id="btnDelete" class="btn btn-default btn-danger">
 				</td>
 			</tr>
 		</table>

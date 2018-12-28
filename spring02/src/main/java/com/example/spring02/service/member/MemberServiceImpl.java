@@ -56,4 +56,15 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.update(dto);
 	}
 
+	@Override
+	public void delete(MemberDTO dto) {
+		memberDao.delete(dto);
+	}
+
+	@Override
+	public int idCheck(String userid) {
+		// TODO Auto-generated method stub
+		return memberDao.idCheck(userid);
+	}
+
 }

@@ -4,10 +4,11 @@ var timechecker=null;
 window.onload=function(){
 	ClearTime();
 	initTimer();
+	printClock();
 }
 
 function ClearTime() {
-	second = 60*5;
+	second = 60*30;
 }
 
 Lpad = function(str,len) {
