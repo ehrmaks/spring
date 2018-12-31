@@ -11,11 +11,12 @@
 <body onload="printClock()">
 <%@ include file="include/menu.jsp" %>
 
-<c:if test="${sessionScope.userid != null }">
+<c:if test="${sessionScope.userid != null}">
 	<h2 class="text-center">
 		${sessionScope.name}(${sessionScope.userid})님의 방문을 환영합니다.
 	</h2>
 </c:if>
+
 <br>
 <h1 class="text-center">
 	Jinseok's PORTFOLIO!  

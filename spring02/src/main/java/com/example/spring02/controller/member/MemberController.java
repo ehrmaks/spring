@@ -1,10 +1,12 @@
 package com.example.spring02.controller.member;
 
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -35,16 +37,18 @@ public class MemberController {
 	@Inject
 	MemberDAO memberDao;
 	@Inject
-	BCryptPasswordEncoder passwordEncoder;
-	
+	BCryptPasswordEncoder bcryptPasswordEncoder;
+
+
 	@RequestMapping("join.do")
 	public String address() {
 		return "member/join";
 	}
 	
+	
 	@RequestMapping("join_check.do")
 	public String join_check(MemberDTO dto) {
-		String passwd = passwordEncoder.encode(dto.getPasswd());
+		String passwd = bcryptPasswordEncoder.encode(dto.getPasswd());
 		dto.setPasswd(passwd);
 		memberService.insert(dto);
 		return "member/login";
@@ -56,22 +60,29 @@ public class MemberController {
 	}
 	
 	@RequestMapping("login_check.do")
-	public ModelAndView login_check(
-			MemberDTO dto, HttpSession session, ModelAndView mav) {
-		//로그인 성공 true, 실패 false
-		String result = memberService.loginCheck(dto);
-		if(result != null) { //로그인 성공
-			
-			session.setAttribute("userid", dto.getUserid());
-			session.setAttribute("name", result);
-			
-			//mav.addObject("timeout", timeout);
-			mav.setViewName("member/member");
-		}else { //로그인 실패
+	public ModelAndView login_check(MemberDTO dto, HttpSession session, ModelAndView mav) {
+
+		String pw = dto.getPasswd();
+		logger.info("암호화 되지 않은 암호 : " + pw);
+		String pw2 = memberDao.pwCheck(dto.getUserid());
+		logger.info("암호화 된 암호 : " + pw2);
+		
+		
+		if(bcryptPasswordEncoder.matches(pw, pw2)) {
+			logger.info("비밀번호 일치");
+			dto.setPasswd(pw2);
+			Boolean result = memberService.loginCheck(dto, session);
+			if(result) { //로그인 성공
+//				mav.setViewName("member/member");
+				mav.setViewName("home");
+			}
+		} else {
+			logger.info("비밀번호 불일치");
 			mav.setViewName("member/login");
 			//뷰에 전달할 값
 			mav.addObject("message", "error");
 		}
+		
 		return mav;
 	}
 	
@@ -100,6 +111,8 @@ public class MemberController {
 	
 	@RequestMapping("member.do")
 	public String view(@ModelAttribute MemberDTO dto) {
+		String passwd = bcryptPasswordEncoder.encode(dto.getPasswd());
+		dto.setPasswd(passwd);
 		memberService.update(dto);
 		
 		return "member/member";
@@ -113,12 +126,35 @@ public class MemberController {
 		return mav;
 	}
 	
-	@RequestMapping("secession.do")
-	public String secession(@ModelAttribute MemberDTO dto, HttpSession session) {
+	@RequestMapping(value="/secession.do")
+	public ModelAndView secession(@ModelAttribute MemberDTO dto, HttpSession session
+			, HttpServletResponse response, ModelAndView mav) throws Exception {
+		String pw = dto.getPasswd_check();
+		logger.info("암호화 되지않은 암호 : " + pw);
+		String userid = (String) session.getAttribute("userid");
+		String pw2 = memberDao.pwCheck(userid);
+		logger.info("암호화 된 암호 : " + pw2);
 		
-		memberService.delete(dto);
-		memberService.logout(session);
-		return "member/login";
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		
+		if (bcryptPasswordEncoder.matches(pw, pw2)) {
+			logger.info("암호화 된 pw2 : " + pw2 + "인증성공!");
+			memberService.delete(dto);
+			memberService.logout(session);
+			mav.setViewName("member/login");
+			mav.addObject("message", "secession");
+			return mav;
+		} else {
+			logger.info("인증 실패!ㅠㅠ");
+			out.println("<script>alert('비밀번호가 맞지 않습니다.');</script>");
+			out.flush();
+			MemberDTO dto2 = memberDao.viewMember(userid);
+			mav.addObject("dto", dto2);
+			mav.setViewName("member/view");
+			return mav;
+		}
 	}
 	
 	@RequestMapping(value="/idcheck", method=RequestMethod.POST,
@@ -129,7 +165,6 @@ public class MemberController {
 		Map<Object, Object> map = new HashMap<Object, Object>();
 		
 		count = memberService.idCheck(userid);
-		System.out.println("count : " + count);
 		map.put("cnt", count);
 		
 		return map;

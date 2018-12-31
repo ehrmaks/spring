@@ -276,14 +276,16 @@
     <version>1.0.2</version>
 </dependency>
 
-	<!-- 스프링 시큐리티 web 라이브러리 -->
-	<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		
+<!-- 스프링 시큐리티 -->
+
+<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 <dependency>
     <groupId>org.springframework.security</groupId>
     <artifactId>spring-security-core</artifactId>
     <version>5.0.1.RELEASE</version>
 </dependency>
-	<!-- 스프링 시큐리티 core 라이브러리 -->
+
 <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
 <dependency>
     <groupId>org.springframework.security</groupId>
@@ -291,7 +293,6 @@
     <version>5.0.1.RELEASE</version>
 </dependency>
 
-	<!-- 스프링 시큐리티 config 라이브러리 -->
 <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
 <dependency>
     <groupId>org.springframework.security</groupId>
@@ -299,7 +300,6 @@
     <version>5.0.1.RELEASE</version>
 </dependency>
 
-	
 
 
 		      

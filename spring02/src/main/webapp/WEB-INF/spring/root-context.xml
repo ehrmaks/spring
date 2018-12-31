@@ -70,22 +70,11 @@
 			</props>
 		</property>
 	</bean>
-	
+
 	<!-- 파일 업로드 경로 설정 -->
 <bean id="uploadPath" class="java.lang.String">
 	<constructor-arg value="C:\upload"></constructor-arg>
 </bean>
 
-	
+
 </beans>
-
-
-
-
-
-
-
-
-
-
-

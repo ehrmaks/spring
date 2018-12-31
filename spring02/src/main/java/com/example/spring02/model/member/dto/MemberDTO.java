@@ -12,6 +12,7 @@ public class MemberDTO {
 	private String address2;
 	private Date updatesys;
 	private String zipcode;
+	private String passwd_check;
 	// getter,setter, toString(), �⺻������
 	
 	
@@ -130,11 +131,26 @@ public class MemberDTO {
 
 
 
+	public String getPasswd_check() {
+		return passwd_check;
+	}
+
+
+
+	public void setPasswd_check(String passwd_check) {
+		this.passwd_check = passwd_check;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "MemberDTO [userid=" + userid + ", passwd=" + passwd + ", name=" + name + ", email=" + email
 				+ ", join_date=" + join_date + ", address1=" + address1 + ", address2=" + address2 + ", updatesys="
-				+ updatesys + ", zipcode=" + zipcode + "]";
+				+ updatesys + ", zipcode=" + zipcode + ", passwd_check=" + passwd_check + "]";
 	}
+
+
+	
 
 }

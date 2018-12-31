@@ -53,7 +53,7 @@ resultType="com.example.spring02.model.board.dto.BoardDTO">
 			SELECT rownum, bno, title, user_name, regdate, viewcnt,
 			(select count(*) from reply 
 			where bno=b.bno) cnt
-        	FROM board b, member m
+        	FROM board b, member m, admin a
 			<include refid="search" />
 			order by bno desc,regdate desc  
 		<include refid="pagingFooter" />
@@ -72,22 +72,22 @@ resultType="com.example.spring02.model.board.dto.BoardDTO">
 <!-- 레코드 갯수 계산 -->	
 	<select id="countArticle" resultType="int">
 		select count(*)
-		from board b, member m
+		from board b, member m, admin a
 		<include refid="search" />
 	</select>
 	
 	<sql id="search">
 		<choose>
-			<when test="search_option == 'all' ">
-				where b.writer=m.userid
-				and (b.user_name like #{keyword}
-				or b.title like #{keyword} 
-				or b.content like #{keyword})
+			<when test="search_option != 'all' ">
+				where b.writer=m.userid or b.writer=a.userid
+				and
+				${search_option} like #{keyword}
 			</when>
 			<otherwise>
-				where b.writer=m.userid
-				and
-				${search_option} like #{keyword}	
+				where b.writer=m.userid or b.writer=a.userid
+				and (b.user_name like #{keyword}
+				or b.title like #{keyword}
+				or b.content like #{keyword})
 			</otherwise>
 		</choose>
 	</sql>
@@ -106,8 +106,8 @@ resultType="com.example.spring02.model.board.dto.BoardDTO">
 	<select id="read" 
 resultType="com.example.spring02.model.board.dto.BoardDTO">
 		select bno,title,regdate,content,viewcnt,user_name,writer 
-		from board b, member m
-		where b.writer=m.userid and b.bno=#{bno}
+		from board b, member m, admin a
+		where (b.writer=m.userid or b.writer=a.userid) and b.bno=#{bno}
 
 	</select>
 	

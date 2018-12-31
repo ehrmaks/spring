@@ -14,14 +14,14 @@ public class MemberDAOImpl implements MemberDAO {
 	SqlSession sqlSession;
 	
 	@Override
-	public String loginCheck(MemberDTO dto) {
-
-		return sqlSession.selectOne("member.login_check", dto);
+	public Boolean loginCheck(MemberDTO dto) {
+		String name = sqlSession.selectOne("member.login_check", dto);
+		
+		return (name==null) ? false : true;
 	}
 
 	@Override
 	public MemberDTO viewMember(String userid) {
-		System.out.println("DAO의 userid = " + userid);
 		return sqlSession.selectOne("member.viewMember", userid);
 	}
 	
@@ -43,6 +43,12 @@ public class MemberDAOImpl implements MemberDAO {
 	public int idCheck(String userid) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("member.idcheck", userid);
+	}
+
+	@Override
+	public String pwCheck(String userid) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("member.pw_check", userid);
 	}
 
 }

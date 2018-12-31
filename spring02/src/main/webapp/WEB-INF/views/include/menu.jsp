@@ -82,7 +82,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           
           <c:if test="${sessionScope.admin_userid != null}">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/admin/admin.do">관리자 홈</a>
+            <a class="nav-link js-scroll-trigger" href="/admin/adminhome.do">관리자 홈</a>
           </li>
           </c:if>
           
@@ -102,7 +102,14 @@ uri="http://java.sun.com/jsp/jstl/core" %>
 			<!-- 로그인한 상태 -->
 			${sessionScope.name}님이 로그인중입니다.
 			<a href="/member/logout.do">로그아웃</a><br>
-			<a href="/member/${sessionScope.userid}/form">회원정보 수정</a><br>
+			<c:if test="${sessionScope.userid != 'admin' }">
+				<a href="/member/${sessionScope.userid}/form">회원정보 수정</a>
+				<br>
+			</c:if>
+			<c:if test="${sessionScope.admin_userid == 'admin' }">
+				<a href="/admin/${sessionScope.admin_userid}/form">회원정보 수정</a>
+				<br>
+			</c:if>
 			<!-- 세션 timeout 되면 invalidate 처리 -->
 			<script type="text/javascript" charset="utf-8" src="/include/js/timeoutchk.js"></script>
 			<span id="timer"></span>&nbsp;

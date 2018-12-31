@@ -11,6 +11,38 @@ $(function(){
 	$("#btnWrite").click(function(){
 		location.href="/board/write.do";
 	});
+	
+	$("#keyword").keyup(function() {
+		var arr = new Array(); // Object를 배열로 저장할 배열
+		var obj = new Object(); // key, value 형태로 저장할 오브젝트
+		var keyword = $("#keyword").val();
+		var search_option = $("#search_option").val();
+		var curPage = 1;
+		
+		console.log("keyword : " + keyword);
+		console.log("search_option : " + search_option);
+		console.log("curPage : " + curPage);
+		
+		obj.keyword = keyword;
+		obj.search_option = search_option;
+		obj.curPage = curPage;
+		arr.push(obj);
+		
+		$.ajax({
+			async: true, // 비동기 통신 default는 true이다
+			type: "post",
+			url: "/board/search",
+			data: JSON.stringify(arr), // 배열을 json string형태로 변환
+			dataType: "json",
+			contentType: "application/json; charset=UTF-8",
+			success: function(data) {
+				
+			}, error: function(e) {
+				console.log(e);
+				alert("실패");
+			}
+		});
+	});
 });
 function list(page){
 	location.href="/board/list.do?curPage="+page;
@@ -25,24 +57,26 @@ function list(page){
 <form name="form1" method="post"
 	action="/board/list.do">
 	<div align="right">
-	<select name="search_option">
+	<select name="search_option" id="search_option">
 		<option value="all" <c:out value="${map.search_option == 'all'?'selected':''}"/> >제목+이름+제목</option>
         <option value="user_name" <c:out value="${map.search_option == 'user_name'?'selected':''}"/> >이름</option>
         <option value="content" <c:out value="${map.search_option == 'content'?'selected':''}"/> >내용</option>
         <option value="title" <c:out value="${map.search_option == 'title'?'selected':''}"/> >제목</option>
 	</select>
 	
-	<input name="keyword" value="${map.keyword}">
+	<input name="keyword" id="keyword" value="${map.keyword}">
 	<input type="submit" value="조회" class="btn btn-primary float-right">
-	<br>
-	${map.count}개의 게시물이 있습니다.
+	
+	</div>
+	<div id="count" align="right">
+		${map.count}개의 게시물이 있습니다.
 	</div>
 	<div align="right">
 	
 	</div>
 </form>
 
-
+<div id="div1"></div>
 <table class="table table-striped table-bordered table-hover" width="600px" border="1">
 	<thead>
 	<tr> 
@@ -76,6 +110,7 @@ function list(page){
 	</tbody>
 </c:forEach>	
 </table>
+
 <br>
 <table class="container">
 	<!-- 페이지 네비게이션 출력 -->
@@ -118,14 +153,6 @@ function list(page){
 		
 	</tr>
 	
-	<tr>
-		
-		<td>
-			<div class="footer">
-				<hr>
-			</div>
-		</td>
-	</tr>
 </table>
 </body>
 </html>

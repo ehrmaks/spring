@@ -24,7 +24,7 @@
 			
 			var con = confirm("정말로 탈퇴하시겠습니까?");
 			if(con == true) {
-				document.form1.action = "${path}/member/secession.do";
+				document.form1.action = "${path}/admin/secession.do";
 				document.form1.submit();
 			} else {
 				alert("이전페이지로 이동");
@@ -37,14 +37,14 @@
 </script>
 
 <body>
-<%@ include file="../include/menu.jsp" %>
+<%@ include file="../include/admin_menu.jsp" %>
 
 	<form name="form1" method="post">
 		<table class="table table-hover">
 			<tr>
 				<td>아이디</td>
 				<td><input id="userid" name="userid" value="${dto.userid}" readonly="readonly">
-					<input type="hidden" id="userid2" value="${sessionScope.userid}">
+					<input type="hidden" id="userid2" value="${sessionScope.admin_userid}">
 				</td>
 				
 			</tr>

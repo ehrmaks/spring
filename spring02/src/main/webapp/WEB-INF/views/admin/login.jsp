@@ -72,6 +72,11 @@ $(function() {
 					로그아웃 처리되었습니다.
 				</div>
 			</c:if>
+			<c:if test="${message == 'secession' }">
+				<div style="color:blue;">
+					탈퇴처리 되었습니다.
+				</div>
+			</c:if>
 			<br>
 			
 			<input type="button" id="btnLogin" class="btn btn-default btn-primary" value="로그인">&nbsp;&nbsp;&nbsp;&nbsp;

@@ -55,7 +55,7 @@
             <a class="nav-link js-scroll-trigger" href="${path}/messages/write.do">메시지 전송</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/admin/admin.do">관리자 홈</a>
+            <a class="nav-link js-scroll-trigger" href="/admin/adminhome.do">관리자 홈</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="/">Home</a>
@@ -76,7 +76,12 @@
 		<c:otherwise>
 			<!-- 로그인 상태 -->
 			관리자 : ${sessionScope.admin_name}님이 로그인중입니다.
-			<a href="/admin/logout.do">로그아웃</a>
+			<a href="/admin/logout.do">로그아웃</a><br>
+			<a href="/admin/${sessionScope.admin_userid}/form">회원정보 수정</a><br>
+			<!-- 세션 timeout 되면 invalidate 처리 -->
+			<script type="text/javascript" charset="utf-8" src="/include/js/timeoutchk.js"></script>
+			<span id="timer"></span>&nbsp;
+			<a href="javascript:refreshTimer();">연장</a>
 		</c:otherwise>
 	</c:choose>
 </div>

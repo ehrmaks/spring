@@ -15,24 +15,20 @@ public class MemberServiceImpl implements MemberService {
 	MemberDAO memberDao;
 	
 	@Override
-	public String loginCheck(MemberDTO dto) {
-//		boolean result = memberDao.loginCheck(dto);
-//		
-//		if(result) { // �α��� ����
-//			// ���Ǻ����� �� ����
-//			System.out.println("서비스impl dto2 접근 시도");
-//			MemberDTO dto2 = viewMember(dto.getUserid());
-//			System.out.println("dto2 출력 : "+dto2);
-//			
-//			//setAttribute (������,��)
-//			session.setAttribute("userid", dto.getUserid());
-//			session.setAttribute("name", dto2.getName());
-//			System.out.println(session.getAttribute("userid"));
-//			System.out.println(session.getAttribute("name"));
-//		}
-//		
-//		return result;
-		return memberDao.loginCheck(dto);
+	public Boolean loginCheck(MemberDTO dto, HttpSession session) {
+		boolean result = memberDao.loginCheck(dto);
+		
+		if(result) {
+			MemberDTO dto2 = viewMember(dto.getUserid());
+			
+			session.setAttribute("userid", dto.getUserid());
+			session.setAttribute("name", dto2.getName());
+			System.out.println(session.getAttribute("userid"));
+			System.out.println(session.getAttribute("name"));
+		}
+		
+		return result;
+//		return memberDao.loginCheck(dto);
 	}
 
 	@Override

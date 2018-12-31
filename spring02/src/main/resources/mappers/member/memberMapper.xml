@@ -48,6 +48,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where userid = #{userid}
 	</select>
 	
+	<select id="pw_check" resultType="String">
+		select passwd
+		from member
+		where userid = #{userid}
+	</select>
+	
 </mapper>
 
 

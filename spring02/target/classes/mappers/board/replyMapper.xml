@@ -20,9 +20,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select r.rno, bno, r.replytext, r.replyer, 
 				r.secret_reply, r.regdate, r.updatedate, r.user_name,
 				(select b.writer from board b where b.bno = r.bno) as writer
-			from reply r, member m
+			from reply r, member m, admin a
 			where
-				r.replyer = m.userid
+				(r.replyer = m.userid or r.replyer = a.userid)
 				and bno = #{bno}
 			order by rno
 		<include refid="pagingFooter"></include>
