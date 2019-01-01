@@ -12,20 +12,20 @@
 <% pageContext.setAttribute("newLineChar", "\n"); %>
 <table style="width:80%; margin: auto; text-align: left;" class="table table-hover">
 <c:forEach var="row" items="${list}">   
-<%--  	<c:set var="str"
+  	<c:set var="str"
 value="${fn:replace(row.replytext,'<','&lt;') }" />
 	<c:set var="str"
 value="${fn:replace(str,'>','&gt;') }" />	
 	<c:set var="str"  
 value="${fn:replace(str,'  ','&nbsp;&nbsp;')}" />
 	<c:set var="str"
-value="${fn:replace(str,newLineChar,'<br>') }" /> --%>
+value="${fn:replace(str,newLineChar,'<br>') }" />
 	<tr> 
 		<td>
 			${row.user_name}
 			( <fmt:formatDate value="${row.regdate}"
 				 pattern="yyyy-MM-dd a HH:mm:ss" /> )<br>
-			${row.replytext} 
+			<%-- ${row.replytext}  --%>${str}
 			<br>
 			<!-- 본인 댓글만 수정버튼 생성되도록 처리 -->
 			<c:if test="${sessionScope.userid == row.replyer || sessionScope.userid == 'admin' || sessionScope.userid == row.writer}">

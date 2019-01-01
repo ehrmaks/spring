@@ -9,7 +9,10 @@ public class BoardDTO {
 	private String content;
 	private String writer; // 작성자 id
 	private String user_name;
-	private Date regdate;
+	
+	//private Date regdate;
+	private String regdate;
+	
 	private int viewcnt;
 	private int cnt; // 댓글 개수
 	private String[] files;
@@ -47,14 +50,20 @@ public class BoardDTO {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
-	public Date getRegdate() {
+	/*public Date getRegdate() {
 		return regdate;
 	}
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
-	}
+	}*/
 	public int getViewcnt() {
 		return viewcnt;
+	}
+	public String getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
 	}
 	public void setViewcnt(int viewcnt) {
 		this.viewcnt = viewcnt;

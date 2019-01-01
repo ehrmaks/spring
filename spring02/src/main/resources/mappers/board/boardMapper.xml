@@ -50,7 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="listAll"
 resultType="com.example.spring02.model.board.dto.BoardDTO">
 		<include refid="pagingHeader" />
-			SELECT rownum, bno, title, user_name, regdate, viewcnt,
+			SELECT rownum, bno, title, user_name, (select to_char(regdate, 'yyyy-mm-dd hh12:mi:ss') from board where bno=b.bno) regdate, 
+			viewcnt,
 			(select count(*) from reply 
 			where bno=b.bno) cnt
         	FROM board b, member m, admin a
@@ -77,7 +78,7 @@ resultType="com.example.spring02.model.board.dto.BoardDTO">
 	</select>
 	
 	<sql id="search">
-		<choose>
+		<!-- <choose>
 			<when test="search_option != 'all' ">
 				where b.writer=m.userid or b.writer=a.userid
 				and
@@ -89,7 +90,28 @@ resultType="com.example.spring02.model.board.dto.BoardDTO">
 				or b.title like #{keyword}
 				or b.content like #{keyword})
 			</otherwise>
-		</choose>
+		</choose> -->
+		<if test="search_option == 'user_name'">
+			where b.writer=m.userid or b.writer=a.userid
+			and
+			b.user_name like #{keyword}
+		</if>
+		<if test="search_option == 'content'">
+			where b.writer=m.userid or b.writer=a.userid
+			and
+			b.content like #{keyword}
+		</if>
+		<if test="search_option == 'title'">
+			where b.writer=m.userid or b.writer=a.userid
+			and
+			b.title like #{keyword}
+		</if>
+		<if test="search_option == 'all'">
+			where b.writer=m.userid or b.writer=a.userid
+				and (b.user_name like #{keyword}
+				or b.title like #{keyword}
+				or b.content like #{keyword})
+		</if>
 	</sql>
 	
 	<insert id="insert">
@@ -105,7 +127,7 @@ resultType="com.example.spring02.model.board.dto.BoardDTO">
 	
 	<select id="read" 
 resultType="com.example.spring02.model.board.dto.BoardDTO">
-		select bno,title,regdate,content,viewcnt,user_name,writer 
+		select bno,title,(select to_char(regdate, 'yyyy-mm-dd hh12:mi:ss') from board where bno=b.bno) regdate,content,viewcnt,user_name,writer 
 		from board b, member m, admin a
 		where (b.writer=m.userid or b.writer=a.userid) and b.bno=#{bno}
 

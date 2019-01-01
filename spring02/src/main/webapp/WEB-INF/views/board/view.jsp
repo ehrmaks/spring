@@ -282,7 +282,7 @@ function showReplyModify(rno){
 <h2 class="text-center">게시물 보기</h2>
 <form id="form1" name="form1" method="post"
 action="/board/insert.do" enctype="multipart/form-data">
-	<table border="1" width="800px" class="table table-striped table-bordered table-hover">
+	<table border="1" class="table table-striped table-bordered table-hover">
 		<colgroup>
 			<col width="10%"/>
 			<col width="35%"/>
@@ -304,7 +304,8 @@ action="/board/insert.do" enctype="multipart/form-data">
 				<th scope="row">작성자</th>
 				<td>${dto.user_name}</td>
 				<th scope="row">작성시간</th>
-				<td><fmt:formatDate value="${dto.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				<%-- <td><fmt:formatDate value="${dto.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td> --%>
+				<td>${dto.regdate}</td>
 			</tr>
 			<tr>
 				<th scope="row">제목</th>

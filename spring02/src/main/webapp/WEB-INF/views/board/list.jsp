@@ -36,7 +36,73 @@ $(function(){
 			dataType: "json",
 			contentType: "application/json; charset=UTF-8",
 			success: function(data) {
+				$("#count").html(data.count + "개의 게시물이 있습니다.").css("color", "orange");
 				
+				var date = new Date();
+				var list = data.list;
+				var html = "";
+				var html2 = "";
+				
+				html += '<tr>';
+				html += '<td>번호</td>';
+				html += '<td>제목</td>';
+				html += '<td>이름</td>';
+				html += '<td>날짜</td>';
+				html += '<td>조회수</td>';
+				for(var i=0; i<list.length; i++){
+					var regdate = list[i].regdate;
+					console.log("typeof : " + typeof(regdate));
+					
+					html += '<tr>';
+					html += '<td>'+list[i].bno+'</td>';
+					html += '<td><a href="/board/view.do?bno='+list[i].bno+'">'+list[i].title+'</a>';
+					if(list[i].cnt > 0) {
+						html += '<span style="color:red;">( '+list[i].cnt+' )</span>';
+					}
+					html += '</td>';
+					
+					html += '<td>'+list[i].user_name+'</td>';
+					html += '<td>'+regdate+'</td>';
+					html += '<td>'+list[i].viewcnt+'</td>';
+					html += '</tr>';
+				}
+				html += '</tr>';
+				
+				html2 += '<tr>';
+				html2 += '<td colspan="5" align="center" class="page-item">';
+				if(data.pager.curBlock >= 1) {
+					var j = 1;
+					html2 += '<a href="#" onclick="list('+j+')">[처음]</a>';
+				}
+				if(data.pager.curBlock >= 1) {
+					html2 += '<a href="#" onclick="list('+data.pager.prevPage+')">[이전]</a>&nbsp;&nbsp;';
+				}
+				
+				for(var num=data.pager.blockBegin; num<=data.pager.blockEnd; num++) {
+					if(num == data.pager.curPage) {
+						html2 += '<span style="color:red;">'+num+'</span>&nbsp;&nbsp;';
+					} else {
+						html2 += '<a href="#" onclick="list('+num+')">'+num+'</a>&nbsp;&nbsp;';
+					}
+				}
+				
+				if(data.pager.curBlock <= data.pager.totBlock) {
+					html2 += '<a href="#" onclick="list('+data.pager.nextPage+')">[다음]</a>';
+				}
+				
+				if(data.pager.curPage <= data.pager.totPage) {
+					html2 += '<a href="#" onclick="list('+data.pager.totPage+')">[끝]</a>';
+				}
+				
+				html2 += '<div class="container">';
+				html2 += '<button type="button" id="btnWrite" class="btn btn-primary float-right">글쓰기</button>';
+				html2 += '</div>';
+				html2 += '</td>';
+				html2 += '</tr>';
+				
+				$("#table1").html(html);
+				$("#table2").html(html2);
+			
 			}, error: function(e) {
 				console.log(e);
 				alert("실패");
@@ -47,6 +113,7 @@ $(function(){
 function list(page){
 	location.href="/board/list.do?curPage="+page;
 }
+
 </script>
 </head>
 <body>
@@ -75,10 +142,8 @@ function list(page){
 	
 	</div>
 </form>
-
-<div id="div1"></div>
-<table class="table table-striped table-bordered table-hover" width="600px" border="1">
-	<thead>
+<!-- table-striped table-bordered  -->
+<table class="table table-hover" border="1" id="table1">
 	<tr> 
 		<th>번호</th>
 		<th>제목</th>
@@ -86,7 +151,6 @@ function list(page){
 		<th>날짜</th>
 		<th>조회수</th>
 	</tr>
-	</thead>
 	<!-- forEach var="개별데이터" items="집합데이터" -->
 <c:forEach var="row" items="${map.list}">
 	<tbody>
@@ -103,8 +167,10 @@ function list(page){
 		
 		<td>${row.user_name}</td>
 
-		<td><fmt:formatDate value="${row.regdate}"
+		<%-- <td><fmt:formatDate value="${row.regdate}"
 			pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+		<td>${row.viewcnt}</td> --%>
+		<td>${row.regdate}</td>
 		<td>${row.viewcnt}</td>
 	</tr>
 	</tbody>
@@ -112,7 +178,7 @@ function list(page){
 </table>
 
 <br>
-<table class="container">
+<table class="container" id="table2">
 	<!-- 페이지 네비게이션 출력 -->
 	<tr class="pagenation">
 		<td colspan="5" align="center" class="page-item">
@@ -147,8 +213,8 @@ function list(page){
 			</c:if>
 			
 			<div class="container">
-			<button type="button" id="btnWrite" class="btn btn-primary float-right">글쓰기</button>
-		</div>
+				<button type="button" id="btnWrite" class="btn btn-primary float-right">글쓰기</button>
+			</div>
 		</td>
 		
 	</tr>

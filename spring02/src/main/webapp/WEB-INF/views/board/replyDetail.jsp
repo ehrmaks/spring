@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="../include/header2.jsp" %>
 <script>
@@ -59,19 +59,11 @@ $("#btnReplyUpdate").click(function(){
 </head>
 <body>
 <%@ include file="../include/menu2.jsp" %>
-댓글 번호 : ${dto.rno}<br>
+<div style="color: blue; font-size: 20px; font-style: italic;">댓글 번호 : ${dto.rno}<br></div>
 <div align="center">
-<textarea id="detailReplytext" rows="3" cols="50">
-	<c:if test="${dto.secret_reply == 'y'}">
-		<c:if test="${!sessionScope.userid==dto.writer && !sessionScope.userid==dto.replyer}"> 
-			비밀 댓글입니다.
-		</c:if>
-		<c:if test="${sessionScope.userid==dto.writer || sessionScope.userid==dto.replyer || sessionScope.userid=='admin'}">
-			${dto.replytext}
-		</c:if>
-	</c:if>
-	<c:if test="${dto.secret_reply == 'n'}">${dto.replytext}</c:if>
-</textarea>
+<textarea id="detailReplytext" rows="3" cols="50" id="detail"><c:if test="${dto.secret_reply == 'y'}"><c:if test="${!sessionScope.userid==dto.writer && !sessionScope.userid==dto.replyer}">비밀 댓글입니다.</c:if>
+<c:if test="${sessionScope.userid==dto.writer || sessionScope.userid==dto.replyer || sessionScope.userid=='admin'}">${dto.replytext}</c:if></c:if>
+<c:if test="${dto.secret_reply == 'n'}">${dto.replytext}</c:if></textarea>
 </div>
 <div style="text-align: center;" align="center">
 	<!-- 본인 댓글/관리자만 수정, 삭제가 가능하도록 처리 -->
