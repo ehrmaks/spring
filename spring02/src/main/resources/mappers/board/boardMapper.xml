@@ -54,8 +54,18 @@ resultType="com.example.spring02.model.board.dto.BoardDTO">
 			viewcnt,
 			(select count(*) from reply 
 			where bno=b.bno) cnt
-        	FROM board b, member m, admin a
-			<include refid="search" />
+        	FROM board b, admin a
+			<include refid="admin_search" />
+			order by bno desc,regdate desc  
+		<include refid="pagingFooter" />
+			union all
+		<include refid="pagingHeader" />
+			SELECT rownum, bno, title, user_name, (select to_char(regdate, 'yyyy-mm-dd hh12:mi:ss') from board where bno=b.bno) regdate, 
+			viewcnt,
+			(select count(*) from reply 
+			where bno=b.bno) cnt
+        	FROM board b, member m
+			<include refid="member_search" />
 			order by bno desc,regdate desc  
 		<include refid="pagingFooter" />
 	</select>
@@ -72,46 +82,45 @@ resultType="com.example.spring02.model.board.dto.BoardDTO">
 
 <!-- 레코드 갯수 계산 -->	
 	<select id="countArticle" resultType="int">
-		select count(*)
-		from board b, member m, admin a
-		<include refid="search" />
+		select sum(C.cnt) from
+		(select count(*) cnt from board b, admin a
+		<include refid="admin_search"/>
+		union all
+		select count(*) cnt from board b, member m
+		<include refid="member_search"/>) C
+		
 	</select>
 	
-	<sql id="search">
-		<!-- <choose>
+	<sql id="admin_search">
+		<choose>
 			<when test="search_option != 'all' ">
-				where b.writer=m.userid or b.writer=a.userid
+				where b.writer=a.userid
 				and
 				${search_option} like #{keyword}
 			</when>
 			<otherwise>
-				where b.writer=m.userid or b.writer=a.userid
+				where b.writer=a.userid
 				and (b.user_name like #{keyword}
 				or b.title like #{keyword}
 				or b.content like #{keyword})
 			</otherwise>
-		</choose> -->
-		<if test="search_option == 'user_name'">
-			where b.writer=m.userid or b.writer=a.userid
-			and
-			b.user_name like #{keyword}
-		</if>
-		<if test="search_option == 'content'">
-			where b.writer=m.userid or b.writer=a.userid
-			and
-			b.content like #{keyword}
-		</if>
-		<if test="search_option == 'title'">
-			where b.writer=m.userid or b.writer=a.userid
-			and
-			b.title like #{keyword}
-		</if>
-		<if test="search_option == 'all'">
-			where b.writer=m.userid or b.writer=a.userid
+		</choose>
+	</sql>
+	
+	<sql id="member_search">
+		<choose>
+			<when test="search_option != 'all' ">
+				where b.writer=m.userid
+				and
+				${search_option} like #{keyword}
+			</when>
+			<otherwise>
+				where b.writer=m.userid
 				and (b.user_name like #{keyword}
 				or b.title like #{keyword}
 				or b.content like #{keyword})
-		</if>
+			</otherwise>
+		</choose>
 	</sql>
 	
 	<insert id="insert">
@@ -128,9 +137,12 @@ resultType="com.example.spring02.model.board.dto.BoardDTO">
 	<select id="read" 
 resultType="com.example.spring02.model.board.dto.BoardDTO">
 		select bno,title,(select to_char(regdate, 'yyyy-mm-dd hh12:mi:ss') from board where bno=b.bno) regdate,content,viewcnt,user_name,writer 
-		from board b, member m, admin a
-		where (b.writer=m.userid or b.writer=a.userid) and b.bno=#{bno}
-
+		from board b, member m
+		where b.writer=m.userid and b.bno=#{bno}
+		union all
+		select bno,title,(select to_char(regdate, 'yyyy-mm-dd hh12:mi:ss') from board where bno=b.bno) regdate,content,viewcnt,user_name,writer 
+		from board b, admin a
+		where b.writer=a.userid and b.bno=#{bno}
 	</select>
 	
 </mapper>

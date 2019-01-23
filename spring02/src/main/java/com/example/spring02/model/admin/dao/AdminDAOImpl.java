@@ -52,4 +52,5 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.selectOne("admin.pw_check", userid);
 	}
 
+
 }

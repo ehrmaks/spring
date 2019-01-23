@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Home</title>
+	<title>Jinseok's Portfolio</title>
 <%@ include file="include/header.jsp" %>
 </head>
 <body onload="printClock()">
@@ -70,5 +70,6 @@
 
 
 </script>
+
 </body>
 </html>

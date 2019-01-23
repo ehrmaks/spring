@@ -180,7 +180,7 @@ function list(page){
 <br>
 <table class="container" id="table2">
 	<!-- 페이지 네비게이션 출력 -->
-	<tr class="pagenation">
+	<tr>
 		<td colspan="5" align="center" class="page-item">
 			<c:if test="${map.pager.curBlock > 1}">
 				<a href="#" onclick="list('1')">[처음]</a>

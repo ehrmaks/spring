@@ -51,4 +51,5 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectOne("member.pw_check", userid);
 	}
 
+
 }
