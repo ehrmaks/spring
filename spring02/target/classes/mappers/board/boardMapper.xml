@@ -50,34 +50,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="listAll"
 resultType="com.example.spring02.model.board.dto.BoardDTO">
 		<include refid="pagingHeader" />
+		select rownum as rn, b1.* from (
+			SELECT A1.* FROM (
 			SELECT rownum, bno, title, user_name, (select to_char(regdate, 'yyyy-mm-dd hh12:mi:ss') from board where bno=b.bno) regdate, 
 			viewcnt,
 			(select count(*) from reply 
 			where bno=b.bno) cnt
         	FROM board b, admin a
 			<include refid="admin_search" />
-			order by bno desc,regdate desc  
-		<include refid="pagingFooter" />
-			union all
-		<include refid="pagingHeader" />
+			order by bno desc)A1
+
+			union
+			
+			SELECT A2.* FROM (
 			SELECT rownum, bno, title, user_name, (select to_char(regdate, 'yyyy-mm-dd hh12:mi:ss') from board where bno=b.bno) regdate, 
 			viewcnt,
 			(select count(*) from reply 
 			where bno=b.bno) cnt
         	FROM board b, member m
 			<include refid="member_search" />
-			order by bno desc,regdate desc  
+			order by bno desc)A2
+		)b1
 		<include refid="pagingFooter" />
+		order by bno desc 
 	</select>
 	
 	<!-- 페이징 sql -->
 <sql id="pagingHeader">
     SELECT * FROM (
-        SELECT ROWNUM AS rn, A.* FROM (
+        <!-- SELECT ROWNUM AS rn, A.* FROM ( -->
 </sql>
 <sql id="pagingFooter">
-        ) A
-    ) WHERE rn BETWEEN #{start} AND #{end}
+        <!-- ) A -->
+    )A3 WHERE rn BETWEEN #{start} AND #{end} 
 </sql>
 
 <!-- 레코드 갯수 계산 -->	
