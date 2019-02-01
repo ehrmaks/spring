@@ -39,8 +39,11 @@
 <body>
 <%@ include file="../include/menu.jsp" %>
 
+<div class="container">
+	<h2 align="center">회원탈퇴 페이지</h2><br><br>
+
 	<form name="form1" method="post">
-		<table class="table table-hover">
+		<table class="table table-hover" width="80%">
 			<tr>
 				<td>아이디</td>
 				<td><input id="userid" name="userid" value="${dto.userid}" readonly="readonly">
@@ -71,6 +74,6 @@
 		
 		
 	</form>
-
+</div>
 </body>
 </html>

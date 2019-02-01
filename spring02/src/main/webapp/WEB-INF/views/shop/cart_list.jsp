@@ -25,16 +25,17 @@
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
-<h2>장바구니</h2>
+<h2 align="center">장바구니</h2><br><br>
+<div class="container">
 	<c:choose>
 		<c:when test="${map.count == 0}">
-			장바구니가 비었습니다.
+			<h5 align="left">장바구니가 비었습니다.</h5>
 		</c:when>
 		<c:otherwise>
 			<form action="${path}/shop/cart/update.do"
 			name="form1" method="post">
-				<table border="1" width="800px">
-					<tr>
+				<table border="1" width="80%" class="table table-hover">
+					<tr align="center">
 						<th>상품명</th>
 						<th>이미지</th>
 						<th>단가</th>
@@ -76,12 +77,17 @@
 					</tr>
 				</table>
 				
-				<button id="btnUpdate">수정</button>
-				<button id="btnDelete" type="button"> 장바구니 비우기</button>
+				
+					<button id="btnUpdate" class="btn btn-warning">수정</button>
+					<button id="btnDelete" type="button" class="btn btn-default btn-danger"> 장바구니 비우기</button>
+				
 			</form>
 		</c:otherwise>
 	</c:choose>
-	<button type="button" id="btnList">상품목록</button>
+	
+		<button type="button" id="btnList" class="btn btn-default btn-info">상품목록</button>
+	</div>
+	
 
 </body>
 </html>

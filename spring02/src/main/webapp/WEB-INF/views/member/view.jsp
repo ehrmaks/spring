@@ -109,8 +109,10 @@ function daumZipCode() {
 <body>
 <%@ include file="../include/menu.jsp" %>
 
+<div class="container">
+	<h2 align="center">회원정보 수정페이지</h2><br><br>
 	<form name="form1" method="post">
-		<table class="table table-striped table-bordered table-hover" width="600px">
+		<table class="table table-striped table-bordered table-hover" width="80%">
 			<tr>
 				<td>아이디</td>
 				<td><input id="userid" name="userid" value="${dto.userid}" readonly="readonly"></td>
@@ -161,6 +163,6 @@ function daumZipCode() {
 		
 		
 	</form>
-
+</div>
 </body>
 </html>

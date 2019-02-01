@@ -279,7 +279,9 @@ function showReplyModify(rno){
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
-<h2 class="text-center">게시물 보기</h2>
+<h2 class="text-center">게시물 보기</h2><br><br>
+
+<div class="container">
 <form id="form1" name="form1" method="post"
 action="/board/insert.do" enctype="multipart/form-data">
 	<table border="1" class="table table-striped table-bordered table-hover">
@@ -365,7 +367,7 @@ action="/board/insert.do" enctype="multipart/form-data">
 <br>
 <br>
 <br>
-
+</div>
 </body>
 </html>
 

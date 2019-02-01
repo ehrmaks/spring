@@ -38,19 +38,19 @@
 	}
 </script>
 
-<h2>상품등록</h2>
+<h2 align="center">상품등록</h2><br><br>
 
 <form name="form1" method="post" 
 enctype="multipart/form-data">
-	<table>
+	<table class="table table-hover" width="80%" border="1">
 		<tr>
 			<td>상품명</td>
-			<td><input name="product_name" id="product_name"></td>
+			<td><input name="product_name" id="product_name" width="20%"></td>
 		</tr>
 		
 		<tr>
 			<td>가격</td>
-			<td><input name="product_price" id="product_price"></td>
+			<td><input name="product_price" id="product_price" width="20%"></td>
 		</tr>
 		
 		<tr>
@@ -75,9 +75,9 @@ enctype="multipart/form-data">
 		<tr>
 			<td colspan="2" align="center">
 				<input type="button" value="등록" 
-				onclick="javascript:product_write()">
+				onclick="javascript:product_write()" class="btn btn-default btn-info">
 				<input type="button" value="목록"
-				onclick="location.href='${path}/shop/product/list.do'">
+				onclick="location.href='${path}/shop/product/list.do'" class="btn btn-default btn-warning">
 			</td>
 		</tr>
 	</table>

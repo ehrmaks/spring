@@ -9,9 +9,10 @@
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
-<h2>상품목록</h2>
-<table border="1" width="500px">
-	<tr>
+<h2 align="center">상품목록</h2><br><br>
+<div class="container">
+<table border="1" width="80%" class="table table-hover">
+	<tr align="center">
 		<th>상품코드</th>
 		<th>이미지</th>
 		<th>상품명</th>
@@ -40,6 +41,9 @@
 		</tr>
 	</c:forEach>
 </table>
+
+</div>
+
 
 </body>
 </html>

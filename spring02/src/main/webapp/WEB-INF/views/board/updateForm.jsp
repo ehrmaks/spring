@@ -247,6 +247,7 @@ function listAttach(){
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
+<div class="container">
 <h2 class="text-center">게시물 수정</h2>
 <form id="form1" name="form1" method="post"
 action="${path}/board/insert.do">
@@ -301,7 +302,7 @@ CKEDITOR.replace("content",{
 	</div>
 	
 	<br>	<br>	<br>	<br>
-
+</div>
 
 </body>
 </html>

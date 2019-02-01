@@ -120,6 +120,7 @@ function list(page){
 <%@ include file="../include/menu.jsp" %>
 <h2 align="center">게시판</h2>
 
+<div class="container">
 <!-- 검색폼 -->
 <form name="form1" method="post"
 	action="/board/list.do">
@@ -218,8 +219,9 @@ function list(page){
 		</td>
 		
 	</tr>
-	
 </table>
+</div>
+
 </body>
 </html>
 
