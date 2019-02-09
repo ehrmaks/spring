@@ -42,14 +42,13 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public void update(int cart_id) {
-		// TODO Auto-generated method stub
-
+		cartDao.update(cart_id);
 	}
 
 	@Override
 	public int countCart(String userid, int product_id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return cartDao.countCart(userid, product_id);
 	}
 
 	@Override
@@ -59,12 +58,17 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public void updateCart(CartDTO dto) {
-
+		cartDao.updateCart(dto);
 	}
 
 	@Override
 	public void modifyCart(CartDTO dto) {
 		cartDao.modifyCart(dto);
+	}
+
+	@Override
+	public int counting(String userid) {
+		return cartDao.counting(userid);
 	}
 
 }

@@ -66,17 +66,17 @@ $(function() {
 	});
 	
 	$("#btnjoin").click(function() {
-	var idtext = document.form1.userid;
-	var pwtext = document.form1.passwd;
-	var cpwtext = document.form1.passwd_check;
-	var nametext = document.form1.name;
-	var emailtext = document.form1.email;
+	var idtext = $("#userid");
+	var pwtext = $("#passwd");
+	var cpwtext = $("#passwd_check");
+	var nametext = $("#name");
+	var emailtext = $("#email");
 	
-	var id = idtext.value;
-    var pw = pwtext.value;
-    var cpw = cpwtext.value;
-    var name = nametext.value;
-    var email = emailtext.value;
+	var id = $("#userid").val();
+    var pw = $("#passwd").val();
+    var cpw = $("#passwd_check").val();
+    var name = $("#name").val();
+    var email = $("#email").val();
 	
 	var regExp1 = /^[a-zA-Z0-9]{4,12}$/;
     //id와 비밀번호의 유효성 검사
@@ -93,20 +93,20 @@ $(function() {
     	// 밑에 동일한 유효성 검사
     {
     	alert("형식에 맞춰 ID를 입력하세요.");
-    	idtext.value = "";
+    	id = "";
     	idtext.focus();
     	return;
     }
     if(!regExp1.test(pw))
     {
     	alert("형식이 맞춰 비밀번호를 입력하세요.");
-    	pwtext.value="";
+    	pw="";
     	pwtext.focus();
     	return;
     }
     if(!(cpw.slice(0,cpw.length) === pw.slice(0,pw.length))){
     	alert("비밀번호가 동일하지 않습니다.");
-   		cpwtext.value="";
+   		cpw="";
    		cpwtext.focus();
    		return;
     }
@@ -114,7 +114,7 @@ $(function() {
     if(!regname.test(name))
     {
     	alert("이름을 형식에 맞춰 입력하세요.");
-    	nametext.value="";
+    	name="";
     	nametext.focus();
     	return;
     }
@@ -122,14 +122,16 @@ $(function() {
     if(!regExp2.test(email))
     {
     	alert("이메일을 형식에 맞춰 입력하세요.");
-    	emailtext.value="";
+    	email="";
     	emailtext.focus();
     	return;
     }
     
 	alert("가입 성공 하셨습니다!");
-    document.form1.action="${path}/member/join_check.do";
-    document.form1.submit();
+    /* document.form1.action="/member/join_check.do";
+    document.form1.submit(); */
+    $("form[name=form1]").attr("action","/member/join_check.do");
+    $("form[name=form1]").submit();
 	});
 	
 	$("#btnback").click(function() {
@@ -186,7 +188,8 @@ function daumZipCode() {
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
-
+<h2 align="center">회원가입 페이지</h2><br><br>
+<div class="container" style="overflow: scroll;">
 <form name="form1" method="post">
 <table class="table table-hover">
 			<tr>
@@ -236,5 +239,6 @@ function daumZipCode() {
 			</tr>
 		</table>
 </form>
+</div>
 </body>
 </html>

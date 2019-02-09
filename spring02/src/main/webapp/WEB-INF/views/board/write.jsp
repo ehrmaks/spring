@@ -194,42 +194,73 @@ $(document).ready(function(){
 
 
 </head>
+
+<style>
+.fileDrop {
+	width: 60%;
+	height: 100%;
+	border: 1px dotted gray;
+	background-color: white;
+}
+</style>
+
 <body>
 <%@ include file="../include/menu.jsp" %>
-<h2 class="text-center">글쓰기</h2>
+<h2 class="text-center">글쓰기</h2><br><br>
 <form id="form1" name="form1" method="post"
 action="/board/insert.do" enctype="multipart/form-data">
-	<div class="container" style="width:80%;">제목 : <input name="title" id="title" size="60"
+	<div class="container" style="width:80%; overflow: scroll;">
+	
+	<table border="1" class="table table-hover">
+		<tr>
+			<td>
+				제목
+			</td>
+			<td>
+				<input name="title" id="title" size="60"
 					placeholder="제목을 입력하세요">
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				내용  
+			</td>
+			<td>
+				<textarea id="content" name="content"
+				rows="3" cols="80" placeholder="내용을 입력하세요"></textarea>
+				<script>
+					// ckeditor 적용
+					CKEDITOR.replace("content",{
+						filebrowserUploadUrl: "/imageUpload.do"
+					});
+				</script>
+			</td>
+		</tr>
+	</table>
+	
 	</div>
-	<div style="width:80%;" class="container">
-		내용  <textarea id="content" name="content"
-rows="3" cols="80" placeholder="내용을 입력하세요"></textarea>
-<script>
-// ckeditor 적용
-CKEDITOR.replace("content",{
-	filebrowserUploadUrl: "/imageUpload.do"
-});
-</script>
-	</div>
-<!-- 	<div> 첨부파일을 아래박스에 드래그하세요 OR&nbsp;
-		<div class="fileDrop"></div>
-		<div id="uploadedList"></div>
-	</div> -->
+
 	<div style="width:700px; text-align:center;" class="container">
 		<button type="button" id="btnSave"  class="btn btn-default btn-primary">확인</button>
 	</div>
 </form>
 <br><hr><br>
-	<div class="container" style="text-align: center;"> 첨부파일을 아래박스에 드래그 하세요 또는&nbsp;
+	<div class="container" align="center">
 		<form id="uploadForm" enctype="multipart/form-data" method="post"
 		action="/upload/uploadAjax">
 			<input type="file" name="file" class="btn btn-default btn-info">
 		</form>
 		<button id="fileUp" class="btn btn-default btn-primary">업로드</button>
-		<div class="container" style="width:60%; height: 100px; background-color: pink;"></div>
-		<div id="uploadedList" class="container"></div>
+		
+		<div class="fileDrop">
+			<div align="center">
+				<div align="center" style="font-style: normal; color: gray; "><img src="/images/upload.png"> 마우스로 파일을 끌어오세요.</div>
+			</div>
+			<div id="uploadedList" class="container" align="left"></div>
+		</div>
 	</div>
+
 	<br>	<br>	<br>	<br>
 
 </body>

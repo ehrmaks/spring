@@ -33,8 +33,10 @@ $(function(){
 		}
 		
 		//폼 데이터를 서버로 제출
-		document.form1.action="${path}/member/login_check.do";
-		document.form1.submit();
+		/* document.form1.action="${path}/member/login_check.do";
+		document.form1.submit(); */
+		$("form[name=form1]").attr("action","${path}/member/login_check.do");
+		$("form[name=form1]").submit();
 	});
 	
 	$("#userid").keypress(function() {
@@ -61,8 +63,8 @@ $(function(){
 			}
 			
 			//폼 데이터를 서버로 제출
-			document.form1.action="${path}/member/login_check.do";
-			document.form1.submit();
+			$("form[name=form1]").attr("action","${path}/member/login_check.do");
+			$("form[name=form1]").submit();
 		}
 	});
 	
@@ -90,16 +92,16 @@ $(function(){
 			}
 			
 			//폼 데이터를 서버로 제출
-			document.form1.action="${path}/member/login_check.do";
-			document.form1.submit();
+			$("form[name=form1]").attr("action","${path}/member/login_check.do");
+			$("form[name=form1]").submit();
 		}
 	});
-});
-
-$(function() {
+	
 	$("#btnJoin").click(function() {
-		document.form1.action="${path}/member/join.do";
-		document.form1.submit();
+		$("form[name=form1]").attr("action","/member/join.do");
+		$("form[name=form1]").submit();
+		/* document.form1.action="/member/join.do";
+		document.form1.submit(); */
 	});
 });
 

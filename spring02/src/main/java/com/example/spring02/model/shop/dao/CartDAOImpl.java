@@ -1,6 +1,8 @@
 package com.example.spring02.model.shop.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -51,17 +53,25 @@ public class CartDAOImpl implements CartDAO {
 
 	@Override
 	public int countCart(String userid, int product_id) {
-		return 0;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userid", userid);
+		map.put("product_id", product_id);
+		return sqlSession.selectOne("cart.countCart", map);
 	}
 
 	@Override
 	public void updateCart(CartDTO dto) {
-
+		sqlSession.update("cart.updateCart", dto);
 	}
 
 	@Override
 	public void modifyCart(CartDTO dto) {
 		sqlSession.update("cart.modifyCart", dto);
+	}
+
+	@Override
+	public int counting(String userid) {
+		return sqlSession.selectOne("cart.counting", userid);
 	}
 
 }

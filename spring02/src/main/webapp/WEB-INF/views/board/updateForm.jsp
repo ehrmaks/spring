@@ -34,7 +34,7 @@ $(document).ready(function() {
 			document.form1.content.focus();
 			return;
 		}
-		document.form1.action="${path}/board/update.do";
+		$("form[name=form1]").attr("action", "${path}/board/update.do")
 		
 		// 첨부파일 이름을 form에 추가
 		var that = $("#form1");
@@ -57,7 +57,7 @@ $(document).ready(function() {
 		//폼에 hidden 태그들을 붙임
 		$("#form1").append(str, str2);
 		// 폼에 입력한 데이터를 서버로 전송
-		document.form1.submit();
+		$("form[name=form1]").submit();
 		
 	});
 	
@@ -241,8 +241,14 @@ function listAttach(){
 
 </script>
 
-
-
+<style>
+.fileDrop {
+	width: 60%;
+	height: 100%;
+	border: 1px dotted gray;
+	background-color: white;
+}
+</style>
 
 </head>
 <body>
@@ -289,16 +295,19 @@ CKEDITOR.replace("content",{
 	<br>
 </form>
 
-	<div class="container" style="text-align: center;"> 첨부파일을 아래박스에 드래그 하세요 또는&nbsp;
+	<div class="container" align="center">
 		<form id="uploadForm" enctype="multipart/form-data" method="post"
 		action="/upload/uploadAjax">
 			<input type="file" name="file" class="btn btn-default btn-info">
 		</form>
 		<button id="fileUp" class="btn btn-default btn-primary">업로드</button>
-		<!-- 첨부팡리 등록 영역 -->
-		<div class="container" style="width:60%; height: 100px; background-color: pink;"></div>
-		<!-- 첨부파일의 목록 출력 영역 -->
-		<div id="uploadedList" class="container"></div>
+		
+		<div class="fileDrop">
+			<div align="center">
+				<div align="center" style="font-style: normal; color: gray; "><img src="/images/upload.png"> 마우스로 파일을 끌어오세요.</div>
+			</div>
+			<div id="uploadedList" class="container" align="left"></div>
+		</div>
 	</div>
 	
 	<br>	<br>	<br>	<br>

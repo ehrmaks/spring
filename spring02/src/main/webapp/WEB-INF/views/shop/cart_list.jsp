@@ -19,14 +19,20 @@
 				location.href="${path}/shop/cart/deleteAll.do";
 			}
 		});
+		
 	});
 </script>
 
+<style type="text/css">
+	#cart {
+		overflow: scroll;
+	}
+</style>
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
 <h2 align="center">장바구니</h2><br><br>
-<div class="container">
+<div class="container" id="cart" style="font-size: 80%;">
 	<c:choose>
 		<c:when test="${map.count == 0}">
 			<h5 align="left">장바구니가 비었습니다.</h5>
@@ -34,7 +40,7 @@
 		<c:otherwise>
 			<form action="${path}/shop/cart/update.do"
 			name="form1" method="post">
-				<table border="1" width="80%" class="table table-hover">
+				<table border="1" class="table table-hover">
 					<tr align="center">
 						<th>상품명</th>
 						<th>이미지</th>
@@ -47,13 +53,12 @@
 					<c:forEach var="row" items="${map.list}">
 						<tr align="center">
 							<td>${row.product_name}</td>
-							<td><img src="${path}/images/${row.picture_url}"
-							width="100px" height="100px"></td>
+							<td><a href="/shop/product/detail/${row.product_id}"><img src="${path}/images/${row.picture_url}" width="50px"></a></td>
 							<td><fmt:formatNumber value="${row.product_price}"
 							pattern="###,###,###"></fmt:formatNumber></td>
-							<td align="center" width="1px"><input type="number" name="amount"
+							<td align="center"><input type="number" name="amount" id="amount"
 							value="${row.amount}">
-							<input type="hidden" name="cart_id"
+							<input type="hidden" name="cart_id" id="cart_id"
 							value="${row.cart_id}"></td>
 							
 							<td><fmt:formatNumber value="${row.money}"
@@ -78,7 +83,7 @@
 				</table>
 				
 				
-					<button id="btnUpdate" class="btn btn-warning">수정</button>
+					<button id="btnUpdate" class="btn btn-warning">적용</button>
 					<button id="btnDelete" type="button" class="btn btn-default btn-danger"> 장바구니 비우기</button>
 				
 			</form>

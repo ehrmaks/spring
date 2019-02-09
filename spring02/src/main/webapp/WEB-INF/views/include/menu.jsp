@@ -7,7 +7,7 @@
 <html lang="en">
 
 <head>
-
+<%@ include file="../include/header.jsp"%>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
@@ -15,7 +15,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin - Dashboard</title>
+<title>Shopping Mall</title>
 
 <!-- Bootstrap core CSS-->
 <link href="/resources/sbadmin/vendor/bootstrap/css/bootstrap.min.css"
@@ -33,6 +33,30 @@
 <!-- Custom styles for this template-->
 <link href="/resources/sbadmin/css/sb-admin.css" rel="stylesheet">
 
+<script type="text/javascript">
+$(function() {
+	$("#admin").keydown(function() {
+		var keycode = (event.keyCode ? event.keyCode : event.which);
+		if(keycode=='18'){
+			location.href="/admin/login.do";
+		}
+	});
+	
+	$.ajax({
+		async : true, // 비동기 통신 default는 true이다
+		type : "post",
+		url : "/shop/cart/count",
+		dataType : "json",
+		contentType : "application/json; charset=UTF-8",
+		success : function(data) {
+			var counting = data.counting;
+			$('#basket_count').html(counting);
+		}, error : function(data) {
+			console.log(data);
+		}
+	});
+});
+</script>
 </head>
 
 <body id="page-top">
@@ -47,13 +71,14 @@
 		</button>
 
 		<!-- Navbar Search -->
-		<form
+		<form action="/shop/product/list.do" method="post"
 			class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
 			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Search for..."
-					aria-label="Search" aria-describedby="basic-addon2">
+				<input type="text" class="form-control" placeholder="상품 검색"
+					aria-label="Search" aria-describedby="basic-addon2" 
+					name="keyword" value="${map.keyword}">
 				<div class="input-group-append">
-					<button class="btn btn-primary" type="button">
+					<button class="btn btn-primary" type="submit">
 						<i class="fas fa-search"></i>
 					</button>
 				</div>
@@ -63,19 +88,20 @@
 		<!-- Navbar -->
 		<ul class="navbar-nav ml-auto ml-md-0">
 			<li class="nav-item dropdown no-arrow mx-1"><a
-				class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
-				role="button" data-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="false"> <i class="fas fa-bell fa-fw"></i> <span
-					class="badge badge-danger">9+</span>
+				class="nav-link dropdown-toggle" href="/shop/cart/list.do" id="alertsDropdown"
+				role="button" aria-haspopup="true"
+				aria-expanded="false"><img src="/images/cart.png">
+				<!-- <i class="fas fa-bell fa-fw"></i> -->  
+				<span class="badge badge-danger" id="basket_count">${map.counting}</span>
 			</a>
-				<div class="dropdown-menu dropdown-menu-right"
+				<!-- <div class="dropdown-menu dropdown-menu-right"
 					aria-labelledby="alertsDropdown">
 					<a class="dropdown-item" href="#">Action</a> <a
 						class="dropdown-item" href="#">Another action</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="#">Something else here</a>
-				</div></li>
-			<li class="nav-item dropdown no-arrow mx-1"><a
+				</div>  --></li>
+			<!-- <li class="nav-item dropdown no-arrow mx-1"><a
 				class="nav-link dropdown-toggle" href="#" id="messagesDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> <i class="fas fa-envelope fa-fw"></i> <span
@@ -87,7 +113,7 @@
 						class="dropdown-item" href="#">Another action</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="#">Something else here</a>
-				</div></li>
+				</div></li> -->
 			<li class="nav-item dropdown no-arrow"><a
 				class="nav-link dropdown-toggle" href="#" id="userDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
@@ -100,7 +126,7 @@
 							<!-- 로그인하지 않은 상태 -->
 							<a class="dropdown-item" href="/member/join.do">Register</a>
 							<a class="dropdown-item" href="/member/login.do">login</a>
-							<a class="dropdown-item" href="/admin/login.do">admin login</a>
+							
 						</c:when>
 
 						<c:otherwise>
@@ -138,7 +164,7 @@
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="pagesDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>Menu</span>
+				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>Test</span>
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">Test Menu:</h6>
@@ -169,8 +195,8 @@
 
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">Board Menu:</h6>
-					<a class="dropdown-item" href="#">공지사항</a> <a class="dropdown-item"
-						href="/board/list.do">상품문의</a>
+					<a class="dropdown-item" href="/notice/list.do">공지사항</a> 
+					<a class="dropdown-item" href="/board/list.do">상품문의</a>
 				</div></li>
 
 			<li class="nav-item dropdown"><a
@@ -193,7 +219,7 @@
 					</c:if>
 				</div></li>
 
-			<li class="nav-item dropdown"><a
+			<li id="admin" class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="pagesDropdown"
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> <i class="fas fa-fw fa-table"></i> 
@@ -207,7 +233,6 @@
 							<!-- 로그인하지 않은 상태 -->
 							<a class="dropdown-item" href="/member/join.do">Register</a>
 							<a class="dropdown-item" href="/member/login.do">login</a>
-							<a class="dropdown-item" href="/admin/login.do">admin login</a>
 						</c:when>
 
 						<c:otherwise>
@@ -244,7 +269,11 @@
 			</c:if>
 		</ul>
 
-
+		<div style="position: fixed; z-index: 400; display: block; bottom: 10%; right: 3%; 
+			table-layout: fixed; text-overflow: ellipsis; overflow-x: hidden; overflow-y: hidden;">
+				<img src="/images/kakaotalk.png" onclick="window.open('http://pf.kakao.com/_vkZWj/chat','chat','width=1024,height=800')" 
+				style="cursor: pointer;" title="카카오톡상담하기">
+		</div>
 
 		<div id="content-wrapper">
 			<div class="container-fluid">
@@ -257,6 +286,7 @@
 				</footer>
 			</div>
 
+			
 
 			<!-- Scroll to Top Button-->
 			<a class="scroll-to-top rounded" href="#page-top"> <i
@@ -297,7 +327,6 @@
 				src="/resources/sbadmin/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 			<!-- Page level plugin JavaScript-->
-			<script src="/resources/sbadmin/vendor/chart.js/Chart.min.js"></script>
 			<script
 				src="/resources/sbadmin/vendor/datatables/jquery.dataTables.js"></script>
 			<script
@@ -308,7 +337,6 @@
 
 			<!-- Demo scripts for this page-->
 			<script src="/resources/sbadmin/js/demo/datatables-demo.js"></script>
-			<script src="/resources/sbadmin/js/demo/chart-area-demo.js"></script>
 </body>
 
 </html>

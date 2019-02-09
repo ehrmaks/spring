@@ -51,16 +51,16 @@ $(function() {
 		}
 		alert("수정 성공 하셨습니다!");
 		
-		document.form1.action = "${path}/admin/admin.do";
-		document.form1.submit();
 		
+		$("form[name=form1]").attr("action", "${path}/admin/admin.do");
+		$("form[name=form1]").submit();
 	});
 	
 	$("#btnDelete").click(function() {
 		var userid = $("#userid").val();
 		
-		document.form1.action = "${path}/admin/delete.do";
-		document.form1.submit();
+		$("form[name=form1]").attr("action", "${path}/admin/delete.do");
+		$("form[name=form1]").submit();
 	});
 });
 
@@ -109,8 +109,9 @@ function daumZipCode() {
 <body>
 <%@ include file="../include/admin_menu.jsp" %>
 
+<div class="container">
 	<form name="form1" method="post">
-		<table class="table table-striped table-bordered table-hover" width="600px">
+		<table class="table table-striped table-bordered table-hover" width="80%">
 			<tr>
 				<td>아이디</td>
 				<td><input id="userid" name="userid" value="${dto.userid}" readonly="readonly"></td>
@@ -161,6 +162,6 @@ function daumZipCode() {
 		
 		
 	</form>
-
+</div>
 </body>
 </html>

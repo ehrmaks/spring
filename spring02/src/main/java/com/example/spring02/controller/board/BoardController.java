@@ -96,8 +96,6 @@ public class BoardController {
 	@RequestParam (defaultValue="") String keyword,
 	@RequestParam (defaultValue="1") int curPage) 
 			throws Exception {
-		
-
 
 		// 레코드 갯수 계산
 		int count = 

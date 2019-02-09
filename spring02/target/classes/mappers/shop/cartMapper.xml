@@ -58,6 +58,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and m.userid=#{userid}
 	</select>
 	
+	<select id="countCart" resultType="int">
+		select count(*) from tbl_cart
+		where userid=#{userid} and product_id=#{product_id}
+	</select>
+	
+	<update id="updateCart">
+		update tbl_cart set amount = amount + #{amount} where userid = #{userid} and product_id = #{product_id}
+	</update>
+	
+	<select id="counting" resultType="int">
+		select count(*) from tbl_cart
+		where userid=#{userid}
+	</select>
+	
 </mapper>
 
 

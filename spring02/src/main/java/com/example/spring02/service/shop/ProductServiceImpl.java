@@ -15,10 +15,6 @@ public class ProductServiceImpl implements ProductService {
 	@Inject
 	ProductDAO productDao;
 	
-	@Override
-	public List<ProductDTO> listProduct() {
-		return productDao.listProduct();
-	}
 
 	@Override
 	public ProductDTO detailProduct(int product_id) {
@@ -46,6 +42,16 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public void insertProduct(ProductDTO dto) {
 		productDao.insertProduct(dto);
+	}
+
+	@Override
+	public List<ProductDTO> listProduct(String search_option, String keyword, int start, int end) {
+		return productDao.listProduct(search_option, keyword, start, end);
+	}
+
+	@Override
+	public int countArticle(String search_option, String keyword) throws Exception {
+		return productDao.countArticle(search_option, keyword);
 	}
 
 }

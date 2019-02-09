@@ -51,16 +51,16 @@ $(function() {
 		}
 		alert("수정 성공 하셨습니다!");
 		
-		document.form1.action = "${path}/member/member.do";
-		document.form1.submit();
+		$("form[name=form1]").attr("action","${path}/member/member.do");
+		$("form[name=form1]").submit();
 		
 	});
 	
 	$("#btnDelete").click(function() {
 		var userid = $("#userid").val();
 		
-		document.form1.action = "${path}/member/delete.do";
-		document.form1.submit();
+		$("form[name=form1]").attr("action","${path}/member/delete.do");
+		$("form[name=form1]").submit();
 	});
 });
 
@@ -109,7 +109,7 @@ function daumZipCode() {
 <body>
 <%@ include file="../include/menu.jsp" %>
 
-<div class="container">
+<div class="container" style="overflow: scroll;">
 	<h2 align="center">회원정보 수정페이지</h2><br><br>
 	<form name="form1" method="post">
 		<table class="table table-striped table-bordered table-hover" width="80%">

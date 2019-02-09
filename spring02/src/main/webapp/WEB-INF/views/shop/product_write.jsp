@@ -38,6 +38,7 @@
 	}
 </script>
 
+<div class="container">
 <h2 align="center">상품등록</h2><br><br>
 
 <form name="form1" method="post" 
@@ -82,6 +83,6 @@ enctype="multipart/form-data">
 		</tr>
 	</table>
 </form>
-
+</div>
 </body>
 </html>

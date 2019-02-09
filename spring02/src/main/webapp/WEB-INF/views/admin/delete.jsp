@@ -24,8 +24,8 @@
 			
 			var con = confirm("정말로 탈퇴하시겠습니까?");
 			if(con == true) {
-				document.form1.action = "${path}/admin/secession.do";
-				document.form1.submit();
+				$("form[name=form1]").attr("action","${path}/admin/secession.do");
+				$("form[name=form1]").submit();
 			} else {
 				alert("이전페이지로 이동");
 				history.back();

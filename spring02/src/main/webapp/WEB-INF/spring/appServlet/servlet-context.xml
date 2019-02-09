@@ -72,6 +72,10 @@
 			<mapping path="/board/insert.do"/>
 			<mapping path="/board/update.do"/>
 			<mapping path="/board/delete.do"/>
+			<mapping path="/notice/write.do"/>
+			<mapping path="/notice/insert.do"/>
+			<mapping path="/notice/update.do"/>
+			<mapping path="/notice/delete.do"/>
 			<mapping path="/shop/cart/list.do"/>
 			<mapping path="/shop/cart/insert.do"/>
 			<mapping path="/chatting.do"/>

@@ -1,5 +1,7 @@
 package com.example.spring02.controller.shop;
 
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,21 +9,48 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.spring02.model.shop.dto.CartDTO;
 import com.example.spring02.service.shop.CartService;
 
+import net.sf.json.JSONArray;
+
+
 @Controller
 @RequestMapping("shop/cart/*")
 public class CartController {
 	
+	private static final Logger logger = 
+			LoggerFactory.getLogger(CartController.class);
+	
 	@Inject
 	CartService cartService;
+	
+	@RequestMapping(value="/shop/cart/count", method=RequestMethod.POST,
+			produces = "application/json")
+	@ResponseBody
+	public ModelAndView count(ModelAndView mav, HttpSession session) {
+		String userid = (String) session.getAttribute("userid");
+		int counting = cartService.counting(userid);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("counting", counting);
+		mav.addAllObjects(map);
+		mav.setViewName("jsonView");
+		
+		return mav;
+	}
 	
 	@RequestMapping("list.do")
 	public ModelAndView list (HttpSession session, 
@@ -54,16 +83,14 @@ public class CartController {
 		String userid = (String) session.getAttribute("userid");
 		
 		dto.setUserid(userid);
-		
-		
+
 		// 장바구니에 기존 상품이 있는지 검사
 		int count = cartService.countCart(userid, dto.getProduct_id());
-		
 		if(count == 0) {
 			// 없으면 insert
 			cartService.insert(dto);
 		} else {
-			// 잇으면 update
+			// 있으면 update
 			cartService.updateCart(dto);
 		}
 	
@@ -94,8 +121,9 @@ public class CartController {
 	}
 	
 	@RequestMapping("update.do")
-	public String update(@RequestParam int[] amount,
+	public ModelAndView update(@RequestParam int[] amount,
 			@RequestParam int[] cart_id, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
 		
 		String userid = (String) session.getAttribute("userid");
 		
@@ -113,6 +141,10 @@ public class CartController {
 			}
 		}
 		
-		return "redirect:/shop/cart/list.do";
+		
+		mav.setViewName("redirect:/shop/cart/list.do");
+		
+		/*return "redirect:/shop/cart/list.do";*/
+		return mav;
 	}
 }

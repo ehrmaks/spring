@@ -1,11 +1,14 @@
 package com.example.spring02.model.shop.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.spring02.model.shop.dto.ProductDTO;
 
@@ -14,13 +17,6 @@ public class ProductDAOImpl implements ProductDAO {
 	
 	@Inject
 	SqlSession sqlSession;
-
-	
-	// 상품 목록
-	@Override
-	public List<ProductDTO> listProduct() {
-		return sqlSession.selectList("product.product_list");
-	}
 	
 	
 	// 상품 상세정보
@@ -51,6 +47,28 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public String fileInfo(int product_id) {
 		return sqlSession.selectOne("product.fileInfo", product_id);
+	}
+
+	// 상품 목록
+	@Override
+	public List<ProductDTO> listProduct(String search_option, String keyword, int start, int end) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("search_option", search_option);
+		map.put("keyword", "%"+keyword+"%");
+		map.put("start", start);
+		map.put("end", end);
+		
+		return sqlSession.selectList("product.product_list", map);
+	}
+
+	// 상품 갯수 검사
+	@Override
+	public int countArticle(String search_option, String keyword) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search_option", search_option);
+		map.put("keyword", "%"+keyword+"%");
+		return sqlSession.selectOne("product.count", map);
 	}
 
 }

@@ -81,7 +81,9 @@ $(function(){
 });
 
 function onOpen(evt) {
-	$("#chatdata").append("연결 됨.");
+	var sessionname = $("#sessionname").val();
+	
+	$("#chatdata").append(sessionname+"님이 연결 됨.");
 }
         
 function sendMessage(){      
@@ -145,7 +147,8 @@ function onMessage(evt){  //변수 안에 function자체를 넣음.
 }
     
 function onClose(evt){
-	$("#chatdata").append("연결 끊김");
+	var sessionname = $("#sessionname").val();
+	$("#chatdata").append(sessionname + "님이 퇴장했습니다.");
 }    
 </script>
 </html>

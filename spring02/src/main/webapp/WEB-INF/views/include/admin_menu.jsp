@@ -39,7 +39,7 @@
 
 	<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-		<a class="navbar-brand mr-1" href="/">Start Bootstrap</a>
+		<a class="navbar-brand mr-1" href="/">Portfolio</a>
 
 		<button class="btn btn-link btn-sm text-white order-1 order-sm-0"
 			id="sidebarToggle" href="#">
@@ -99,8 +99,8 @@
 						<c:when test="${sessionScope.admin_userid == null}">
 							<!-- 로그인 하지 않은 상태. -->
 							<a class="dropdown-item" href="/member/join.do">Register</a>
-							<a class="dropdown-item" href="/member/login.do">로그인</a> | 
-					<a class="dropdown-item" href="/admin/login.do">관리자 로그인</a>
+							<a class="dropdown-item" href="/member/login.do">login</a>
+							<a class="dropdown-item" href="/admin/login.do">admin login</a>
 						</c:when>
 
 						<c:otherwise>
@@ -161,7 +161,7 @@
 
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<h6 class="dropdown-header">Board Menu:</h6>
-					<a class="dropdown-item" href="#">공지사항</a> <a class="dropdown-item"
+					<a class="dropdown-item" href="/notice/list.do">공지사항</a> <a class="dropdown-item"
 						href="/board/list.do">상품문의</a>
 				</div></li>
 
@@ -200,8 +200,8 @@
 						<c:when test="${sessionScope.admin_userid == null}">
 							<!-- 로그인 하지 않은 상태. -->
 							<a class="dropdown-item" href="/member/join.do">Register</a>
-							<a class="dropdown-item" href="/member/login.do">로그인</a> | 
-					<a class="dropdown-item" href="/admin/login.do">관리자 로그인</a>
+							<a class="dropdown-item" href="/member/login.do">login</a>
+					<a class="dropdown-item" href="/admin/login.do">admin login</a>
 						</c:when>
 
 						<c:otherwise>

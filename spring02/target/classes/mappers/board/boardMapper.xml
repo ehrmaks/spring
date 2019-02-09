@@ -5,132 +5,143 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
 <mapper namespace="board">
-<!-- 새로운 첨부파일 추가 -->	
+	<!-- 새로운 첨부파일 추가 -->
 	<insert id="updateAttach">
 		insert into attach (fileSize,fullName, bno) values
-		( #{fileSize}, #{fullName}, #{bno} )
+		(
+		#{fileSize}, #{fullName}, #{bno} )
 	</insert>
 
-<!-- 게시물 내용 수정 -->
+	<!-- 게시물 내용 수정 -->
 	<update id="update">
 		update board
 		set title=#{title}, content=#{content}
 		where bno=#{bno}
 	</update>
 
-<!-- 첨부파일 레코드 삭제 -->
+	<!-- 첨부파일 레코드 삭제 -->
 	<delete id="deleteFile">
 		delete from attach
 		where fullName=#{fullName}
 	</delete>
-	
+
 	<delete id="delete">
- 		delete from board where bno=#{bno}
-<!--  		update board set show='N' where bno=#{bno}  -->
+		delete from board where bno=#{bno}
+		<!-- update board set show='N' where bno=#{bno} -->
 	</delete>
 
-<!-- 첨부파일 정보 저장 -->	
+	<!-- 첨부파일 정보 저장 -->
 	<insert id="addAttach">
 		insert into attach (
 		fullName, bno, fileSize
-		) values ( 
-		#{fullName}, (SELECT MAX(bno) from board), #{fileSize} ) 
+		) values (
+		#{fullName}, (SELECT MAX(bno) from board), #{fileSize} )
 		<!-- currval 은 현재 시퀀스의 값을 의미한다 -->
 	</insert>
 
-<!-- 첨부파일 목록 -->
-	<select id="getAttach" 	resultType="java.util.HashMap">
-		select filesize,fullname from attach
+	<!-- 첨부파일 목록 -->
+	<select id="getAttach" resultType="java.util.HashMap">
+		select filesize,fullname from
+		attach
 		where bno=#{bno}
-		order by regdate desc	
+		order by regdate desc
 	</select>
 
 
 
 	<select id="listAll"
-resultType="com.example.spring02.model.board.dto.BoardDTO">
+		resultType="com.example.spring02.model.board.dto.BoardDTO">
 		<include refid="pagingHeader" />
 		select rownum as rn, b1.* from (
-			SELECT A1.* FROM (
-			SELECT rownum, bno, title, user_name, (select to_char(regdate, 'yyyy-mm-dd hh12:mi:ss') from board where bno=b.bno) regdate, 
-			viewcnt,
-			(select count(*) from reply 
-			where bno=b.bno) cnt
-        	FROM board b, admin a
-			<include refid="admin_search" />
-			order by bno desc)A1
+		SELECT A1.* FROM (
+		SELECT rownum, bno, title, user_name, (select to_char(regdate, 'yyyy-mm-dd
+		hh12:mi:ss') from board where bno=b.bno) regdate,
+		viewcnt,
+		(select count(*) from reply
+		where bno=b.bno) cnt
+		FROM board b, admin a
+		<include refid="admin_search" />
+		order by bno desc)A1
 
-			union
-			
-			SELECT A2.* FROM (
-			SELECT rownum, bno, title, user_name, (select to_char(regdate, 'yyyy-mm-dd hh12:mi:ss') from board where bno=b.bno) regdate, 
-			viewcnt,
-			(select count(*) from reply 
-			where bno=b.bno) cnt
-        	FROM board b, member m
-			<include refid="member_search" />
-			order by bno desc)A2
+		union
+
+		SELECT A2.* FROM (
+		SELECT rownum, bno, title, user_name, (select to_char(regdate, 'yyyy-mm-dd
+		hh12:mi:ss') from board where bno=b.bno) regdate,
+		viewcnt,
+		(select count(*) from reply
+		where bno=b.bno) cnt
+		FROM board b, member m
+		<include refid="member_search" />
+		order by bno desc)A2
 		)b1
 		<include refid="pagingFooter" />
-		order by bno desc 
+		order by bno desc
 	</select>
-	
-	<!-- 페이징 sql -->
-<sql id="pagingHeader">
-    SELECT * FROM (
-        <!-- SELECT ROWNUM AS rn, A.* FROM ( -->
-</sql>
-<sql id="pagingFooter">
-        <!-- ) A -->
-    )A3 WHERE rn BETWEEN #{start} AND #{end} 
-</sql>
 
-<!-- 레코드 갯수 계산 -->	
+	<!-- 페이징 sql -->
+	<sql id="pagingHeader">
+		SELECT * FROM (
+		<!-- SELECT ROWNUM AS rn, A.* FROM ( -->
+	</sql>
+	<sql id="pagingFooter">
+		<!-- ) A -->
+		)A3 WHERE rn BETWEEN #{start} AND #{end}
+	</sql>
+
+	<!-- 레코드 갯수 계산 -->
 	<select id="countArticle" resultType="int">
 		select sum(C.cnt) from
 		(select count(*) cnt from board b, admin a
-		<include refid="admin_search"/>
+		<include refid="admin_search" />
 		union all
 		select count(*) cnt from board b, member m
-		<include refid="member_search"/>) C
-		
+		<include refid="member_search" />
+		) C
+
 	</select>
-	
+
 	<sql id="admin_search">
 		<choose>
 			<when test="search_option != 'all' ">
-				where b.writer=a.userid
+				where b.writer=a.userid and notice is null
 				and
-				${search_option} like #{keyword}
+				${search_option} like
+				#{keyword}
 			</when>
 			<otherwise>
-				where b.writer=a.userid
+				where b.writer=a.userid and notice is null
 				and (b.user_name like #{keyword}
-				or b.title like #{keyword}
+				or
+				b.title like #{keyword}
 				or b.content like #{keyword})
 			</otherwise>
 		</choose>
 	</sql>
-	
+
 	<sql id="member_search">
 		<choose>
 			<when test="search_option != 'all' ">
 				where b.writer=m.userid
 				and
-				${search_option} like #{keyword}
+				${search_option} like
+				#{keyword}
 			</when>
 			<otherwise>
 				where b.writer=m.userid
 				and (b.user_name like #{keyword}
-				or b.title like #{keyword}
+				or
+				b.title like #{keyword}
 				or b.content like #{keyword})
 			</otherwise>
 		</choose>
 	</sql>
-	
+
 	<insert id="insert">
-		insert into board (bno,title,content,writer,user_name) values
-		( SEQ_BOARD.NEXTVAL , #{title}, #{content}, #{writer}, #{user_name} )
+		insert into board
+		(bno,title,content,writer,user_name) values
+		( SEQ_BOARD.NEXTVAL ,
+		#{title}, #{content}, #{writer}, #{user_name} )
 	</insert>
 
 	<!-- 조회수 증가 처리 -->
@@ -138,18 +149,21 @@ resultType="com.example.spring02.model.board.dto.BoardDTO">
 		update board set viewcnt=viewcnt+1
 		where bno=#{bno}
 	</update>
-	
-	<select id="read" 
-resultType="com.example.spring02.model.board.dto.BoardDTO">
-		select bno,title,(select to_char(regdate, 'yyyy-mm-dd hh12:mi:ss') from board where bno=b.bno) regdate,content,viewcnt,user_name,writer 
+
+	<select id="read"
+		resultType="com.example.spring02.model.board.dto.BoardDTO">
+		select bno,title,(select to_char(regdate, 'yyyy-mm-dd
+		hh12:mi:ss') from board where bno=b.bno)
+		regdate,content,viewcnt,user_name,writer
 		from board b, member m
 		where b.writer=m.userid and b.bno=#{bno}
 		union all
-		select bno,title,(select to_char(regdate, 'yyyy-mm-dd hh12:mi:ss') from board where bno=b.bno) regdate,content,viewcnt,user_name,writer 
+		select bno,title,(select to_char(regdate, 'yyyy-mm-dd hh12:mi:ss')
+		from board where bno=b.bno) regdate,content,viewcnt,user_name,writer
 		from board b, admin a
 		where b.writer=a.userid and b.bno=#{bno}
 	</select>
-	
+
 </mapper>
 
 

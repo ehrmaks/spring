@@ -10,12 +10,12 @@
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
-
-<h2>상품정보</h2>
-<table>
+<div class="container">
+<h2 align="center">상품정보</h2>
+<table class="table table-hover" width="80%">
 	<tr>
 		<td><img src="${path}/images/${dto.picture_url}"
-		width="300px" height="300px"></td>
+		width="80%"></td>
 		
 		<td align="center">
 			
@@ -58,7 +58,7 @@
 		</td>
 	</tr>
 </table>
-
+</div>
 
 </body>
 </html>

@@ -35,7 +35,6 @@ public class BoardDAOImpl implements BoardDAO {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("fullName", fullName);
-		System.out.println("DAO FullName" + fullName);
 		map.put("fileSize", fileSize);
 		
 		sqlSession.insert("board.addAttach", map);	
@@ -63,7 +62,6 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public void delete(int bno) throws Exception {
-		System.out.println("삭제DB접근");
 		sqlSession.delete("board.delete", bno);
 	}
 
