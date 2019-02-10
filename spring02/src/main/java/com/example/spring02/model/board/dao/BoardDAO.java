@@ -11,7 +11,7 @@ public interface BoardDAO {
 	public void deleteFile(String fullName);
 	// 첨부파일 정보
 	public List<Map<String, Object>> getAttach(int bno);
-	// 첨부팡리 저장
+	// 첨부파일 저장
 	public void addAttach(String fullName, String fileSize);
 	// 첨부파일 수정
 	public void updateAttach(String fileSize, String fullName, int bno);

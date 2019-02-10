@@ -24,6 +24,9 @@ public class EmailServiceImpl implements EmailService {
 			// 받는 사람
 			msg.addRecipient(RecipientType.TO, 
 					new InternetAddress(dto.getReceiveMail()));
+			
+			System.out.println("보낸사람 : " + dto.getSenderMail());
+			System.out.println("보낸사람 이름 : " + dto.getSenderName());
 			// 보내는 사람(이메일주소+이름)
 			msg.addFrom(new InternetAddress[] {
 					new InternetAddress(dto.getSenderMail(), dto.getSenderName())

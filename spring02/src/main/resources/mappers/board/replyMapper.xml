@@ -17,25 +17,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by rno -->
 		
 		<include refid="pagingHeader"/>
+		select rownum as rn, A1.* from (
 			select r.rno, bno, r.replytext, r.replyer, 
 				r.secret_reply, r.regdate, r.updatedate, r.user_name,
 				(select b.writer from board b where b.bno = r.bno) as writer
 			from reply r, member m
 			where
 				r.replyer = m.userid
-				and bno = #{bno}
-			order by rno
+				and bno = #{bno} order by rno)A1
+
+			union all
+		
+		select rownum as rn, A2.* from (
+			select r.rno, bno, r.replytext, r.replyer, 
+				r.secret_reply, r.regdate, r.updatedate, r.user_name,
+				(select b.writer from board b where b.bno = r.bno) as writer
+			from reply r, admin a
+			where
+				r.replyer = a.userid
+				and bno = #{bno} order by rno)A2
 		<include refid="pagingFooter"></include>
+		order by rno
 	</select>
 	
 	<sql id="pagingHeader">
 		select * from (
-		select rownum as rn, A.* from (
+		<!-- select rownum as rn, A.* from ( -->
 	</sql>
 	
 	<sql id="pagingFooter">
-			) A
-		) where rn between #{start} and #{end}
+			<!-- ) A -->
+		)A3 where rn between #{start} and #{end} 
 	</sql>
 	
 	<delete id="deleteReply">

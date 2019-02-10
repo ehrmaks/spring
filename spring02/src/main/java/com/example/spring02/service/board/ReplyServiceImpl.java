@@ -47,6 +47,11 @@ public class ReplyServiceImpl implements ReplyService {
 //댓글 쓰기	
 	@Override
 	public void create(ReplyDTO dto) {
+		/*String replytext = dto.getReplytext();
+		replytext = replytext.replace("\n", "<br>");
+		
+		dto.setReplytext(replytext);*/
+		
 		replyDao.create(dto);
 	}
 	@Override

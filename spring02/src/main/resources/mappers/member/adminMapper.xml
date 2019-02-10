@@ -4,15 +4,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
 <mapper namespace="admin">
+
 	<select id="login_check" resultType="String">
-		select name from member
+		select name from admin
 		where userid=#{userid} and passwd=#{passwd}		
 	</select>
 	
-	<insert id="insert" parameterType="com.example.spring02.model.admin.dto.AdminDTO">
-		insert into member(userid,passwd,name,email) values 
-		(#{userid}, #{passwd}, #{name}, #{email})
+	<insert id="insert" parameterType="com.example.spring02.model.member.dto.MemberDTO">
+		insert into admin(userid,passwd,name,email,address1,address2,zipcode) 
+		values (#{userid}, #{passwd}, #{name}, #{email}, #{address1}, #{address2}, #{zipcode})
 	</insert>
+	
+	<select id="viewMember"
+	resultType="com.example.spring02.model.member.dto.MemberDTO">
+		select userid, passwd, name, email, join_date, address1, address2, zipcode
+		 from admin where userid=#{userid}
+	</select>
+	
+	<update id="update">
+		update admin 
+		set
+			userid = #{userid,jdbcType=VARCHAR},
+			passwd = #{passwd,jdbcType=VARCHAR},
+			name = #{name,jdbcType=VARCHAR},
+			email = #{email,jdbcType=VARCHAR},
+			address1 = #{address1,jdbcType=VARCHAR},
+			address2 = #{address2,jdbcType=VARCHAR},
+			updatesys = SYSDATE,
+			zipcode = #{zipcode,jdbcType=VARCHAR}
+		where
+			userid = #{userid,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="delete">
+		delete from	admin
+		where userid = #{userid} and passwd = #{passwd}
+	</delete>
+	
+	<select id="idcheck" parameterType="String" resultType="Integer">
+		select count(*) 
+		from admin
+		where userid = #{userid}
+	</select>
+	
+	<select id="pw_check" resultType="String">
+		select passwd
+		from admin
+		where userid = #{userid}
+	</select>
+	
+	
 </mapper>
 
 

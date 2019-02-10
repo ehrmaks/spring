@@ -23,7 +23,6 @@ public class BoardServiceImpl implements BoardService {
 	//첨부파일 레코드 삭제
 	@Override
 	public void deleteFile(String fullName) {
-		System.out.println("삭제할 fullName = " + fullName);
 		boardDao.deleteFile(fullName);
 	}
 
@@ -122,7 +121,6 @@ public class BoardServiceImpl implements BoardService {
 		// attach 레코드 삭제
 		// 첨부파일 삭제
 		// board 레코드 삭제
-		System.out.println("삭제 서비스");
 		boardDao.delete(bno);
 		
 	}

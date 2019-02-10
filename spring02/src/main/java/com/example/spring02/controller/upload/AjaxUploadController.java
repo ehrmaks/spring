@@ -79,7 +79,6 @@ public class AjaxUploadController {
 		
 		map.put("fileSize", fileSize);
 		map.put("fullName", fullName);
-		System.out.println("map의 fullname : " + map.put("fullName", fullName));
 		mav.addAllObjects(map);
 		mav.setViewName("jsonView");
 		

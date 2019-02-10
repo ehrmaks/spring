@@ -3,25 +3,80 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <%@ include file="../include/header.jsp" %>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 
 <script>
 $(function() {
-	$("#btnjoin").click(function() {
-	var idtext = document.form1.userid;
-	var pwtext = document.form1.passwd;
-	var cpwtext = document.form1.passwd_check;
-	var nametext = document.form1.name;
-	var emailtext = document.form1.email;
+	var idck = 0;
+	$("#userid").keyup(function() {
+		var userid = $("#userid").val();
+		
+		if(userid == "") {
+			$("#div2").html("아이디를 입력하세요.").css("color","red");
+		} else {
+			$.ajax({
+				async: true, // 비동기 통신 default는 true이다
+				type: "post",
+				data: userid,
+				url: "/member/idcheck",
+				dataType: "json",
+				contentType: "application/json; charset=UTF-8",
+				success: function(data) {
+					if(data.cnt > 0) {
+						$("#div2").html("아이디가 존재합니다. 다른 아이디를 입력해주세요.").css("color","red");
+					} else {
+						$("#div2").html("사용가능한 아이디입니다.").css("color","blue");		
+						idck = 1;
+					}
+				}, error: function(error) {
+					console.log(error);
+					alert("error : " + error);
+				}
+			});
+		}
+	});
 	
-	var id = idtext.value;
-    var pw = pwtext.value;
-    var cpw = cpwtext.value;
-    var name = nametext.value;
-    var email = emailtext.value;
+	
+	
+	
+	$("#passwd").keyup(function() {
+		var passwd = $("#passwd").val();
+		var passwd_check = $("#passwd_check").val();
+		
+		if(passwd != passwd_check) {
+			$("#div1").html("비밀번호가 일치하지 않습니다.").css("color","red");
+		} else {
+			$("#div1").html("일치 합니다.").css("color","blue");
+		}
+	});
+	
+	
+	$("#passwd_check").keyup(function() {
+		var passwd = $("#passwd").val();
+		var passwd_check = $("#passwd_check").val();
+		
+		if(passwd != passwd_check) {
+			$("#div1").html("비밀번호가 일치하지 않습니다.").css("color","red");
+		} else {
+			$("#div1").html("일치 합니다.").css("color","blue");
+		}
+	});
+	
+	$("#btnjoin").click(function() {
+	var idtext = $("#userid");
+	var pwtext = $("#passwd");
+	var cpwtext = $("#passwd_check");
+	var nametext = $("#name");
+	var emailtext = $("#email");
+	
+	var id = $("#userid").val();
+    var pw = $("#passwd").val();
+    var cpw = $("#passwd_check").val();
+    var name = $("#name").val();
+    var email = $("#email").val();
 	
 	var regExp1 = /^[a-zA-Z0-9]{4,12}$/;
     //id와 비밀번호의 유효성 검사
@@ -38,20 +93,20 @@ $(function() {
     	// 밑에 동일한 유효성 검사
     {
     	alert("형식에 맞춰 ID를 입력하세요.");
-    	idtext.value = "";
+    	id = "";
     	idtext.focus();
     	return;
     }
     if(!regExp1.test(pw))
     {
     	alert("형식이 맞춰 비밀번호를 입력하세요.");
-    	pwtext.value="";
+    	pw="";
     	pwtext.focus();
     	return;
     }
     if(!(cpw.slice(0,cpw.length) === pw.slice(0,pw.length))){
     	alert("비밀번호가 동일하지 않습니다.");
-   		cpwtext.value="";
+   		cpw="";
    		cpwtext.focus();
    		return;
     }
@@ -59,7 +114,7 @@ $(function() {
     if(!regname.test(name))
     {
     	alert("이름을 형식에 맞춰 입력하세요.");
-    	nametext.value="";
+    	name="";
     	nametext.focus();
     	return;
     }
@@ -67,14 +122,16 @@ $(function() {
     if(!regExp2.test(email))
     {
     	alert("이메일을 형식에 맞춰 입력하세요.");
-    	emailtext.value="";
+    	email="";
     	emailtext.focus();
     	return;
     }
     
-
-    document.form1.action="${path}/member/join_check.do";
-    document.form1.submit();
+	alert("가입 성공 하셨습니다!");
+    /* document.form1.action="/member/join_check.do";
+    document.form1.submit(); */
+    $("form[name=form1]").attr("action","/member/join_check.do");
+    $("form[name=form1]").submit();
 	});
 	
 	$("#btnback").click(function() {
@@ -131,19 +188,57 @@ function daumZipCode() {
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
-
+<h2 align="center">회원가입 페이지</h2><br><br>
+<div class="container" style="overflow: scroll;">
 <form name="form1" method="post">
-	아이디 : <input id="userid" name="userid" size="10"><br>
-	비밀번호 : <input type="password" name="passwd" id="passwd"><br>
-	비밀번호 확인 : <input type="password" name="passwd_check" id="passwd_check"><br>
-	이름 : <input type="text" name="name" size="10" id="name"><br>
-	우편번호 : <input name="zipcode" id="zipcode" readonly size="10">
-	<input type="button" onclick="daumZipCode()" value="우편번호 찾기"><br>
-	주소 : <input name="address1" id="address1" size="60"><br>
-	상세주소 : <input name="address2" id="address2"><br>
-	이메일 : <input type="text" name="email" id="email" size="30"><br>
-	<input type="button" id="btnjoin" value="가입신청">&nbsp;&nbsp;
-	<input type="button" id="btnback" value="취소">
+<table class="table table-hover">
+			<tr>
+				<td>아이디</td>
+				<td><input name="userid" id="userid" size="10">
+					<div id="div2" style="color: red; font-style: inherit;"></div>
+				</td>
+			</tr>
+			<tr>
+				<td>이름</td>
+				<td><input name="name" id="name" size="10">
+					
+				</td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td><input type="password" name="passwd" id="passwd"></td>
+			</tr>
+			<tr>
+				<td>비밀번호 확인</td>
+				<td><input type="password" name="passwd_check" id="passwd_check">
+					<div id="div1" style="color: red; font-style: inherit;"></div>
+				</td>
+			</tr>
+			<tr>
+				<td>이메일주소</td>
+				<td><input type="text" name="email" id="email" size="30"></td>
+			</tr>
+			<tr>
+				<td>우편번호</td>
+				<td><input name="zipcode" id="zipcode" readonly="readonly" size="10">
+				<input type="button" onclick="daumZipCode()" value="우편번호 찾기" class="btn btn-default btn-info"></td>
+			</tr>
+			<tr>
+				<td>주소</td>
+				<td><input name="address1" id="address1" size="60"></td>
+			</tr>
+			<tr>
+				<td>상세주소</td>
+				<td><input name="address2" id="address2" size="60"></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="button" value="가입신청" id="btnjoin" class="btn btn-default btn-primary">
+					<input type="button" value="취소" id="btnback" class="btn btn-default btn-danger">
+				</td>
+			</tr>
+		</table>
 </form>
+</div>
 </body>
 </html>

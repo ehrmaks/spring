@@ -14,7 +14,7 @@
 <script>
 	function product_delete() {
 		if(confirm("삭제하시겠습니까?")){
-			document.form1.action="${path}/shop/product/delete.do";
+			document.form1.action="/shop/product/delete.do";
 			document.form1.submit();
 		}
 	}
@@ -36,20 +36,21 @@
 			return;
 		}
 		
-		if(product_desc == "") {
+		/* if(product_desc == "") {
 			alert("상품 설명을 입력하세요.");
 			$("#product_desc").focus();
 			return;
-		}
-		document.form1.action = "${path}/shop/product/update.do";
+		} */
+		document.form1.action = "/shop/product/update.do";
 		document.form1.submit();
 	}
 </script>
 
-<h2>상품 정보 편집</h2>
-<form name="form1" method="post"
-enctype="multipart/form-data">
-	<table>
+<div class="container">
+<h2 align="center">상품 정보 편집</h2><br><br>
+<form name="form1" method="post" enctype="multipart/form-data">
+	<input type="hidden" id="product_id" name="product_id" value="${dto.product_id}">
+	<table class="table table-hover" width="80%" border="1">
 		<tr>
 			<td>상품명</td>
 			<td><input name="product_name" id="product_name"
@@ -65,28 +66,32 @@ enctype="multipart/form-data">
 		<tr>
 			<td>상품설명</td>
 			<td><textarea rows="5" cols="60" name="product_desc"
-			id="product_desc">${dto.product_desc}</textarea></td>
+			id="product_desc">${dto.product_desc}</textarea>
+			<script>
+			CKEDITOR.replace("product_desc", {
+				filebrowserUploadUrl : "${path}/imageUpload.do"
+			});
+			</script>
+			</td>
 		</tr>
 		
 		<tr>
 			<td>상품이미지</td>
-			<td><img src="${path}/images/${dto.picture_url}" width="300px"
-			height="300px"><br>
-			<input type="file" name="file1" id="file1"></td>
+			<td><img src="/images/${dto.picture_url}" width="350px"
+			height="250px"><br>
+			<input type="file" name="file1" id="file1" class="btn btn-default btn-info"></td>
 		</tr>
 		
 		<tr>
 			<td colspan="2" align="center">
-				<input name="hidden" name="product_id" value="${dto.product_id}">
-				<input type="button" value="수정" onclick="product_update()">
-				<input type="button" value="삭제" onclick="product_delete()">
-				<input type="button" value="목록" onclick="location.href='${path}/shop/product/list.do'">
+				<input type="button" value="수정" onclick="product_update()" class="btn btn-default btn-warning">
+				<input type="button" value="삭제" onclick="product_delete()" class="btn btn-default btn-danger">
+				<input type="button" value="목록" onclick="location.href='${path}/shop/product/list.do'" class="btn btn-default btn-info">
 			</td>
 		</tr>
 	</table>
-
-
 </form>
+</div>
 
 </body>
 </html>

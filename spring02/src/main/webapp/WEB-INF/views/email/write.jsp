@@ -8,8 +8,11 @@
 <%@ include file="../include/header.jsp" %>
 </head>
 <body>
+
 <%@ include file="../include/admin_menu.jsp" %>
+
 <h2>이메일 보내기</h2>
+
 <form action="${path}/email/send.do" method="post">
 	발신자 이름 : <input name="senderName"><br>
 	발신자 이메일 : <input name="senderMail"><br>
@@ -22,4 +25,5 @@
 <span style="color: red;">${message}</span>
 
 </body>
+
 </html>

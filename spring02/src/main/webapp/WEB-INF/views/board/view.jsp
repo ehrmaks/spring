@@ -279,10 +279,12 @@ function showReplyModify(rno){
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
-<h2>게시물 보기</h2>
+<h2 class="text-center">게시물 보기</h2><br><br>
+
+<div class="container">
 <form id="form1" name="form1" method="post"
 action="/board/insert.do" enctype="multipart/form-data">
-	<table border="1" width="800px">
+	<table border="1" class="table table-striped table-bordered table-hover">
 		<colgroup>
 			<col width="10%"/>
 			<col width="35%"/>
@@ -304,6 +306,7 @@ action="/board/insert.do" enctype="multipart/form-data">
 				<th scope="row">작성자</th>
 				<td>${dto.user_name}</td>
 				<th scope="row">작성시간</th>
+				<%-- <td><fmt:formatDate value="${dto.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td> --%>
 				<td>${dto.regdate}</td>
 			</tr>
 			<tr>
@@ -331,31 +334,32 @@ action="/board/insert.do" enctype="multipart/form-data">
 	<hr>
 	<br>
 	
-	<div style="width:700px; text-align:center;">
+	<div class="container" style="width:700px; text-align:center;">
 <!-- 수정,삭제에 필요한 글번호를 hidden 태그에 저장 -->	
 		<input type="hidden" name="bno" value="${dto.bno}">
 		
 		<!-- 본인만 수정,삭제 버튼 표시 -->
 		<c:if test="${sessionScope.userid == dto.writer || sessionScope.userid == 'admin'}">
-			<button type="button" id="btnUpdate">수정</button>
-			<button type="button" id="btnDelete">삭제</button>
+			<button type="button" id="btnUpdate" class="btn btn-default btn-warning">수정</button>
+			<button type="button" id="btnDelete" class="btn btn-default btn-danger">삭제</button>
 		</c:if>
 		
-		<button type="button" id="btnList">목록</button>
+		<button type="button" id="btnList" class="btn btn-default btn-info">목록</button>
 	</div>
 	<br>
 	<hr>
 	<br>
 </form>
 <!-- 댓글 작성 -->
-<div style="width:700px; text-align:center;">
+<div style="width:700px; text-align:center;" align="center" class="container">
 	 <c:if test="${sessionScope.userid != null }">
 	 	<textarea rows="5" cols="80" id="replytext"
 	 		placeholder="댓글을 작성하세요"></textarea>
 	 	<br>
 	 	<input type="checkbox" id="secretReply"> 비밀댓글
-	 	<button type="button" id="btnReply">댓글작성</button>
+	 	<button type="button" id="btnReply" class="btn btn-default btn-primary">댓글작성</button>
 	 </c:if>
+	 <br>
 </div>
 <!-- 댓글 목록 -->
 <div id="listReply"></div>
@@ -363,7 +367,7 @@ action="/board/insert.do" enctype="multipart/form-data">
 <br>
 <br>
 <br>
-
+</div>
 </body>
 </html>
 

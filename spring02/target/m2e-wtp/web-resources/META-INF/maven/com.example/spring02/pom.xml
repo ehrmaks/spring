@@ -17,7 +17,8 @@
 	
 	<properties>
 		<java-version>1.8</java-version>
-		<org.springframework-version>5.0.1.RELEASE</org.springframework-version>		<org.aspectj-version>1.6.10</org.aspectj-version>
+		<org.springframework-version>5.0.1.RELEASE</org.springframework-version>		
+		<org.aspectj-version>1.8.13</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
 	<dependencies>
@@ -46,6 +47,13 @@
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>	
+		
+		
+		<dependency>
+    		<groupId>ch.qos.logback</groupId>
+    		<artifactId>logback-classic</artifactId>
+    		<version>1.1.7</version> <!--버전은 상황에 따라 -->
+		</dependency>
 		
 		<!-- Logging -->
 		<dependency>
@@ -126,11 +134,21 @@
 		</dependency>  
 		
 
+<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-websocket</artifactId>
+    <version>5.0.1.RELEASE</version>
+</dependency>
+
+
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 <dependency>
     <groupId>com.fasterxml.jackson.core</groupId>
     <artifactId>jackson-databind</artifactId>
-    <version>2.9.4</version>
+    <version>2.9.5</version>
 </dependency>
+
 
 
 
@@ -266,30 +284,38 @@
 </dependency>
 
 		
-<!--  Spring Security -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>3.2.10.RELEASE</version>
-        </dependency>
- 
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-            <version>3.2.10.RELEASE</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-            <version>3.2.10.RELEASE</version>
-        </dependency>
-    
-        <dependency> 
-            <groupId>org.springframework.security</groupId> 
-            <artifactId>spring-security-taglibs</artifactId>
-            <version>3.2.10.RELEASE</version> 
-         </dependency>
+<!-- 스프링 시큐리티 -->
+
+<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-core</artifactId>
+    <version>5.0.1.RELEASE</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-web</artifactId>
+    <version>5.0.1.RELEASE</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+<dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-config</artifactId>
+    <version>5.0.1.RELEASE</version>
+</dependency>
+
+<!-- sql log -->
+<dependency>
+    <groupId>org.lazyluke</groupId>
+    <artifactId>log4jdbc-remix</artifactId>
+    <version>0.2.7</version>
+</dependency>
+
+
+
 
 
 		      

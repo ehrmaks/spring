@@ -15,4 +15,5 @@ public interface CartService {
 	public int sumMoney(String userid);
 	public void updateCart(CartDTO dto);
 	public void modifyCart(CartDTO dto);
+	public int counting(String userid);
 }

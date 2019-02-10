@@ -5,7 +5,9 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
@@ -53,7 +55,8 @@
 		<beans:constructor-arg value="d:/upload"/>
 	</beans:bean> -->
 	
-	
+	<!-- aop의 설정으로 Proxy 객체를 자동으로 생성 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	<!-- 인터셉터 빈 등록 -->
 	<beans:bean id="loginInterceptor"
 	class="com.example.spring02.interceptor.LoginInterceptor"></beans:bean>
@@ -69,8 +72,13 @@
 			<mapping path="/board/insert.do"/>
 			<mapping path="/board/update.do"/>
 			<mapping path="/board/delete.do"/>
+			<mapping path="/notice/write.do"/>
+			<mapping path="/notice/insert.do"/>
+			<mapping path="/notice/update.do"/>
+			<mapping path="/notice/delete.do"/>
 			<mapping path="/shop/cart/list.do"/>
 			<mapping path="/shop/cart/insert.do"/>
+			<mapping path="/chatting.do"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 		<interceptor>
@@ -80,6 +88,9 @@
 		<interceptor>
 			<mapping path="/shop/product/write.do"/>
 			<mapping path="/shop/product/insert.do"/>
+			<mapping path="/messages/write.do"/>
+			<mapping path="/email/write.do"/>
+			<mapping path="/admin/admin.do"/>
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 	</interceptors>
@@ -89,6 +100,8 @@
 <beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver" id="viewResolver">
     <beans:property value="0" name="order"></beans:property>
 </beans:bean>
+
+
 
 		
 	

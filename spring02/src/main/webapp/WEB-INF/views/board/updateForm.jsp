@@ -34,7 +34,7 @@ $(document).ready(function() {
 			document.form1.content.focus();
 			return;
 		}
-		document.form1.action="${path}/board/update.do";
+		$("form[name=form1]").attr("action", "${path}/board/update.do")
 		
 		// 첨부파일 이름을 form에 추가
 		var that = $("#form1");
@@ -57,7 +57,7 @@ $(document).ready(function() {
 		//폼에 hidden 태그들을 붙임
 		$("#form1").append(str, str2);
 		// 폼에 입력한 데이터를 서버로 전송
-		document.form1.submit();
+		$("form[name=form1]").submit();
 		
 	});
 	
@@ -243,25 +243,25 @@ function listAttach(){
 
 <style>
 .fileDrop {
-	width: 600px;
-	height: 100px;
+	width: 60%;
+	height: 100%;
 	border: 1px dotted gray;
-	background-color: gray;
+	background-color: white;
 }
 </style>
-
 
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
-<h2>게시물 수정</h2>
+<div class="container">
+<h2 class="text-center">게시물 수정</h2>
 <form id="form1" name="form1" method="post"
 action="${path}/board/insert.do">
-	<div>제목  <input name="title" id="title" size="80" 
+	<div class="container" style="width:80%;">제목 : <input name="title" id="title" size="60"
 	value="${dto.title}" placeholder="제목을 입력해주세요">
 	</div>
-	<div>조회수 : ${dto.viewcnt}	</div>
-	<div style="width:800px;">
+	<div class="container" style="width:80%;">조회수 : ${dto.viewcnt}	</div>
+	<div style="width:80%;" class="container">
 		내용 
 		<textarea name="content" id="content" rows="4" 
 		cols="80" placeholder="내용을 입력해주세요">
@@ -277,38 +277,41 @@ CKEDITOR.replace("content",{
 	<br><hr><br>
 	
 	
-	<div style="width:700px; text-align:center;">
+	<div style="width:700px; text-align:center;" class="container">
 <!-- 수정,삭제에 필요한 글번호를 hidden 태그에 저장 -->	
 		<input type="hidden" name="bno" value="${dto.bno}">
 		
 		<!-- 본인만 수정,삭제 버튼 표시 -->
 		<c:if test="${sessionScope.userid == dto.writer}">
-			<button type="button" id="btnSave">확인</button>
+			<button type="button" id="btnSave" class="btn btn-default btn-primary">확인</button>
 		</c:if>
 
 		
 		
-		<button type="button" id="btnList">목록</button>
+		<button type="button" id="btnList" class="btn btn-default btn-info">목록</button>
 	</div>
 	<br>
 	<hr>
 	<br>
 </form>
 
-	<div> 첨부파일을 아래박스에 드래그 하세요 또는&nbsp;
+	<div class="container" align="center">
 		<form id="uploadForm" enctype="multipart/form-data" method="post"
 		action="/upload/uploadAjax">
-			<input type="file" name="file">
+			<input type="file" name="file" class="btn btn-default btn-info">
 		</form>
-		<button id="fileUp">업로드</button>
-		<!-- 첨부팡리 등록 영역 -->
-		<div class="fileDrop"></div>
-		<!-- 첨부파일의 목록 출력 영역 -->
-		<div id="uploadedList"></div>
+		<button id="fileUp" class="btn btn-default btn-primary">업로드</button>
+		
+		<div class="fileDrop">
+			<div align="center">
+				<div align="center" style="font-style: normal; color: gray; "><img src="/images/upload.png"> 마우스로 파일을 끌어오세요.</div>
+			</div>
+			<div id="uploadedList" class="container" align="left"></div>
+		</div>
 	</div>
 	
 	<br>	<br>	<br>	<br>
-
+</div>
 
 </body>
 </html>
