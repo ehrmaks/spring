@@ -4,6 +4,17 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />  
-
+    <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" /> 
+<!--     <beans:bean class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+    	<beans:constructor-arg ref="sessionRegistry"/>
+    	<beans:property name="maximumSessions" value="1"/>
+    	<beans:property name="exceptionIfMaximumExceeded" value="false"/>
+    </beans:bean> -->
+    <!-- <http auto-config="true">
+    	<session-management invalid-session-url="/member/login.do">
+    		<concurrency-control max-sessions="1" expired-url="/member/login.do"/>
+    	</session-management>
+    	<intercept-url pattern="/resources/**" access="permitAll"/>
+    	<intercept-url pattern="/" access="permitAll"/>
+    </http> -->
 </beans:beans>

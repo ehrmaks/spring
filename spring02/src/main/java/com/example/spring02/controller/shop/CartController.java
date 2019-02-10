@@ -2,6 +2,7 @@ package com.example.spring02.controller.shop;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,8 +23,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.spring02.model.shop.dto.CartDTO;
 import com.example.spring02.service.shop.CartService;
+import com.mysql.cj.xdevapi.JsonArray;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 
 @Controller
@@ -144,6 +147,68 @@ public class CartController {
 		
 		mav.setViewName("redirect:/shop/cart/list.do");
 		
+		/*return "redirect:/shop/cart/list.do";*/
+		return mav;
+	}
+	
+	@SuppressWarnings({ "unchecked", "null" })
+	@RequestMapping(value="/shop/cart/update", method=RequestMethod.POST,
+			produces="application/json")
+	@ResponseBody
+	public ModelAndView ajaxUpdate(
+			@RequestBody String paramData, HttpSession session) throws Exception {
+		
+		String userid = (String) session.getAttribute("userid");
+		
+		List<Map<String, Object>> resultMap = new ArrayList<Map<String,Object>>();
+		resultMap = JSONArray.fromObject(paramData);
+		
+		int cart_id[] = null;
+		int amount[] = null;
+		
+		for(Map<String, Object> map : resultMap) {
+			String c_id = map.get("cart_id").toString(); // ["150","149","148"]
+			cart_id = Arrays.stream(c_id.substring(2, c_id.length()-2).split("\",\""))
+				    .map(String::trim).mapToInt(Integer::parseInt).toArray();
+			
+			String a_amount = map.get("amount").toString(); // ["4","1","2"]
+			amount = Arrays.stream(a_amount.substring(2, a_amount.length()-2).split("\",\""))
+				    .map(String::trim).mapToInt(Integer::parseInt).toArray();
+		}
+		
+		if (userid != null) {
+			for(int i=0; i<cart_id.length; i++) {
+				if(amount[i] == 0) { // 수량이 0이면 레코드 삭제
+					cartService.delete(cart_id[i]);
+				} else { // 0이 아니면 수정
+					CartDTO dto = new CartDTO();
+					dto.setUserid(userid);
+					dto.setCart_id(cart_id[i]);
+					dto.setAmount(amount[i]);
+					cartService.modifyCart(dto);
+				}
+			}
+		}
+		
+		
+		ModelAndView mav = new ModelAndView();
+		Map<String, Object> map = new HashMap<>();
+		
+		List<CartDTO> list = cartService.listCart(userid);
+		
+		int sumMoney = cartService.sumMoney(userid);
+		
+		int fee = sumMoney >= 50000 ? 0 : 2500;
+		
+		map.put("sumMoney", sumMoney); // 장바구니 금액 합계
+		map.put("fee", fee); // 배송료
+		map.put("sum", sumMoney+fee); // 총합계금액
+		map.put("list", list); // 맵에 자료 추가
+		map.put("count", list.size()); // 상품갯수
+		map.put("cart_id", cart_id);
+		map.put("amount", amount);
+		mav.addAllObjects(map);
+		mav.setViewName("jsonView");
 		/*return "redirect:/shop/cart/list.do";*/
 		return mav;
 	}

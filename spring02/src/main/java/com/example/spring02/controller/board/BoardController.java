@@ -124,6 +124,7 @@ public class BoardController {
 		return mav;	
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/board/search", method=RequestMethod.POST,
 			produces = "application/json")
 	@ResponseBody

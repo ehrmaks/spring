@@ -44,8 +44,14 @@ public class AdminController {
 	
 	
 	@RequestMapping("login.do") //세부적인 url mapping
-	public String login() {
-		return "admin/login"; //views/admin/login.jsp로 이동
+	public String login(HttpSession session) {
+		String userid = (String) session.getAttribute("userid");
+		
+		if(userid != null) {
+			return "home";
+		} else {
+			return "admin/login"; //views/admin/login.jsp로 이동
+		}
 	}
 	@RequestMapping("adminhome.do")
 	public String adminHome() {

@@ -55,8 +55,17 @@ public class MemberController {
 	}
 	
 	@RequestMapping("login.do") //세부적인 url 매핑
-	public String login() {
-		return "member/login"; // login.jsp로 이동
+	public String login(HttpSession session) {
+		String userid = (String) session.getAttribute("userid");
+		
+		if(userid != null) {
+			
+			return "home";
+		} else {
+			
+			return "member/login"; // login.jsp로 이동
+		}
+		
 	}
 	
 	@RequestMapping("login_check.do")

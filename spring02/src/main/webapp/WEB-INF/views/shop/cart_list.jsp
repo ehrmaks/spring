@@ -20,6 +20,53 @@
 			}
 		});
 		
+		$("input[name=amount]").keyup(function() {
+			var targetArr = new Array();
+			var obj = new Object();
+			
+			var cart_id = $("[name=cart_id]").map(function() {
+				return this.value}).get();
+			var amount = $("[name=amount]").map(function() {
+				return this.value}).get();
+			
+			obj.cart_id = cart_id;
+			obj.amount = amount;
+			
+			targetArr.push(obj);
+			var param = JSON.stringify(targetArr);
+			
+			$.ajax({
+				async : true,
+				type : "post",
+				url : "/shop/cart/update",
+				data : param,
+				dataType : "json",
+				contentType : "application/json; charset=UTF-8",
+				success : function(data) {
+					var list = data.list;
+					var count = data.count;
+					var fee = data.fee;
+					var sum = data.sum;
+					var sumMoney = data.sumMoney;
+					var cart_id = data.cart_id;
+					var amount = data.amount;
+					var html = "";
+					
+					html += '<td align="center"><input type="number" value='+amount+'>';
+					html += '<input type="hidden" value='+cart_id+'></td>';
+					
+					html2 = '';
+					html2 += '장바구니 금액 합계 : '+sumMoney+'<br>';
+					html2 += '배송료 : '+fee+'<br>';
+					html2 += '총합계 : '+sum+'';
+					
+					$("[name=amount]").html(html);
+					$("[name=sum]").html(html2);
+				}, error : function(data) {
+					console.log(data);
+				}
+			});
+		});
 	});
 </script>
 
@@ -40,7 +87,7 @@
 		<c:otherwise>
 			<form action="${path}/shop/cart/update.do"
 			name="form1" method="post">
-				<table border="1" class="table table-hover">
+				<table border="1" class="table table-hover" name="table1">
 					<tr align="center">
 						<th>상품명</th>
 						<th>이미지</th>
@@ -60,8 +107,7 @@
 							value="${row.amount}">
 							<input type="hidden" name="cart_id" id="cart_id"
 							value="${row.cart_id}"></td>
-							
-							<td><fmt:formatNumber value="${row.money}"
+							<td name="money"><fmt:formatNumber value="${row.money}"
 							pattern="###,###,###"></fmt:formatNumber></td>
 							<td>
 								<c:if test="${sessionScope.userid != null}">
@@ -71,7 +117,7 @@
 						</tr>
 					</c:forEach>
 					<tr>
-						<td colspan="5" align="right">
+						<td colspan="5" align="right" name="sum">
 							장바구니 금액 합계 : <fmt:formatNumber value="${map.sumMoney}"
 							pattern="###,###,###"></fmt:formatNumber><br>
 							배송료 : <fmt:formatNumber value="${map.fee}"
