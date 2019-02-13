@@ -12,12 +12,26 @@
 		$("#btnList").click(function() {
 			// 장바구니 목록으로 이동
 			location.href="${path}/shop/product/list.do";
+			/* document.form1.action="${path}/shop/product/list.do";
+			document.form1.submit(); */
 		});
 		
 		$("#btnDelete").click(function() {
 			if(confirm("장바구니를 비우시겠습니까?")) {
-				location.href="${path}/shop/cart/deleteAll.do";
+				//location.href="${path}/shop/cart/deleteAll.do";
+				document.form1.action="${path}/shop/cart/deleteAll.do";
+				document.form1.submit();
 			}
+		});
+		
+		$("#btnUpdate").click(function() {
+			document.form1.action="${path}/shop/cart/update.do";
+			document.form1.submit();
+		});
+		
+		$("#btnBuy").click(function() {
+			document.form1.action="${path}/shop/cart/buy.do";
+			document.form1.submit();
 		});
 		
 		$("input[name=amount]").keyup(function() {
@@ -85,8 +99,9 @@
 			<h5 align="left">장바구니가 비었습니다.</h5>
 		</c:when>
 		<c:otherwise>
-			<form action="${path}/shop/cart/update.do"
-			name="form1" method="post">
+			<form name="form1" method="post">
+				<input type="hidden" value="${map.sumMoney}" name="sumMoney">
+				<input type="hidden" value="${map.fee}" name="fee">
 				<table border="1" class="table table-hover" name="table1">
 					<tr align="center">
 						<th>상품명</th>
@@ -131,12 +146,15 @@
 				
 					<button id="btnUpdate" class="btn btn-warning">적용</button>
 					<button id="btnDelete" type="button" class="btn btn-default btn-danger"> 장바구니 비우기</button>
-				
+					<div align="right">
+						<button id="btnBuy" type="button" class="btn btn-default btn-info">구매하기</button>
+					</div>
 			</form>
 		</c:otherwise>
 	</c:choose>
-	
-		<button type="button" id="btnList" class="btn btn-default btn-info">상품목록</button>
+		<div align="right">
+			<button type="button" id="btnList" class="btn btn-default btn-info">상품목록</button>
+		</div>
 	</div>
 	
 

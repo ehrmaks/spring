@@ -1,11 +1,16 @@
 package com.example.spring02.model.member.dao;
 
+
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.example.spring02.model.member.dto.MemberDTO;
+import com.example.spring02.model.shop.dto.CartDTO;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO {
@@ -51,5 +56,29 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectOne("member.pw_check", userid);
 	}
 
+	@Override
+	public void amount(String userid, int point, int total_amount) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userid", userid);
+		map.put("point", point);
+		map.put("total_amount", total_amount);
+		
+		sqlSession.update("member.update_amount", map);
+	}
 
+	@Override
+	public int total_amount(String userid) {
+		return sqlSession.selectOne("member.total_amount", userid);
+	}
+
+	@Override
+	public int point(String userid) {
+		return sqlSession.selectOne("member.point", userid);
+	}
+
+	@Override
+	public String rating(String userid) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("member.rating", userid);
+	}
 }

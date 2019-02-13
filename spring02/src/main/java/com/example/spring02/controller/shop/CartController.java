@@ -4,8 +4,11 @@ package com.example.spring02.controller.shop;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -21,7 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.spring02.model.member.dao.MemberDAO;
+import com.example.spring02.model.shop.dao.CartDAO;
 import com.example.spring02.model.shop.dto.CartDTO;
+import com.example.spring02.service.member.MemberService;
 import com.example.spring02.service.shop.CartService;
 import com.mysql.cj.xdevapi.JsonArray;
 
@@ -38,6 +44,10 @@ public class CartController {
 	
 	@Inject
 	CartService cartService;
+	@Inject
+	MemberService memberService;
+	@Inject
+	CartDAO cartDao;
 	
 	@RequestMapping(value="/shop/cart/count", method=RequestMethod.POST,
 			produces = "application/json")
@@ -163,11 +173,24 @@ public class CartController {
 		List<Map<String, Object>> resultMap = new ArrayList<Map<String,Object>>();
 		resultMap = JSONArray.fromObject(paramData);
 		
-		int cart_id[] = null;
+		int cart_id[]=null;
 		int amount[] = null;
 		
 		for(Map<String, Object> map : resultMap) {
 			String c_id = map.get("cart_id").toString(); // ["150","149","148"]
+			
+			// 정규식으로 표현
+			/*Pattern p = Pattern.compile("\\d+");
+			Matcher m = p.matcher(c_id);
+			List<Integer> list = new ArrayList<>();
+			
+			while (m.find()) {
+				int i = 0;
+				list.add(Integer.valueOf(m.group(i)));
+				cart_id[i] = list.get(i).intValue();
+				i++;
+			}*/
+			// 문자열 자르기로 표현
 			cart_id = Arrays.stream(c_id.substring(2, c_id.length()-2).split("\",\""))
 				    .map(String::trim).mapToInt(Integer::parseInt).toArray();
 			
@@ -210,6 +233,26 @@ public class CartController {
 		mav.addAllObjects(map);
 		mav.setViewName("jsonView");
 		/*return "redirect:/shop/cart/list.do";*/
+		return mav;
+	}
+	
+	@RequestMapping("buy.do")
+	public ModelAndView buy(ModelAndView mav, CartDTO dto, HttpSession session) {
+		int sumMoney = dto.getSumMoney();
+		int fee = dto.getFee();
+		dto.setTotal_amount(sumMoney+fee);
+		int total_amount = sumMoney+fee;
+		int point = 0;
+		for(int i=0; i<sumMoney; i++) {
+			if(i%1000 == 0) {
+				point += 50;
+			}
+		}
+		String userid = (String) session.getAttribute("userid");
+		memberService.amount(userid, point, total_amount);
+		cartDao.cartClear(userid);
+		
+		mav.setViewName("shop/buy");
 		return mav;
 	}
 }

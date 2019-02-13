@@ -179,6 +179,34 @@ public class MemberController {
 		return map;
 	}
 	
+	@RequestMapping("mypage.do")
+	public ModelAndView myPage(ModelAndView mav, HttpSession session) {
+		
+		String userid = (String) session.getAttribute("userid");
+		String name = (String) session.getAttribute("name");
+		System.out.println("######## name : " + name);
+		int total_amount = memberDao.total_amount(userid); // 총 주문액수
+		int point = memberDao.point(userid); // 총 적립금 (주문액수 1000원당 50point 적립)
+		int use_point = 0; // 사용 적립금
+		int available = point-use_point; // 가용 적립금
+		int coupon = 1; // 쿠폰 수
+		String rating = memberDao.rating(userid);
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("rating", rating);
+		map.put("total_amount", total_amount);
+		map.put("point", point);
+		map.put("available", available);
+		map.put("use_point", use_point);
+		map.put("coupon", coupon);
+		map.put("name", name);
+		mav.addObject("map", map);
+		mav.setViewName("member/mypage");
+		
+		return mav;
+	}
+	
 }
 
 

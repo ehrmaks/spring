@@ -54,7 +54,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where userid = #{userid}
 	</select>
 	
+	<update id="update_amount">
+		update member 
+		set 
+		total_amount = total_amount + #{total_amount},
+		point = point + #{point}
+		where userid = #{userid}
+	</update>
 	
+	<select id="total_amount" resultType="Integer">
+		select total_amount
+		from member
+		where userid=#{userid}
+	</select>
+	
+	<select id="point" resultType="Integer">
+		select point
+		from member
+		where userid=#{userid}
+	</select>
+	
+	<select id="rating" resultType="String">
+		select rating
+		from member
+		where userid=#{userid}
+	</select>
 	
 </mapper>
 
