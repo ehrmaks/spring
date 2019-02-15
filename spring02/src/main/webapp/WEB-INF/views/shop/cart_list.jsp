@@ -30,7 +30,7 @@
 		});
 		
 		$("#btnBuy").click(function() {
-			document.form1.action="${path}/shop/cart/buy.do";
+			document.form1.action="${path}/shop/cart/order.do";
 			document.form1.submit();
 		});
 		
@@ -147,8 +147,8 @@
 					<button id="btnUpdate" class="btn btn-warning">적용</button>
 					<button id="btnDelete" type="button" class="btn btn-default btn-danger"> 장바구니 비우기</button>
 					<div align="right">
-						<button id="btnBuy" type="button" class="btn btn-default btn-info">구매하기</button>
-					</div>
+						<button id="btnBuy" type="button" class="btn btn-default btn-info">주문서 작성</button>
+					</div><br>
 			</form>
 		</c:otherwise>
 	</c:choose>

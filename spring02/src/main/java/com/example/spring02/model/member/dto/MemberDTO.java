@@ -16,6 +16,7 @@ public class MemberDTO {
 	private String rating;
 	private int point;
 	private int total_amount;
+	private String phone;
 	
 	
 	public String getUserid() {
@@ -96,11 +97,21 @@ public class MemberDTO {
 	public void setTotal_amount(int total_amount) {
 		this.total_amount = total_amount;
 	}
+	
+	
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 	@Override
 	public String toString() {
 		return "MemberDTO [userid=" + userid + ", passwd=" + passwd + ", name=" + name + ", email=" + email
 				+ ", join_date=" + join_date + ", address1=" + address1 + ", address2=" + address2 + ", updatesys="
 				+ updatesys + ", zipcode=" + zipcode + ", passwd_check=" + passwd_check + ", rating=" + rating
-				+ ", point=" + point + ", total_amount=" + total_amount + "]";
+				+ ", point=" + point + ", total_amount=" + total_amount + ", phone=" + phone + "]";
 	}
+	
+	
 }

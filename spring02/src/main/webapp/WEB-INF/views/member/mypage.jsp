@@ -90,7 +90,7 @@
 		<br> <br>
 			<div class="d-flex p-5">
 				<p class="thumbnail">
-					<img src="/images/rating_silver.png" style="width: 80%"
+					<img src="/images/rating_${map.rating}.png" style="width: 80%"
 						name="rating">
 				</p>
 				<div class="description">
@@ -121,7 +121,7 @@
 									class="user-data"><span>0원</span>&nbsp; <a href="#"><img
 											src="/images/조회.png" name="rating"></a></strong></li>
 								<li><strong class="title">총주문</strong> <strong
-									class="user-data"><span>${total_amount}원</span>&nbsp;
+									class="user-data"><span>${map.total_amount}원</span>&nbsp;
 								</strong></li>
 								<li><strong class="title">쿠폰</strong> <strong
 									class="user-data"><span>${map.coupon}개</span>&nbsp; <a href="#"><img
@@ -129,7 +129,7 @@
 							</ul>
 						</div>
 					</div>
-					</div id="wrapper">
+					</div>
 			</form>
 			</div>
 

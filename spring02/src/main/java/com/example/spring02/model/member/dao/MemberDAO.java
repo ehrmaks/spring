@@ -18,4 +18,6 @@ public interface MemberDAO {
 	public int total_amount(String userid);
 	public int point(String userid);
 	public String rating(String userid);
+	public void updateRating(String userid, String rating);
+	public MemberDTO shopMember(String userid);
 }

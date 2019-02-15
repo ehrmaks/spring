@@ -190,7 +190,20 @@ public class MemberController {
 		int use_point = 0; // 사용 적립금
 		int available = point-use_point; // 가용 적립금
 		int coupon = 1; // 쿠폰 수
-		String rating = memberDao.rating(userid);
+		String rating = null;
+		
+		if(total_amount >= 100000 && total_amount < 300000) {
+			rating = "Gold";
+			memberDao.updateRating(userid, rating);
+		} else if(total_amount >= 300000 && total_amount < 500000) {
+			rating = "Diamond";
+			memberDao.updateRating(userid, rating);
+		} else if(total_amount >= 500000) {
+			rating = "Vip";
+			memberDao.updateRating(userid, rating);
+		}
+		
+		rating = memberDao.rating(userid);
 		
 		Map<String, Object> map = new HashMap<>();
 		

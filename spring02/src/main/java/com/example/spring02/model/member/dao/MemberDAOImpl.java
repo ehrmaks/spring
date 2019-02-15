@@ -81,4 +81,18 @@ public class MemberDAOImpl implements MemberDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("member.rating", userid);
 	}
+
+	@Override
+	public void updateRating(String userid, String rating) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userid", userid);
+		map.put("rating", rating);
+		
+		sqlSession.update("member.update_rating", map);
+	}
+
+	@Override
+	public MemberDTO shopMember(String userid) {
+		return sqlSession.selectOne("member.shop_member", userid);
+	}
 }
