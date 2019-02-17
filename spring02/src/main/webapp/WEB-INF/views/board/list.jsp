@@ -100,8 +100,8 @@
 										html2 += '<a href="#" onclick="list(' + data.pager.totPage + ')">[끝]</a>';
 									}
 
-									html2 += '<div class="container">';
-									html2 += '<button type="button" id="btnWrite" class="btn btn-primary float-right">글쓰기</button>';
+									html2 += '<div align="left">';
+									html2 += '<button type="button" id="btnWrite" class="btn btn-primary float-left">글쓰기</button>';
 									html2 += '</div>';
 									html2 += '</td>';
 									html2 += '</tr>';
@@ -126,7 +126,7 @@
 	<%@ include file="../include/menu.jsp"%>
 	<h2 align="center">상품문의</h2><br><br>
 
-	<div class="container">
+	<div class="container" style="width:100%; overflow: scroll;">
 		<!-- 검색폼 -->
 		<form name="form1" method="post" action="/board/list.do">
 			<div align="right">
@@ -141,22 +141,8 @@
 						<c:out value="${map.search_option == 'title'?'selected':''}"/>>제목</option>
 				</select>
 
-				<div
-					class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-					<div class="input-group">
-						<input type="text" class="form-control"
-							placeholder="Search for..." aria-label="Search"
-							aria-describedby="basic-addon2" name="keyword" id="keyword"
-							value="${map.keyword}">
-						<div class="input-group-append">
-							<button class="btn btn-primary" type="submit">
-								<i class="fas fa-search"></i>
-							</button>
-							<!-- <i class="fas fa-search"><input type="submit" value="조회" class="btn btn-primary"></i> -->
-						</div>
-					</div>
-				</div>
-
+					<input type="text" placeholder="Search for..." name="keyword" id="keyword" value="${map.keyword}">
+					<button class="btn btn-primary" type="submit" value="조회">조회</button>
 			</div>
 			<div id="count" align="right">${map.count}개의게시물이있습니다.</div>
 			<div align="right"></div>
@@ -193,7 +179,7 @@
 		</table>
 
 		<br>
-		<table class="container" id="table2">
+		<table class="table table-hover" id="table2">
 			<!-- 페이지 네비게이션 출력 -->
 			<tr>
 				<td colspan="5" align="center" class="page-item">
@@ -225,9 +211,9 @@
 						<a href="#" onclick="list('${map.pager.totPage}')">[끝]</a>
 					</c:if>
 
-					<div class="container">
-						<button type="button" id="btnWrite"
-							class="btn btn-primary float-right">글쓰기</button>
+					<div align="left">
+						&nbsp;&nbsp;&nbsp;<button type="button" id="btnWrite"
+							class="btn btn-primary float-left">글쓰기</button>
 					</div>
 				</td>
 			</tr>

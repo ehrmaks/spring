@@ -1,11 +1,13 @@
 package com.example.spring02.controller.member;
 
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -18,12 +20,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.spring02.model.member.dao.MemberDAO;
 import com.example.spring02.model.member.dto.MemberDTO;
 import com.example.spring02.service.member.MemberService;
+import com.example.spring02.util.KakaoAccessToken;
+import com.fasterxml.jackson.databind.JsonNode;
 
 @Controller //컨트롤러 빈으로 등록
 @RequestMapping("member/*") //공통적인 url 매핑

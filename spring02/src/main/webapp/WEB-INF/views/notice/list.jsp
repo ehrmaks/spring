@@ -122,7 +122,7 @@
 	<%@ include file="../include/menu.jsp"%>
 	<h2 align="center">공지사항</h2><br><br>
 
-	<div class="container">
+	<div class="container" style="width:100%; overflow: scroll;">
 		<!-- 검색폼 -->
 		<form name="form1" method="post" action="/notice/list.do">
 			<div align="right">
@@ -217,9 +217,9 @@
 					</c:if>
 					
 					<c:if test="${sessionScope.admin_userid != null}">
-						<div class="container">
+						<div align="left">
 							<button type="button" id="btnWrite"
-								class="btn btn-primary float-right">글쓰기</button>
+								class="btn btn-primary float-left">글쓰기</button>
 						</div>
 					</c:if>
 				</td>

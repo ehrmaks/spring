@@ -95,4 +95,21 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberDTO shopMember(String userid) {
 		return sqlSession.selectOne("member.shop_member", userid);
 	}
+
+	@Override
+	public String kakaoJoinCheck(String userid) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("member.kakao_join_check", userid);
+	}
+
+	@Override
+	public Boolean kakaoLoginCehck(MemberDTO dto) {
+		String name = sqlSession.selectOne("member.kakao_login_check", dto);
+		return (name==null) ? false : true;
+	}
+
+	@Override
+	public void kakaoInsert(MemberDTO dto) {
+		sqlSession.insert("member.kakao_insert", dto);
+	}
 }

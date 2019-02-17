@@ -3,6 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	<settings>
+	 	<setting name="cacheEnabled" value="false"/>
+	 	<setting name="jdbcTypeForNull" value="NULL"/>
+	 </settings>
 	<!-- <properties resource="db.properties" /> -->
 	<typeAliases>
 		<!--<typeAlias type="com.example.spring02." alias="memberDto"></typeAlias>
@@ -25,3 +29,5 @@
 		<mapper resource="mappers/memberMapper.xml" />
 	</mappers> -->
 </configuration>
+
+	

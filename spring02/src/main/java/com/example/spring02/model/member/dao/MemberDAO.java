@@ -20,4 +20,7 @@ public interface MemberDAO {
 	public String rating(String userid);
 	public void updateRating(String userid, String rating);
 	public MemberDTO shopMember(String userid);
+	public String kakaoJoinCheck(String userid);
+	public Boolean kakaoLoginCehck(MemberDTO dto);
+	public void kakaoInsert(MemberDTO dto);
 }

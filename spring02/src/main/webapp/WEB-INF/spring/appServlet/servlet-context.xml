@@ -78,6 +78,9 @@
 			<mapping path="/notice/delete.do"/>
 			<mapping path="/shop/cart/list.do"/>
 			<mapping path="/shop/cart/insert.do"/>
+			<mapping path="/shop/cart/buy.do"/>
+			<mapping path="/shop/cart/order.do"/>
+			<mapping path="/member/mypage.do"/>
 			<mapping path="/chatting.do"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
@@ -101,7 +104,7 @@
     <beans:property value="0" name="order"></beans:property>
 </beans:bean>
 
-
+	
 
 		
 	

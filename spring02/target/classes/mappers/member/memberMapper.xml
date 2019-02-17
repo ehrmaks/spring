@@ -5,6 +5,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
 <mapper namespace="member">
 
+	<select id="kakao_join_check" resultType="String">
+		select userid
+		from member
+		where userid=#{userid}
+	</select>
+	
+	<select id="kakao_login_check" parameterType="com.example.spring02.model.member.dto.MemberDTO"
+	resultType="String">
+		select name 
+		from member 
+		where userid=#{userid}
+	</select>
+	<insert id="kakao_insert" parameterType="com.example.spring02.model.member.dto.MemberDTO">
+		insert into member(userid, name, email, phone)
+		values(#{userid}, #{name}, #{email}, #{phone})
+	</insert>
+
 	<select id="login_check" 
 	parameterType="com.example.spring02.model.member.dto.MemberDTO"
 	resultType="String">

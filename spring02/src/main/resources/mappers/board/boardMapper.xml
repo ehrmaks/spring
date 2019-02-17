@@ -53,18 +53,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="com.example.spring02.model.board.dto.BoardDTO">
 		<include refid="pagingHeader" />
 		select rownum as rn, b1.* from (
-		SELECT A1.* FROM (
-		SELECT rownum, bno, title, user_name, (select to_char(regdate, 'yyyy-mm-dd
-		hh12:mi:ss') from board where bno=b.bno) regdate,
-		viewcnt,
-		(select count(*) from reply
-		where bno=b.bno) cnt
-		FROM board b, admin a
-		<include refid="admin_search" />
-		order by bno desc)A1
-
-		union
-
 		SELECT A2.* FROM (
 		SELECT rownum, bno, title, user_name, (select to_char(regdate, 'yyyy-mm-dd
 		hh12:mi:ss') from board where bno=b.bno) regdate,
@@ -74,6 +62,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM board b, member m
 		<include refid="member_search" />
 		order by bno desc)A2
+
+		union all
+		
+		SELECT A1.* FROM (
+		SELECT rownum, bno, title, user_name, (select to_char(regdate, 'yyyy-mm-dd
+		hh12:mi:ss') from board where bno=b.bno) regdate,
+		viewcnt,
+		(select count(*) from reply
+		where bno=b.bno) cnt
+		FROM board b, admin a
+		<include refid="admin_search" />
+		order by bno desc)A1
 		)b1
 		<include refid="pagingFooter" />
 		order by bno desc

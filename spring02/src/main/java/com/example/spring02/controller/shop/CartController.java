@@ -283,7 +283,14 @@ public class CartController {
 	}
 	
 	@RequestMapping("buy.do")
-	public ModelAndView buy(ModelAndView mav, CartDTO dto, HttpSession session) {
+	public ModelAndView buy(CartDTO dto,
+			@RequestParam String email,
+			@RequestParam String name,
+			@RequestParam String address1,
+			@RequestParam String address2,
+			@RequestParam String phone,HttpSession session) {
+		
+		ModelAndView mav = new ModelAndView();
 		int sumMoney = dto.getSumMoney();
 		int fee = dto.getFee();
 		dto.setTotal_amount(sumMoney+fee);
@@ -295,25 +302,15 @@ public class CartController {
 			}
 		}
 		String userid = (String) session.getAttribute("userid");
-		String name = (String) session.getAttribute("name");
-		
-		MemberDTO member = memberDao.shopMember(userid);
-		
-		/*String address1 = dto2.getAddress1();
-		String address2 = dto2.getAddress2();
-		String phone = dto2.getPhone();*/
-		/*String product_name = dto3.getProduct_name();*/
-		/*System.out.println("#########" + address1 + address2 + phone);*/
 		
 		memberService.amount(userid, point, total_amount);
 		cartDao.cartClear(userid);
 		Map<String, Object> map = new HashMap<>();
 		
-		/*map.put("product_name", product_name);*/
-		/*map.put("address1", address1);
+		map.put("address1", address1);
 		map.put("address2", address2);
-		map.put("phone", phone);*/
-		map.put("member", member);
+		map.put("phone", phone);
+		map.put("email", email);
 		map.put("total_amount", total_amount);
 		map.put("sumMoney", sumMoney);
 		map.put("fee", fee);

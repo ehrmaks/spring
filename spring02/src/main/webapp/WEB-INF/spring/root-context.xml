@@ -87,5 +87,6 @@
 	<websocket:sockjs/>
 </websocket:handlers>
 
+<bean id="naverLoginBO" class="com.example.spring02.util.NaverLoginBO"/>
 
 </beans>

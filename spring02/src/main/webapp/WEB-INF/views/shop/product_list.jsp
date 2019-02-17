@@ -16,10 +16,10 @@
 <body>
 <%@ include file="../include/menu.jsp" %>
 <h2 align="center">상품목록</h2><br><br>
-<div class="container">
+<div class="container" style="width:100%; overflow: scroll;">
 
 
-<table border="1" width="80%" class="table table-hover">
+<table border="1" class="table table-hover">
 	<tr align="center">
 		<th>상품코드</th>
 		<th>이미지</th>
@@ -87,7 +87,8 @@
 </table>
 
 <form action="/shop/product/list.do" name="form1" method="post">
-	<div align="right">
+	<div align="left">
+		<br><br><br>
 		<select name="search_option" id="search_option">
 			<option value="all"
 			<c:out value="${map.search_option == 'all'?'selected':''}"></c:out>>모두검색</option>
@@ -99,20 +100,8 @@
 			<c:out value="${map.search_option == 'product_desc'?'selected':''}"></c:out>>상품내용</option>
 		</select>
 		
-		<div
-			class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-			<div class="input-group">
-				<input type="text" class="form-control"
-					placeholder="Search for..." aria-label="Search"
-					aria-describedby="basic-addon2" name="keyword" id="keyword"
-					value="${map.keyword}">
-				<div class="input-group-append">
-					<button class="btn btn-primary" type="submit">
-						<i class="fas fa-search"></i>
-					</button>
-				</div>
-			</div>
-		</div>
+		<input type="text" placeholder="Search for..." name="keyword" id="keyword" value="${map.keyword}">
+		<button class="btn btn-primary" type="submit" value="조회">조회</button><br><br><br><br><br><br>
 	</div>
 </form>
 </div>

@@ -70,4 +70,20 @@ public class MemberServiceImpl implements MemberService {
 		memberDao.amount(userid, point, total_amount);
 	}
 
+	@Override
+	public Boolean kakoLoginCheck(MemberDTO dto, HttpSession session) {
+		boolean result = memberDao.kakaoLoginCehck(dto);
+		
+		if(result) {
+			MemberDTO dto2 = viewMember(dto.getUserid());
+			
+			session.setAttribute("userid", dto.getUserid());
+			session.setAttribute("name", dto2.getName());
+			System.out.println(session.getAttribute("userid"));
+			System.out.println(session.getAttribute("name"));
+		}
+		
+		return result;
+	}
+
 }

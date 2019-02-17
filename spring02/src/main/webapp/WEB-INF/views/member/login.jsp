@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 <%@ include file="../include/header.jsp" %>
 <script>
 $(function(){
@@ -103,7 +103,23 @@ $(function(){
 		/* document.form1.action="/member/join.do";
 		document.form1.submit(); */
 	});
+	
 });
+
+function kakao_login() {
+	//window.open('https://kauth.kakao.com/oauth/authorize?client_id=4df0a212b67066319be28e560b93c078&redirect_uri=https://test.kjsfk.com/kakaologin&response_type=code','카카오톡로그인','width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes');
+	location.href="https://kauth.kakao.com/oauth/authorize?client_id=4df0a212b67066319be28e560b93c078&redirect_uri=https://test.kjsfk.com/kakaologin&response_type=code";
+	/* var win = window.open("", "_self");
+    win.close(); */
+}
+
+function naver_login() {
+	location.href="/naverlogin";
+	//window.open('/naverlogin', '네이버로그인', 'width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes');
+	
+	/* var win = window.open("", "_self");
+    win.close(); */
+}
 
 </script>
 </head>
@@ -147,11 +163,25 @@ $(function(){
 			<br>
 		
 			<input type="button" id="btnLogin" value="로그인" class="btn btn-default btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="button" id="btnJoin" value="회원가입" class="btn btn-default btn-primary"> 
+			<input type="button" id="btnJoin" value="회원가입" class="btn btn-default btn-primary"> <br><br>
+			
+			<a href="#">
+				<img src="/images/kakaologin.png" 
+				onclick="kakao_login()">
+			</a>
+			
+			<a href="#">
+				<br><br>
+				<!-- <img src="/images/naverlogin.png"> -->
+				<img src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png" width="60%" onclick="naver_login()">
+			</a>
 		</td>
 	</tr>
 </table>
 </form>
+	
+	<!-- <img src="/images/kakaologin.png" onclick="window.open('https://kauth.kakao.com/oauth/authorize?client_id=4df0a212b67066319be28e560b93c078&redirect_uri=https://localhost/kakaologin&response_type=code','login','width=1024,height=800')"> -->
+<!-- onclick="window.open('https://kauth.kakao.com/oauth/authorize?client_id=4df0a212b67066319be28e560b93c078&redirect_uri=https://localhost/kakaologin&response_type=code','login','width=1024,height=800')" -->
 </body>
 </html>
 

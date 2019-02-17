@@ -139,7 +139,7 @@ $(document).ready(function() {
             },
 			error: function(e) {
 				console.log(e);
-				alert("실패");
+				alert("댓글을 입력하세요!!");
 			}
         });
     }
@@ -281,7 +281,7 @@ function showReplyModify(rno){
 <%@ include file="../include/menu.jsp" %>
 <h2 class="text-center">게시물 보기</h2><br><br>
 
-<div class="container">
+<div class="container" style="width:100%; overflow: scroll;">
 <form id="form1" name="form1" method="post"
 action="/board/insert.do" enctype="multipart/form-data">
 	<table border="1" class="table table-striped table-bordered table-hover">
@@ -334,7 +334,7 @@ action="/board/insert.do" enctype="multipart/form-data">
 	<hr>
 	<br>
 	
-	<div class="container" style="width:700px; text-align:center;">
+	<div class="container" style="width:80%; text-align:center;">
 <!-- 수정,삭제에 필요한 글번호를 hidden 태그에 저장 -->	
 		<input type="hidden" name="bno" value="${dto.bno}">
 		
@@ -351,10 +351,10 @@ action="/board/insert.do" enctype="multipart/form-data">
 	<br>
 </form>
 <!-- 댓글 작성 -->
-<div style="width:700px; text-align:center;" align="center" class="container">
+<div align="center" class="container">
 	 <c:if test="${sessionScope.userid != null }">
 	 	<textarea rows="5" cols="80" id="replytext"
-	 		placeholder="댓글을 작성하세요"></textarea>
+	 		placeholder="댓글을 작성하세요" style="margin: 0px; width: 60%;"></textarea>
 	 	<br>
 	 	<input type="checkbox" id="secretReply"> 비밀댓글
 	 	<button type="button" id="btnReply" class="btn btn-default btn-primary">댓글작성</button>

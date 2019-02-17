@@ -206,10 +206,11 @@ $(document).ready(function(){
 
 <body>
 <%@ include file="../include/menu.jsp" %>
+<div class="container" style="width:100%; overflow: scroll;">
 <h2 class="text-center">글쓰기</h2><br><br>
 <form id="form1" name="form1" method="post"
 action="/board/insert.do" enctype="multipart/form-data">
-	<div class="container" style="width:80%; overflow: scroll;">
+	<div>
 	
 	<table border="1" class="table table-hover">
 		<tr>
@@ -262,7 +263,7 @@ action="/board/insert.do" enctype="multipart/form-data">
 	</div>
 
 	<br>	<br>	<br>	<br>
-
+</div>
 </body>
 </html>
 

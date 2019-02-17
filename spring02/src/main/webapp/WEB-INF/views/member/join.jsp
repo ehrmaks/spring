@@ -28,7 +28,23 @@ $(function() {
 					if(data.cnt > 0) {
 						$("#div2").html("아이디가 존재합니다. 다른 아이디를 입력해주세요.").css("color","red");
 					} else {
-						$("#div2").html("사용가능한 아이디입니다.").css("color","blue");		
+						var idtext = $("#userid");
+						var id = $("#userid").val();
+						var regExp1 = /^[a-zA-Z0-9]{4,12}$/;
+						
+						if(!regExp1.test(id))
+					    	// 아이디 검사 후 4~12자 영문 대소문자와 숫자의 유효성이 안맞다면
+					    	// 공백을 주고 알람을 띄운다.
+					    	// 밑에 동일한 유효성 검사
+					    {
+							$("#div2").html("4~12자 그리고 영문과 숫자만 입력하세요.").css("color","red");
+					    	id = "";
+					    	idtext.focus();
+					    	return;
+					    } else {
+					    	$("#div2").html("사용가능한 아이디입니다.").css("color","blue");
+					    }
+								
 						idck = 1;
 					}
 				}, error: function(error) {

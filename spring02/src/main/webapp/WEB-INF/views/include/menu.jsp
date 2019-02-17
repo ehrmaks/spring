@@ -61,6 +61,52 @@ $(function() {
 
 <body id="page-top">
 
+
+<script type='text/javascript'>
+var img_L = 0;
+var img_T = 0;
+var targetObj;
+
+function getLeft(o){
+     return parseInt(o.style.left.replace('px', ''));
+}
+function getTop(o){
+     return parseInt(o.style.top.replace('px', ''));
+}
+
+// 이미지 움직이기
+function moveDrag(e){
+     var e_obj = window.event? window.event : e;
+     var dmvx = parseInt(e_obj.clientX + img_L);
+     var dmvy = parseInt(e_obj.clientY + img_T);
+     targetObj.style.left = dmvx +"px";
+     targetObj.style.top = dmvy +"px";
+     return false;
+}
+
+// 드래그 시작
+function startDrag(e, obj){
+     targetObj = obj;
+     var e_obj = window.event? window.event : e;
+     img_L = getLeft(obj) - e_obj.clientX;
+     img_T = getTop(obj) - e_obj.clientY;
+
+     document.onmousemove = moveDrag;
+     document.onmouseup = stopDrag;
+     if(e_obj.preventDefault)e_obj.preventDefault(); 
+}
+
+// 드래그 멈추기
+function stopDrag(){
+     document.onmousemove = null;
+     document.onmouseup = null;
+}
+</script>
+
+
+
+
+
 	<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
 		<a class="navbar-brand mr-1" href="/">Portfolio</a>
@@ -271,11 +317,16 @@ $(function() {
 			</c:if>
 		</ul>
 
-		<div style="position: fixed; z-index: 400; display: block; bottom: 10%; right: 3%; 
+		<div style="position: fixed; z-index: 400; display: block; bottom: 10%; right: 2%; 
 			table-layout: fixed; text-overflow: ellipsis; overflow-x: hidden; overflow-y: hidden;">
-				<img src="/images/kakaotalk.png" onclick="window.open('http://pf.kakao.com/_vkZWj/chat','chat','width=1024,height=800')" 
-				style="cursor: pointer;" title="카카오톡상담하기">
+				<img class="drag" src="/images/kakaotalk.png" onclick="window.open('http://pf.kakao.com/_vkZWj/chat','chat','width=1024,height=800')" 
+				style="cursor: pointer; width: 80%;" title="카카오톡상담하기">
 		</div>
+		
+		<!-- <div style='z-index: 400; display: block; table-layout: fixed; text-overflow: ellipsis; overflow-x: hidden; overflow-y: hidden; position:absolute; left:2%; top:80%; cursor:hand;' onmousedown='startDrag(event, this)'>
+			<img src="/images/kakaotalk.png" style="width: 65%;" onclick="window.open('http://pf.kakao.com/_vkZWj/chat','chat','width=1024,height=800')" title="카카오톡상담하기">
+		</div> -->
+		
 
 		<div id="content-wrapper">
 			<div class="container-fluid">
