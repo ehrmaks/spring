@@ -10,6 +10,10 @@ public class CartDTO {
 	private int money;
 	private int amount;
 	private String picture_url;
+	private int sumMoney;
+	private int fee;
+	private int total_amount;
+	
 	public int getCart_id() {
 		return cart_id;
 	}
@@ -64,13 +68,35 @@ public class CartDTO {
 	public void setPicture_url(String picture_url) {
 		this.picture_url = picture_url;
 	}
+	
+	public int getSumMoney() {
+		return sumMoney;
+	}
+	public void setSumMoney(int sumMoney) {
+		this.sumMoney = sumMoney;
+	}
+	
+	public int getFee() {
+		return fee;
+	}
+	public void setFee(int fee) {
+		this.fee = fee;
+	}
+	
+	public int getTotal_amount() {
+		return total_amount;
+	}
+	public void setTotal_amount(int total_amount) {
+		this.total_amount = total_amount;
+	}
 	@Override
 	public String toString() {
 		return "CartDTO [cart_id=" + cart_id + ", userid=" + userid + ", name=" + name + ", product_id=" + product_id
 				+ ", product_name=" + product_name + ", product_price=" + product_price + ", money=" + money
-				+ ", amount=" + amount + ", picture_url=" + picture_url + "]";
+				+ ", amount=" + amount + ", picture_url=" + picture_url + ", sumMoney=" + sumMoney + ", fee=" + fee
+				+ ", total_amount=" + total_amount + "]";
 	}
 	
 	
-	
 }
+

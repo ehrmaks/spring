@@ -133,6 +133,10 @@ function daumZipCode() {
 				</td>
 			</tr>
 			<tr>
+				<td>핸드폰번호</td>
+				<td><input id="phone" name="phone" value="${dto.phone}"></td>
+			</tr>
+			<tr>
 				<td>이메일주소</td>
 				<td><input id="email" name="email" value="${dto.email}"></td>
 			</tr>

@@ -4,8 +4,11 @@ package com.example.spring02.controller.shop;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -21,7 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.spring02.model.member.dao.MemberDAO;
+import com.example.spring02.model.member.dto.MemberDTO;
+import com.example.spring02.model.shop.dao.CartDAO;
 import com.example.spring02.model.shop.dto.CartDTO;
+import com.example.spring02.model.shop.dto.ProductDTO;
+import com.example.spring02.service.member.MemberService;
 import com.example.spring02.service.shop.CartService;
 import com.mysql.cj.xdevapi.JsonArray;
 
@@ -38,6 +46,12 @@ public class CartController {
 	
 	@Inject
 	CartService cartService;
+	@Inject
+	MemberService memberService;
+	@Inject
+	CartDAO cartDao;
+	@Inject
+	MemberDAO memberDao;
 	
 	@RequestMapping(value="/shop/cart/count", method=RequestMethod.POST,
 			produces = "application/json")
@@ -163,11 +177,24 @@ public class CartController {
 		List<Map<String, Object>> resultMap = new ArrayList<Map<String,Object>>();
 		resultMap = JSONArray.fromObject(paramData);
 		
-		int cart_id[] = null;
+		int cart_id[]=null;
 		int amount[] = null;
 		
 		for(Map<String, Object> map : resultMap) {
 			String c_id = map.get("cart_id").toString(); // ["150","149","148"]
+			
+			// 정규식으로 표현
+			/*Pattern p = Pattern.compile("\\d+");
+			Matcher m = p.matcher(c_id);
+			List<Integer> list = new ArrayList<>();
+			
+			while (m.find()) {
+				int i = 0;
+				list.add(Integer.valueOf(m.group(i)));
+				cart_id[i] = list.get(i).intValue();
+				i++;
+			}*/
+			// 문자열 자르기로 표현
 			cart_id = Arrays.stream(c_id.substring(2, c_id.length()-2).split("\",\""))
 				    .map(String::trim).mapToInt(Integer::parseInt).toArray();
 			
@@ -210,6 +237,90 @@ public class CartController {
 		mav.addAllObjects(map);
 		mav.setViewName("jsonView");
 		/*return "redirect:/shop/cart/list.do";*/
+		return mav;
+	}
+	
+	@RequestMapping("order.do")
+	public ModelAndView order(ModelAndView mav, CartDTO dto, HttpSession session) {
+		String userid = (String) session.getAttribute("userid");
+		String name = (String) session.getAttribute("name");
+		int sumMoney = dto.getSumMoney(); // 상품금액
+		int fee = sumMoney >= 50000 ? 0 : 2500; // 배송비
+		int sum = sumMoney+fee; // 총 결제 금액
+		
+		List<CartDTO> list = cartService.listCart(userid); // 리스트
+		
+		String rating = memberDao.rating(userid); // 등급
+		int point = memberDao.point(userid); // 총 포인트
+		int avail_point = 0;
+		
+		for(int i=0; i<sumMoney; i++) {
+			if(i%1000 == 0) {
+				avail_point += 50;
+			}
+		}
+		int use_point = 0; // 사용한 포인트
+		int available = point-use_point; // 가용 포인트
+		int coupon = 1;
+		
+		MemberDTO dto2 = memberDao.shopMember(userid);
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("dto2", dto2);
+		map.put("avail_point", avail_point);
+		map.put("name", name);
+		map.put("rating", rating);
+		map.put("available", available);
+		map.put("coupon", coupon);
+		map.put("point", point);
+		map.put("sumMoney", sumMoney);
+		map.put("fee", fee);
+		map.put("sum", sum);
+		map.put("list", list);
+		mav.addObject("map",map);
+		mav.setViewName("shop/order");
+		return mav;
+	}
+	
+	@RequestMapping("buy.do")
+	public ModelAndView buy(ModelAndView mav, CartDTO dto, HttpSession session) {
+		int sumMoney = dto.getSumMoney();
+		int fee = dto.getFee();
+		dto.setTotal_amount(sumMoney+fee);
+		int total_amount = sumMoney+fee;
+		int point = 0;
+		for(int i=0; i<sumMoney; i++) {
+			if(i%1000 == 0) {
+				point += 50;
+			}
+		}
+		String userid = (String) session.getAttribute("userid");
+		String name = (String) session.getAttribute("name");
+		
+		MemberDTO member = memberDao.shopMember(userid);
+		
+		/*String address1 = dto2.getAddress1();
+		String address2 = dto2.getAddress2();
+		String phone = dto2.getPhone();*/
+		/*String product_name = dto3.getProduct_name();*/
+		/*System.out.println("#########" + address1 + address2 + phone);*/
+		
+		memberService.amount(userid, point, total_amount);
+		cartDao.cartClear(userid);
+		Map<String, Object> map = new HashMap<>();
+		
+		/*map.put("product_name", product_name);*/
+		/*map.put("address1", address1);
+		map.put("address2", address2);
+		map.put("phone", phone);*/
+		map.put("member", member);
+		map.put("total_amount", total_amount);
+		map.put("sumMoney", sumMoney);
+		map.put("fee", fee);
+		map.put("point", point);
+		map.put("name", name);
+		mav.addObject("map", map);
+		mav.setViewName("shop/buy");
 		return mav;
 	}
 }

@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.spring02.model.member.dao.MemberDAO;
 import com.example.spring02.model.member.dto.MemberDTO;
@@ -61,6 +62,12 @@ public class MemberServiceImpl implements MemberService {
 	public int idCheck(String userid) {
 		// TODO Auto-generated method stub
 		return memberDao.idCheck(userid);
+	}
+	
+	@Transactional
+	@Override
+	public void amount(String userid, int point, int total_amount) {
+		memberDao.amount(userid, point, total_amount);
 	}
 
 }

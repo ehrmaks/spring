@@ -72,6 +72,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where userid=#{userid}
 	</select>
 	
+	<delete id="cart_clear">
+		delete from tbl_cart
+		where userid=#{userid}
+	</delete>
+	
 </mapper>
 
 

@@ -16,4 +16,5 @@ public interface CartDAO {
 	public void updateCart(CartDTO dto);
 	public void modifyCart(CartDTO dto);
 	public int counting(String userid);
+	public void cartClear(String userid);
 }

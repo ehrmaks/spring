@@ -240,6 +240,8 @@ $(function() {
 								<a class="dropdown-item" href="#">${sessionScope.name}님</a>
 								<a class="dropdown-item"
 									href="/member/${sessionScope.userid}/form">회원정보수정</a>
+								<a class="dropdown-item"
+									href="/member/mypage.do">마이쇼핑</a>
 							</c:if>
 
 

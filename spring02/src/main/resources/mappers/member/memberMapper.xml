@@ -13,13 +13,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="viewMember"
 	resultType="com.example.spring02.model.member.dto.MemberDTO">
-		select userid, passwd, name, email, join_date, address1, address2, zipcode
+		select userid, passwd, name, email, join_date, address1, address2, zipcode, phone
 		 from member where userid=#{userid}
 	</select>
 	
 	<insert id="insert" parameterType="com.example.spring02.model.member.dto.MemberDTO">
-		insert into member(userid,passwd,name,email,address1,address2,zipcode) 
-		values(#{userid}, #{passwd}, #{name}, #{email}, #{address1}, #{address2}, #{zipcode})
+		insert into member(userid,passwd,name,email,address1,address2,zipcode,phone) 
+		values(#{userid}, #{passwd}, #{name}, #{email}, #{address1}, #{address2}, #{zipcode}, #{phone})
 	</insert>
 	
 	<update id="update">
@@ -33,6 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			address2 = #{address2,jdbcType=VARCHAR},
 			updatesys = SYSDATE,
 			zipcode = #{zipcode,jdbcType=VARCHAR}
+			phone = #{phone,jdbcType=VARCHAR}
 		where
 			userid = #{userid,jdbcType=VARCHAR}
 	</update>
@@ -54,7 +55,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where userid = #{userid}
 	</select>
 	
+	<update id="update_amount">
+		update member 
+		set 
+		total_amount = total_amount + #{total_amount},
+		point = point + #{point}
+		where userid = #{userid}
+	</update>
 	
+	<select id="total_amount" resultType="Integer">
+		select total_amount
+		from member
+		where userid=#{userid}
+	</select>
+	
+	<select id="point" resultType="Integer">
+		select point
+		from member
+		where userid=#{userid}
+	</select>
+	
+	<select id="rating" resultType="String">
+		select rating
+		from member
+		where userid=#{userid}
+	</select>
+	
+	<update id="update_rating">
+		update member
+		set
+		rating = #{rating}
+		where userid=#{userid}
+	</update>
+	
+	<select id="shop_member"
+	resultType="com.example.spring02.model.member.dto.MemberDTO">
+		select email, phone, address1, address2, zipcode
+		from member 
+		where userid=#{userid}
+	</select>
 	
 </mapper>
 

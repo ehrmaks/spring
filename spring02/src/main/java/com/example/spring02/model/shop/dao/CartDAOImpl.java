@@ -74,4 +74,9 @@ public class CartDAOImpl implements CartDAO {
 		return sqlSession.selectOne("cart.counting", userid);
 	}
 
+	@Override
+	public void cartClear(String userid) {
+		sqlSession.delete("cart.cart_clear", userid);
+	}
+
 }

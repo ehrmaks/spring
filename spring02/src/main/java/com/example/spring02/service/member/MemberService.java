@@ -12,4 +12,5 @@ public interface MemberService {
 	public void update(MemberDTO dto);
 	public void delete(MemberDTO dto);
 	public int idCheck(String userid);
+	public void amount(String userid, int point, int total_amount);
 }
